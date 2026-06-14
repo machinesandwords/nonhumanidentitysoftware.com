@@ -8,7 +8,7 @@
   const nav = `
     <div class="nav-section">
       <div class="nav-section-label">Why</div>
-      <a href="/why/" class="nav-item depth-0">About this site</a>
+      <a href="/why/" class="nav-item depth-0">The ghosts are the machine</a>
     </div>
 
     <div class="nav-divider"></div>

@@ -4,26 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-  <title>About This Site | Non-Human Identity Software</title>
-  <meta name="description" content="Why this site exists, how it covers the NHI security market, and what independent means in practice.">
+  <title>The Ghosts Are the Machine — Independent Guide | Non-Human Identity Software</title>
+  <meta name="description" content="Vendor-neutral analysis of non-human identity, machine identity, and secrets governance platforms for security buyers.">
   <link rel="canonical" href="https://nonhumanidentitysoftware.com/why/">
+
+  <meta property="og:title" content="The Ghosts Are the Machine — Independent Guide | Non-Human Identity Software">
+  <meta property="og:description" content="Vendor-neutral analysis of non-human identity, machine identity, and secrets governance platforms for security buyers.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/why/">
+  <meta property="og:type" content="article">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2F7D;--accent-pale:#F2ECF6} .card-title{font-weight:700;}</style>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Ghosts Are the Machine — Why This Site Exists",
+    "description": "Most non-human identity security content is produced by vendors selling NHI platforms. This site gives security architects and platform teams an independent information source.",
+    "url": "https://nonhumanidentitysoftware.com/why/",
+    "datePublished": "2026-06-14",
+    "dateModified": "2026-06-14",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "The Ghosts Are the Machine", "item": "https://nonhumanidentitysoftware.com/why/" }
+    ]
+  }
+  </script>
 </head>
 <body>
 
   <header class="topbar">
     <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
     <div class="topbar-divider"></div>
-    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
-    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+    <div class="topbar-tagline">an independent guide for non-human identity software buyers</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
   </header>
 
   <div class="layout">
@@ -34,48 +62,54 @@
     <main class="main">
       <article class="content">
 
-        <div class="breadcrumb">
-          <a href="/">Home</a>
-          <span class="breadcrumb-sep">/</span>
-          <span>About</span>
-        </div>
+        <span class="page-label">About this site</span>
+        <h1>The Ghosts Are the Machine</h1>
 
-        <span class="page-label">About This Site</span>
-        <h1>No Switzerland</h1>
+        <p class="lead">While NHI may not be a term bandied about at board meetings yet, organizations that don't want to be caught on the back foot will choose wisely and invest significantly in this sector before the first big attack makes headlines that rattle investors. But most non-human identity security content is produced by vendors selling NHI platforms, or by privileged-access and secrets-management incumbents whose roadmaps depend on which architecture this market settles on. The security architect trying to build a defensible shortlist for a $400K NHI governance deployment has no neutral ground to stand on. This site is an attempt to fix that.</p>
 
-        <p class="lead">The NHI security market is new enough that the usual independent infrastructure hasn't caught up. The content that exists is mostly vendor-produced. The analyst coverage is mostly opaque. The media coverage is mostly sponsored. This site is the thing that should exist but doesn't: practitioner-oriented, vendor-neutral coverage of a market that's moving fast and matters.</p>
+        <h2>Written for the function nobody quite owns</h2>
 
-        <h2>What independent actually means here</h2>
+        <p>Non-human identity doesn't have a settled home in the org chart yet. It shows up as a line item under IAM, under cloud security posture management, under DevSecOps tooling, or under a brand-new budget the CISO had to create from scratch — depending on which team got burned first. The security architect evaluating platforms is often doing so without a precedent: no prior tool to replace, no established RFP template, and three other teams who each assume they'll own the resulting product.</p>
 
-        <p>No vendor relationships. No sponsored content. No affiliate arrangements. No advertising. Vendors are included because they're significant to buyers in the market, not because they paid for inclusion or requested it.</p>
+        <p>The platform and cloud engineering teams who actually run the service accounts, CI/CD credentials, and workload identities want a tool that reduces their pager load, not one that adds a new approval gate to every deploy. The compliance and GRC function wants a clean answer to "how many machine identities do we have, who owns each one, and when were they last rotated" — a question that, for most enterprises, currently has no answer at all.</p>
 
-        <p>That means the vendor index includes platforms with weak products. The comparisons say who loses. The guides address the operational problems that vendor documentation skips because acknowledging them would complicate the sales process.</p>
+        <p>This site is written for whoever is holding that shortlist. The goal is to give you a clearer map of how this market is actually segmented — by vendor lineage, not by marketing language — so you can evaluate platforms against the problem you actually have, not the problem the loudest vendor in the category has decided to solve.</p>
 
-        <p>This site takes positions. Neutral analysis that refuses to say which platform wins and which doesn't isn't useful to someone making a procurement decision. When this site has an opinion, it says so. When the evidence is thin or genuinely contested, it says that too.</p>
+        <h2>What the ghosts look like</h2>
 
-        <h2>Who publishes this</h2>
+        <div class="stat-grid">
 
-        <p>Non-Human Identity Software is published by <a href="https://machinesandwords.com">Machines &amp; Words</a>, an independent research and media operation covering B2B software markets. The NHI Register newsletter covers the market biweekly for practitioners and buyers. <a href="/subscribe/">Subscribe here.</a></p>
-
-        <h2>How coverage decisions get made</h2>
-
-        <p>Vendors appear in the index because they're significant to enterprise buyers. Significance is assessed on funding and traction, adoption in enterprise environments, and whether the platform does something meaningfully distinct from the rest of the market. Platforms that exist primarily as marketing operations without real enterprise customers are not included regardless of funding level.</p>
-
-        <p>Comparisons are written for scenarios where both platforms are genuinely co-evaluated by real buyers. They don't exist because a vendor requested one or because co-evaluation is theoretically possible. When a comparison doesn't belong, because the platforms serve genuinely different buyers or solve genuinely different problems, this site says so instead of writing a forced competition.</p>
-
-        <h2>Corrections</h2>
-
-        <p>The NHI market moves fast. Funding rounds, acquisitions, and product changes happen frequently. When something here is wrong or out of date, corrections are made. If you have specific factual corrections, <a href="mailto:corrections@nonhumanidentitysoftware.com">submit them here</a>.</p>
-
-        <div class="newsletter-block">
-          <span class="page-label">The NHI Register</span>
-          <p>Covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
-          <div class="newsletter-form">
-            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
-            <button type="button" id="nl-submit">Subscribe free</button>
+          <div class="card">
+            <div class="card-label">The ratio</div>
+            <div class="stat-value">10–45×</div>
+            <div class="card-sub">Every microservice, integration, and CI/CD run spins up new credentials. Human headcount has a ceiling. This doesn't.</div>
           </div>
-          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+
+          <div class="card">
+            <div class="card-label">The second factor</div>
+            <div class="stat-value">Doesn't exist</div>
+            <div class="card-sub">An API key or OAuth token is a bearer credential — whoever holds it is the identity. There's no prompt, no push notification, no second device to compromise.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">The category</div>
+            <div class="stat-value">Still forming</div>
+            <div class="card-sub">Traditional IAM and PAM were built around a population that logs in, gets reviewed annually, and eventually leaves the company. Machine identity governance is becoming its own line item because that model never fit — and the accounts that fall through the cracks are exactly the "ghosts" this site is named for.</div>
+          </div>
+
         </div>
+
+        <p>These three things compound. A population with no ceiling, none of which can be protected the way human accounts are, governed by tools that were never built for this scale — that's the gap the next headline-making breach comes from. The vendor landscape responding to that gap is still sorting itself out, which is where this site comes in.</p>
+
+        <h2>What independence means on this site</h2>
+
+        <p>Most non-human identity security content is produced by vendors, by analysts whose methodology is opaque, or by publications with display-advertising relationships to the platforms they cover. This site has no vendor relationships, no sponsored content, and no affiliate arrangements.</p>
+
+        <p>The vendor index covers every significant platform in the category — the PAM incumbents extending into machine identity, the pure-play NHI startups, and the secrets-management tools adding governance on top — regardless of which lineage has the bigger marketing budget. The comparisons say which platform fits which environment and why. The guides go after the operational problems — ownership of orphaned service accounts, rotation at scale, agentic AI identity sprawl — that vendor documentation tends to wave past.</p>
+
+        <p>When this site has an opinion, it says so. When the evidence is thin, it says that too.</p>
+
+        <p>The people responsible for non-human identity are securing a population of credentials that barely existed in any meaningful way a decade ago, and that's multiplying faster than any team can track by hand. They need better information than the market currently provides. That is the only reason this site exists.</p>
 
       </article>
     </main>
@@ -84,12 +118,36 @@
   <footer>
     <div class="footer-inner">
       <span class="page-label">Non-Human Identity Software</span>
-      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+      <p>An independent publication. No sponsored content. No affiliate arrangements. Vendor coverage is editorially determined.</p>
     </div>
   </footer>
 
   <script src="/nav.js"></script>
   <script src="/newsletter.js"></script>
+
+  <style>
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: var(--hairline);
+      margin: 24px 0;
+    }
+    .stat-grid .card {
+      background: var(--surface);
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 4px 0 8px;
+      line-height: 1.2;
+    }
+    @media (max-width: 640px) {
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 
 </body>
 </html>
