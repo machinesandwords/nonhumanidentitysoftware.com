@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>NHI Security Vendor Index | Non-Human Identity Software</title>
+  <meta name="description" content="Every significant non-human identity security vendor by category. NHI governance, secrets management, workload identity, certificate lifecycle management, and PAM/IAM with NHI extension. No sponsored placements.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/landscape/vendors/">
+
+  <meta property="og:title" content="NHI Security Vendor Index | Non-Human Identity Software">
+  <meta property="og:description" content="Every significant non-human identity security vendor by category. No sponsored placements.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/landscape/vendors/">
+  <meta property="og:type" content="article">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "NHI Security Vendor Index",
+    "description": "Every significant non-human identity security vendor by functional category. No rankings, no sponsored placements.",
+    "url": "https://nonhumanidentitysoftware.com/landscape/vendors/",
+    "datePublished": "2026-06-13",
+    "dateModified": "2026-06-13",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Landscape", "item": "https://nonhumanidentitysoftware.com/landscape/" },
+      { "@type": "ListItem", "position": 3, "name": "Vendor Index", "item": "https://nonhumanidentitysoftware.com/landscape/vendors/" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .jump-to {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 18px;
+      padding: 12px 16px;
+      border: var(--hairline);
+      background: var(--accent-pale);
+      font-size: 12px;
+      margin: 4px 0 28px;
+    }
+    .jump-to-label {
+      font-weight: 700;
+      color: var(--charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 11px;
+    }
+    .jump-to a {
+      color: var(--accent-dim);
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .jump-to a:hover { text-decoration: underline; }
+    .vendor-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      border-top: 2px solid var(--charcoal);
+      padding-top: 0.75rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .vendor-section-number {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .vendor-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--charcoal);
+    }
+    .vendor-tier-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin: 1.25rem 0 0.5rem;
+      padding-bottom: 0.25rem;
+      border-bottom: var(--hairline);
+    }
+    .vendor-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 110px;
+      border: var(--hairline);
+      border-bottom: none;
+      background: var(--surface);
+    }
+    .vendor-row:last-of-type,
+    .vendor-row:last-child {
+      border-bottom: var(--hairline);
+    }
+    .vendor-name-col {
+      padding: 0.85rem 1rem;
+      border-right: var(--hairline);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .vendor-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .vendor-name a {
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+    .vendor-name a:hover { color: var(--accent); }
+    .vendor-acq {
+      font-size: 11px;
+      color: var(--faint);
+      font-style: italic;
+    }
+    .also-in {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .vendor-body-col {
+      padding: 0.85rem 1rem;
+      border-right: var(--hairline);
+    }
+    .vendor-desc {
+      font-size: 13px;
+      color: var(--charcoal);
+      line-height: 1.6;
+      margin-bottom: 0.4rem;
+    }
+    .vendor-fit {
+      font-size: 12px;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+    .vendor-fit strong {
+      color: var(--charcoal);
+    }
+    .vendor-meta-col {
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .vendor-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .vendor-deploy {
+      font-size: 11px;
+      color: var(--mid);
+      line-height: 1.4;
+    }
+    .vendor-xref {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      border: var(--hairline);
+      background: var(--surface);
+      padding: 0.6rem 1rem 0.6rem 0;
+      font-size: 12px;
+      color: var(--mid);
+      line-height: 1.5;
+      margin-bottom: -1px;
+    }
+    .vendor-xref:last-child { margin-bottom: 0; }
+    .vendor-xref-arrow {
+      color: var(--accent);
+      text-align: center;
+    }
+    .vendor-xref a { color: var(--accent-dim); }
+    .arch-callout {
+      background: var(--accent-pale);
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 0 0 1.25rem;
+    }
+    .arch-callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .arch-callout p {
+      font-size: var(--small);
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+    .arch-callout p:last-child { margin-bottom: 0; }
+    @media (max-width: 640px) {
+      .vendor-row { grid-template-columns: 1fr; }
+      .vendor-name-col, .vendor-body-col { border-right: none; border-bottom: var(--hairline); }
+      .jump-to { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/landscape/">Landscape</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Vendor Index</span>
+        </div>
+
+        <span class="page-label">Vendor Index</span>
+        <h1>NHI Security Vendor Index</h1>
+
+        <p class="lead">Every significant non-human identity security platform, organized by functional category. No sponsored placements, no rankings. Where a vendor's products span multiple categories under different names, the platform is described once, in the category where its portfolio is broadest, with a cross-reference from each other relevant category.</p>
+
+        <p>Pricing tiers are indicative, not published rates: <strong>$</strong> means accessible to mid-market on usage-based or startup pricing, <strong>$$</strong> means enterprise SaaS with annual contracts, <strong>$$$</strong> means platform economics that require formal procurement. Most vendors in this category do not publish list prices.</p>
+
+        <div class="jump-to">
+          <span class="jump-to-label">Jump to:</span>
+          <a href="#governance">01 &middot; NHI Governance and Discovery</a>
+          <a href="#secrets">02 &middot; Secrets Management</a>
+          <a href="#workload">03 &middot; Workload Identity and Access Management</a>
+          <a href="#clm">04 &middot; Certificate Lifecycle Management</a>
+          <a href="#pam">05 &middot; PAM and IAM with NHI Extension</a>
+        </div>
+
+        <div class="section-intro">
+          <p>The <a href="/landscape/">landscape overview</a> explains the differences between these categories. The <a href="/comparisons/">comparisons</a> cover the platforms most frequently evaluated against each other.</p>
+        </div>
+
+
+        <!-- 01 NHI GOVERNANCE AND DISCOVERY -->
+        <div class="vendor-section-header" id="governance">
+          <div class="vendor-section-number">01</div>
+          <div class="vendor-section-title">NHI Governance and Discovery</div>
+        </div>
+
+        <div class="arch-callout">
+          <div class="arch-callout-label">What this category does</div>
+          <p>These platforms discover non-human identities, service accounts, API keys, OAuth tokens, and automated credentials, across cloud, SaaS, on-premises, and CI/CD environments, then enrich that inventory with ownership, access, and risk context.</p>
+          <p>Discovery and governance is not enforcement. These platforms identify and rank what exists and what's risky; remediation requires action in the underlying system where the credential lives, the vault, the IAM console, or the SaaS admin panel.</p>
+        </div>
+
+        <div class="vendor-tier-label">Established</div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.astrix.security" target="_blank" rel="noopener">Astrix Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">NHI discovery and governance platform originally built around SaaS-to-SaaS integration security: OAuth grants, API keys, and service accounts connecting third-party applications to platforms such as Microsoft 365, Google Workspace, Salesforce, and GitHub. Risk scoring incorporates third-party vendor reputation alongside privilege level and observed activity. Coverage has expanded to include cloud and on-premises environments. The AI Agent Control Plane, added in 2025, extends discovery and governance to AI agent identities.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations whose NHI exposure is concentrated in SaaS-to-SaaS integrations and OAuth token sprawl across business applications.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.oasis.security" target="_blank" rel="noopener">Oasis Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">NHI discovery and governance platform covering cloud IAM roles, service accounts, and instance profiles across AWS, Azure, and GCP; SaaS applications; on-premises Active Directory and Linux service accounts; Kubernetes workload identities; and credentials held in HashiCorp Vault, AWS Secrets Manager, and CyberArk. A policy intelligence layer compares stated access policy against observed activity. Agentic Access Management adds time-bound, just-in-time access governance for AI agents. Oasis researchers disclosed a Microsoft MFA bypass vulnerability in 2024.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations with NHI exposure distributed across cloud, Kubernetes, on-premises, and SaaS environments, where cross-environment coverage from a single platform is the priority.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.entro.security" target="_blank" rel="noopener">Entro Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">NHI discovery and governance platform focused on credential context across the software development lifecycle, from development and CI/CD through production secrets managers including HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, GCP Secret Manager, and CyberArk. Each discovered credential is enriched with its owner, the systems it accesses, and the impact of rotating or revoking it. Rated 9.5 out of 10 on PeerSpot as of May 2026, the highest rating in the NHI governance category.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations with established DevSecOps programs that need NHI governance integrated across the SDLC, with ownership context for remediation.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-tier-label">Challengers</div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.clutch.security" target="_blank" rel="noopener">Clutch Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">NHI discovery and governance platform positioned as a single inventory and policy layer across cloud, SaaS, and on-premises environments, with zero-trust access enforcement applied centrally regardless of where a credential originates. Developer workflow integration is less extensive than in detection-first platforms such as GitGuardian.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations prioritizing a centralized, cross-environment NHI inventory and policy enforcement layer over developer-workflow-native tooling.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.token.security" target="_blank" rel="noopener">Token Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">NHI discovery and governance platform covering cloud, SaaS, and on-premises environments, with posture scoring and remediation workflow integration. Positioned similarly to Clutch as a centralized inventory and zero-trust enforcement layer, with a smaller deployment footprint than the established pure-plays.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations evaluating an alternative to the established NHI governance platforms, particularly where cross-environment visibility and posture scoring are the priority.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+
+        <!-- 02 SECRETS MANAGEMENT -->
+        <div class="vendor-section-header" id="secrets">
+          <div class="vendor-section-number">02</div>
+          <div class="vendor-section-title">Secrets Management</div>
+        </div>
+
+        <div class="arch-callout">
+          <div class="arch-callout-label">What this category does</div>
+          <p>Secrets vaults store credentials and control who can retrieve them, handling rotation, audit logging, and access policy for what they hold.</p>
+          <p>Secrets management governs only credentials that were deliberately placed in the vault. In most environments, that's a fraction of what exists.</p>
+        </div>
+
+        <div class="vendor-tier-label">Established</div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.hashicorp.com/products/vault" target="_blank" rel="noopener">HashiCorp Vault</a></div>
+            <div class="vendor-acq">Acquired by IBM, 2024</div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Open-source secrets management platform for storing and controlling access to tokens, passwords, certificates, and encryption keys, with support for dynamic, short-lived secrets generated on demand for databases and cloud providers. Available as self-hosted Vault or as a managed service (HCP Vault). Broad integration ecosystem across major clouds, CI/CD systems, and orchestration platforms. The 2023 shift from MPL to BSL licensing affects how Vault can be used in competing products, a consideration for new Enterprise contracts following the IBM acquisition.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Platform engineering teams needing a flexible, multi-environment secrets backend with broad integration coverage. New Enterprise evaluations should confirm licensing and support terms directly given the change in ownership.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$ / $$$</div>
+            <div class="vendor-deploy">Self-hosted + HCP</div>
+          </div>
+        </div>
+
+        <div class="vendor-xref">
+          <div class="vendor-xref-arrow">&rarr;</div>
+          <div>CyberArk Conjur covers secrets management as part of CyberArk's broader machine identity portfolio. See <a href="#pam">CyberArk</a> under PAM and IAM with NHI Extension (05).</div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://aws.amazon.com/secrets-manager/" target="_blank" rel="noopener">AWS Secrets Manager</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Managed secrets storage for AWS environments, with automatic rotation for RDS, Redshift, and DocumentDB credentials and native IAM integration. Scope is limited to AWS; multi-cloud or hybrid environments require a separate or additional secrets layer. Pricing is per secret stored plus per API call.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations running primarily on AWS that want low-overhead secrets management integrated with IAM, without a separate platform.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$</div>
+            <div class="vendor-deploy">AWS only</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://azure.microsoft.com/en-us/products/key-vault/" target="_blank" rel="noopener">Azure Key Vault</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Managed key and secrets management for Azure environments, with HSM-backed key protection options and integration with Microsoft Entra ID. Scope is limited to Azure. Microsoft's broader NHI capabilities, including Entra Agent ID, are positioned as extensions of the same identity stack.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations standardized on Azure or the Microsoft ecosystem where native Entra ID integration is the priority.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$</div>
+            <div class="vendor-deploy">Azure only</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://cloud.google.com/secret-manager" target="_blank" rel="noopener">Google Secret Manager</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Managed secrets storage for GCP environments, integrated with IAM and Cloud Audit Logs. Scope is limited to GCP. For service-to-service authentication within GCP, Workload Identity Federation is a separate, credential-free alternative to storing secrets.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations running primarily on GCP, evaluated alongside Workload Identity Federation for service-to-service authentication.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$</div>
+            <div class="vendor-deploy">GCP only</div>
+          </div>
+        </div>
+
+        <div class="vendor-tier-label">Specialists</div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.gitguardian.com" target="_blank" rel="noopener">GitGuardian</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Secrets detection platform monitoring public and private repositories, CI/CD pipelines, containers, infrastructure-as-code, and collaboration tools for exposed credentials in real time. The company's State of Secrets Sprawl report found 28.65 million hardcoded secrets added to public GitHub in 2025. GitGuardian NHI Governance, added in 2024, extends the platform with lifecycle management integrations across HashiCorp Vault, CyberArk Conjur, and cloud secrets managers, covering vault-backed credentials but not SaaS OAuth tokens or AI agent identities.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations whose primary exposure is credentials committed to source code, CI/CD configuration, or container images, with developer-workflow-native detection.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$ / $$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+
+        <!-- 03 WORKLOAD IDENTITY -->
+        <div class="vendor-section-header" id="workload">
+          <div class="vendor-section-number">03</div>
+          <div class="vendor-section-title">Workload Identity and Access Management</div>
+        </div>
+
+        <div class="arch-callout">
+          <div class="arch-callout-label">What this category does</div>
+          <p>Workload identity replaces static credentials with cryptographic attestation: a service proves what it is through a short-lived identity document issued by a trusted authority, rather than presenting a stored password or key. SPIFFE is the open standard underlying this category.</p>
+          <p>Implementation requires more engineering investment than secrets management, and does not address legacy systems that cannot participate in attestation.</p>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.aembit.io" target="_blank" rel="noopener">Aembit</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Commercial workload identity and access management platform. Manages workload-to-workload authentication and authorization without static credentials, across AWS, Azure, GCP, Active Directory, Kubernetes, and Microsoft Entra ID. Policy is enforced at the point of access based on context, not only on whether a workload can authenticate. Built on SPIFFE; provides the implementation layer that organizations would otherwise build on open-source SPIRE.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations moving cloud-native workloads from static secrets toward workload identity, without building and operating SPIRE directly.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS + on-prem</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://spiffe.io" target="_blank" rel="noopener">SPIFFE / SPIRE</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Open standard (SPIFFE) and reference implementation (SPIRE) for workload identity. SPIFFE defines the identity format and workload API; SPIRE issues and manages the resulting identity documents. Integrated into Google Cloud, Azure, Istio, cert-manager, HashiCorp Consul, Dapr, and Vault Enterprise 2.0, and packaged into OpenShift by Red Hat. Running SPIRE in production across hybrid environments requires dedicated engineering investment and ongoing operational ownership.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations with the engineering capacity to build and operate SPIRE directly, or already running infrastructure with native SPIFFE integration. Also the reference point for evaluating commercial workload identity platforms.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">Free</div>
+            <div class="vendor-deploy">Self-hosted</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.britive.com" target="_blank" rel="noopener">Britive</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Just-in-time access management for human and non-human identities across AWS, Azure, GCP, Snowflake, Kubernetes, and major SaaS platforms. Permissions are granted for a defined window and removed automatically afterward, including for service accounts and automation that would otherwise hold standing privileges.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations implementing time-bound access for cloud infrastructure across both human administrators and automated processes.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://p0.dev" target="_blank" rel="noopener">P0 Security</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Cloud access governance platform with a request-and-approval workflow for temporary AWS and GCP access, covering both human users and non-human service identities and workload identities. Narrower scope than Britive, with a workflow built around engineering teams rather than enterprise access management.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Engineering-led organizations wanting JIT access for humans and service identities in AWS and GCP without an enterprise access management platform.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$</div>
+            <div class="vendor-deploy">SaaS</div>
+          </div>
+        </div>
+
+        <div class="vendor-xref">
+          <div class="vendor-xref-arrow">&rarr;</div>
+          <div>CyberArk Workload Identity Manager covers SPIFFE-based workload identity as part of CyberArk's broader machine identity portfolio. See <a href="#pam">CyberArk</a> under PAM and IAM with NHI Extension (05).</div>
+        </div>
+
+
+        <!-- 04 CERTIFICATE LIFECYCLE MANAGEMENT -->
+        <div class="vendor-section-header" id="clm">
+          <div class="vendor-section-number">04</div>
+          <div class="vendor-section-title">Certificate Lifecycle Management</div>
+        </div>
+
+        <div class="arch-callout">
+          <div class="arch-callout-label">What this category does</div>
+          <p>Certificate lifecycle management platforms handle the discovery, issuance, renewal, and revocation of TLS and other certificates at enterprise scale. The driving procurement concern is operational: certificate expiry causing outages, and certificate inventories too large to track manually.</p>
+        </div>
+
+        <div class="vendor-xref">
+          <div class="vendor-xref-arrow">&rarr;</div>
+          <div>CyberArk (formerly Venafi) covers certificate lifecycle management as part of CyberArk's broader machine identity portfolio. See <a href="#pam">CyberArk</a> under PAM and IAM with NHI Extension (05).</div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.keyfactor.com" target="_blank" rel="noopener">Keyfactor</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Enterprise PKI and certificate lifecycle management platform covering discovery, issuance, renewal, and revocation across cloud, on-premises, and hybrid environments. Keyfactor EJBCA is an open-source certificate authority covering issuance; Keyfactor Command is the enterprise CLM layer built on top of it.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations needing enterprise CLM with certificate authority management, independent of the CyberArk ecosystem. Common in regulated industries with complex PKI requirements.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">Cloud + on-prem</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.appviewx.com" target="_blank" rel="noopener">AppViewX</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Certificate automation and PKI management platform covering renewal, rotation, and remediation workflows across multiple certificate authorities and environments, aimed at organizations managing large, heterogeneous certificate inventories.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations needing CLM automation at mid-market pricing, frequently evaluated alongside Keyfactor.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">Cloud + on-prem</div>
+          </div>
+        </div>
+
+
+        <!-- 05 PAM AND IAM WITH NHI EXTENSION -->
+        <div class="vendor-section-header" id="pam">
+          <div class="vendor-section-number">05</div>
+          <div class="vendor-section-title">PAM and IAM with NHI Extension</div>
+        </div>
+
+        <div class="arch-callout">
+          <div class="arch-callout-label">What this category does</div>
+          <p>Established PAM and IAM vendors have extended existing platforms to cover non-human identities rather than building separate products. These extensions are strongest for service account governance within environments already under PAM management, and weakest at discovering credentials that were never under PAM management or at governing AI agent identities.</p>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.cyberark.com" target="_blank" rel="noopener">CyberArk</a></div>
+            <div class="also-in">Also in 02 &middot; 03 &middot; 04</div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">CyberArk's machine identity portfolio spans privileged access management, secrets management, and certificate lifecycle management under one vendor. Conjur provides enterprise secrets management with native integration into CyberArk's broader identity platform. Workload Identity Manager, built from the 2024 acquisition of Venafi, provides SPIFFE-based ephemeral workload identity and certificate lifecycle management. Password Safe and related PAM tooling cover service account discovery and credential rotation within environments already under CyberArk management. The Secure Workload Access Solution, announced in 2025, is intended to unify these components into a single view for multi-cloud machine identity governance; integration across the components is ongoing.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations with existing CyberArk PAM investment, or those needing certificate lifecycle management, secrets management, and service account governance from a single vendor. Each product layer, Conjur, Workload Identity Manager, and Password Safe, should be evaluated against its specific use case rather than assumed to operate as a single unified platform today.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$$</div>
+            <div class="vendor-deploy">Cloud + on-prem</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.beyondtrust.com" target="_blank" rel="noopener">BeyondTrust</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">PAM platform with service account management and privileged credential governance through Password Safe, covering automated discovery and rotation for service accounts and application credentials within environments already under BeyondTrust PAM management. Does not cover SaaS OAuth tokens, cloud-native workload identity, certificate lifecycle, or AI agent credentials.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations already running BeyondTrust PAM that need service account and application credential governance within that environment.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$$</div>
+            <div class="vendor-deploy">Cloud + on-prem</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.saviynt.com" target="_blank" rel="noopener">Saviynt</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Cloud-native identity governance and administration (IGA) platform, extended in 2025 to cover non-human identities, including workloads, bots, and service credentials, under the same governance model used for human identity. The NHI capabilities were added more recently than the platform's core IGA functionality.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations already using or evaluating Saviynt for IGA that want non-human identity governance within the same platform.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$$</div>
+            <div class="vendor-deploy">Cloud</div>
+          </div>
+        </div>
+
+        <div class="vendor-row">
+          <div class="vendor-name-col">
+            <div class="vendor-name"><a href="https://www.microsoft.com/en-us/security/business/microsoft-entra" target="_blank" rel="noopener">Microsoft Entra</a></div>
+          </div>
+          <div class="vendor-body-col">
+            <div class="vendor-desc">Microsoft's identity platform, extended in 2025 with Entra Agent ID, which assigns individual identities to AI agents with conditional access, lifecycle management, and monitoring. Also covers service accounts, managed identities, and workload identity federation for Azure workloads. Coverage is concentrated within the Microsoft ecosystem (Azure, Microsoft 365, Entra ID) and limited outside it.</div>
+            <div class="vendor-fit"><strong>Best fit:</strong> Organizations whose NHI exposure is concentrated in Azure workloads, Entra ID service accounts, and Microsoft 365 integrations.</div>
+          </div>
+          <div class="vendor-meta-col">
+            <div class="vendor-price">$$</div>
+            <div class="vendor-deploy">Cloud (Azure)</div>
+          </div>
+        </div>
+
+
+        <h2>Where to go next</h2>
+
+        <p>The <a href="/landscape/">landscape overview</a> explains the trade-offs between vendor categories. The <a href="/comparisons/">comparisons</a> cover the most frequently co-evaluated pairs. The <a href="/guides/">guides</a> go deeper on operational problems: NHI discovery in environments without an existing inventory, when secrets management is structurally insufficient, and what AI agent identity governance requires in practice.</p>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

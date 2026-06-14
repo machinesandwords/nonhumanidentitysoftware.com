@@ -22,6 +22,15 @@
 
     <div class="nav-divider"></div>
 
+        <div class="nav-section">
+      <div class="nav-section-label">Tools</div>
+      <a href="/tools/" class="nav-item depth-0">TBD overview</a>
+      <a href="/tools/vendor-comparison/" class="nav-item depth-1">&#9500; Vendor index</a>
+      <a href="/tools/market-direction/" class="nav-item depth-1">&#9492; TBD direction</a>
+    </div>
+
+    <div class="nav-divider"></div>
+
     <div class="nav-section">
       <div class="nav-section-label">Comparisons</div>
       <a href="/comparisons/" class="nav-item depth-0">All comparisons</a>
@@ -29,6 +38,7 @@
       <a href="/comparisons/entro-vs-clutch/" class="nav-item depth-1">&#9500; Entro vs. Clutch</a>
       <a href="/comparisons/cyberark-vs-hashicorp-vault/" class="nav-item depth-1">&#9500; CyberArk vs. HashiCorp</a>
       <a href="/comparisons/gitguardian-vs-astrix/" class="nav-item depth-1">&#9492; GitGuardian vs. Astrix</a>
+      <a href="/comparisons/" class="nav-item depth-0">more</a>
     </div>
 
     <div class="nav-divider"></div>
