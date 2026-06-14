@@ -1,0 +1,431 @@
+<!-- Intended path: /guides/nhi-rfp-framework/index.html on nonhumanidentitysoftware.com -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>The NHI RFP Framework | Non-Human Identity Software</title>
+  <meta name="description" content="A vendor-neutral RFP framework for evaluating non-human identity platforms: a 12-point requirements matrix across four categories, plus five screening questions for vendor demos.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/guides/nhi-rfp-framework/">
+
+  <meta property="og:title" content="The NHI RFP Framework — Requirements Matrix and Screening Questions | Non-Human Identity Software">
+  <meta property="og:description" content="A vendor-neutral RFP framework for evaluating non-human identity platforms: a 12-point requirements matrix across four categories, plus five screening questions for vendor demos.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/guides/nhi-rfp-framework/">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The NHI RFP Framework: A Requirements Matrix and Five Screening Questions",
+    "description": "A vendor-neutral RFP framework for evaluating non-human identity platforms: a 12-point requirements matrix across four categories, plus five screening questions for vendor demos.",
+    "url": "https://nonhumanidentitysoftware.com/guides/nhi-rfp-framework/",
+    "datePublished": "2026-06-14",
+    "dateModified": "2026-06-14",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://nonhumanidentitysoftware.com/guides/" },
+      { "@type": "ListItem", "position": 3, "name": "The NHI RFP Framework", "item": "https://nonhumanidentitysoftware.com/guides/nhi-rfp-framework/" }
+    ]
+  }
+  </script>
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2F7D;--accent-pale:#F1E9F8}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .req-id {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--faint);
+      white-space: nowrap;
+    }
+    table .tag { margin: 0; }
+    .matrix-table th:first-child { width: 56px; }
+    .matrix-table th:last-child, .matrix-table td:last-child { width: 110px; }
+
+    .download-cta {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 24px;
+      margin: 32px 0;
+    }
+    .download-cta .verdict-label { margin-bottom: 8px; }
+    .download-cta p { font-size: var(--small); color: var(--charcoal); margin-bottom: 16px; }
+    .download-cta p:last-of-type { margin-bottom: 16px; }
+    .download-cta .newsletter-form { margin-bottom: 0; }
+    #dl-msg { font-size: var(--small); font-weight: 700; color: var(--accent); margin-top: 10px; }
+    #dl-msg.error { color: #991b1b; }
+
+    @media (max-width: 640px) {
+      .matrix-table th:last-child, .matrix-table td:last-child { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide for non-human identity software buyers</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/guides/">Guides</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>The NHI RFP Framework</span>
+        </div>
+
+        <span class="page-label">Guide</span>
+        <h1>The NHI RFP Framework</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:16px;">A Requirements Matrix and Five Screening Questions for Evaluating Non-Human Identity Platforms</p>
+
+        <div class="tags">
+          <span class="tag tag-accent">Evaluation</span>
+          <span class="tag">Procurement</span>
+        </div>
+
+        <p class="lead">Most identity and access management RFPs inherit their structure from a world of human users — SSO integration, MFA enforcement, HR-driven provisioning and deprovisioning. Service accounts, API keys, and autonomous agents don't fit that shape. They're created by a deploy script rather than an HR system, they don't authenticate interactively, and the person who created one often leaves the company before the credential does. A standard RFP scored against a non-human identity (NHI) platform will pass vendors that look identical on paper and differ enormously in what they can actually discover, attribute, and govern once the contract is signed. This framework breaks the evaluation into four requirement categories and five screening questions designed to surface that difference before procurement is final.</p>
+
+        <div class="prereq-block">
+          <span class="prereq-label">Before you use this</span>
+          <ul>
+            <li>A rough inventory of the NHI types in your environment — service accounts, API keys, CI/CD secrets, SaaS-to-SaaS OAuth grants, and any agentic AI or MCP deployments already in use</li>
+            <li>A shortlist of two or three vendors (the matrix is most useful as a side-by-side comparison, not a single-vendor checklist)</li>
+            <li>Representation from security/IAM, platform engineering, and whoever owns your CI/CD and SaaS admin consoles — the five screening questions work best as live demo questions, not written-response items</li>
+            <li>The requirements matrix as a working spreadsheet (downloadable below) for scoring each vendor against the same 12 lines</li>
+          </ul>
+        </div>
+
+        <h2>Where standard identity RFPs run out of road</h2>
+
+        <p>A conventional IAM RFP assumes a directory-centric model: every credential maps to a person in Okta or Microsoft Entra ID, every login is interactive and can be MFA-gated, and offboarding is triggered by an HR event. None of those assumptions hold once you're past human users. A GitHub Actions workflow token, a Lambda execution role, and an OAuth grant connecting Salesforce to a Slack webhook were all created by someone running a script, none of them log in, and none of them appear in any HR system's offboarding workflow when that person leaves.</p>
+
+        <p>The practical effect is that a vendor can score "yes" on every line of a generic IAM RFP — SSO support, audit logging, role-based access control — while having no real answer for the questions that determine whether they can find, attribute, and govern the machine identity sprawl already running in your environment. The four categories below are organized around the specific points where that gap shows up, split into Minimum requirements (table stakes — most platforms in this category can do these) and Advanced requirements (the actual differentiators).</p>
+
+        <h2>The four requirement categories</h2>
+
+        <p>Each category maps to one operational question: can the platform find everything, can it tell you who's responsible for what it finds, can it handle the identities your AI agents are creating, and does it watch what happens after a credential leaves the vault. The "Advanced" rows in categories 1–4 each correspond to one of the five screening questions in the next section.</p>
+
+        <h3>1. Dynamic Discovery &amp; Inventory Scope</h3>
+        <p>Objective: locate and index every machine identity and credential across hybrid cloud, on-prem infrastructure, CI/CD pipelines, and third-party SaaS — including the ones nobody registered.</p>
+        <div class="table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr><th>ID</th><th>Requirement</th><th>Level</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="req-id">1.1</td>
+                <td><strong>Vault Bypass Mapping.</strong> Discovers active service accounts, tokens, and API keys that exist entirely outside centralized secrets managers.</td>
+                <td><span class="tag">Minimum</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">1.2</td>
+                <td><strong>Cross-SaaS Interconnectivity.</strong> Maps SaaS-to-SaaS machine connections — OAuth marketplace apps, webhook integrations — natively via API, without an inline network proxy. <a href="#q3">See Question 3 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">1.3</td>
+                <td><strong>Ephemeral Pipeline Inventory.</strong> Tracks short-lived, containerized, or runtime-generated secrets from creation through expiration.</td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Most platforms in this category can inventory what's already sitting in a vault — that's table stakes. The differentiator is what they find <em>outside</em> it: the OAuth app a developer authorized three years ago, the token baked into a container image, the API key a contractor left in a config file. If a vendor's discovery story stops at "we connect to HashiCorp Vault and AWS Secrets Manager," that's 1.1 without 1.2 or 1.3.</p>
+
+        <h3>2. Contextual Attribution &amp; Ownership Remediation</h3>
+        <p>Objective: map every discovered credential back to a human owner, engineering team, or business context — including the ones whose creator already left the company.</p>
+        <div class="table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr><th>ID</th><th>Requirement</th><th>Level</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="req-id">2.1</td>
+                <td><strong>Static Directory Matching.</strong> Matches resource tags and service account metadata against entries in human identity directories like Okta or Entra ID.</td>
+                <td><span class="tag">Minimum</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">2.2</td>
+                <td><strong>Heuristic Owner Deduction.</strong> For orphaned credentials with no usable tags, parses Git history, IaC configs, and deploy metadata to infer the team that maintains the code calling that token. <a href="#q2">See Question 2 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">2.3</td>
+                <td><strong>Safe-Fail Staging.</strong> Provides a passive monitoring window (30–90 days) that proves a stale credential is idle before anyone revokes it. <a href="#q4">See Question 4 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Discovery without attribution just produces a longer list someone has to triage by hand. 2.1 works fine until the credential's tags are missing or wrong — which, for anything old enough to matter, they usually are. 2.2 and 2.3 are what turn a discovery tool into something a security team can actually act on without breaking production.</p>
+
+        <h3>3. Autonomous AI &amp; Agentic Governance</h3>
+        <p>Objective: track, audit, and constrain the identities that autonomous AI agents, orchestrators, and Model Context Protocol (MCP) servers create and use on the organization's behalf.</p>
+        <div class="table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr><th>ID</th><th>Requirement</th><th>Level</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="req-id">3.1</td>
+                <td><strong>Static AI Secret Auditing.</strong> Finds foundation-model API keys (Anthropic, OpenAI, and similar) hardcoded in environment variables or repositories.</td>
+                <td><span class="tag">Minimum</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">3.2</td>
+                <td><strong>Dynamic Multi-Hop Lineage.</strong> Traces the inheritance chain of ephemeral sub-tokens an AI orchestrator (LangChain, Copilot Studio, custom agents) spawns mid-task. <a href="#q5">See Question 5 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">3.3</td>
+                <td><strong>Least-Agency Enforcement.</strong> Validates downstream MCP node trust and constrains agent boundaries against OWASP ASI03 (Identity and Privilege Abuse). <a href="#q5">See Question 5 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>3.1 is a string-matching problem most secret-scanning tools already solve. 3.2 and 3.3 are where this category actually lives — an agent's session token isn't one credential, it's a chain of credentials the agent mints for itself as it works, and a platform that can't follow that chain can't govern it. The <a href="/guides/owasp-agentic-ai-identity-controls/">OWASP agentic AI identity controls guide</a> covers ASI01–ASI03 in more depth if this category is where most of your evaluation time should go.</p>
+
+        <h3>4. Runtime Posture &amp; Behavioral Analysis (NHIDR)</h3>
+        <p>Objective: move beyond static posture scans to continuous behavioral baselines and active machine-identity threat detection and response.</p>
+        <div class="table-wrap">
+          <table class="matrix-table">
+            <thead>
+              <tr><th>ID</th><th>Requirement</th><th>Level</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="req-id">4.1</td>
+                <td><strong>Entitlement Right-Sizing.</strong> Compares assigned permissions against actual historical usage to flag over-privileged accounts and propose minimized policies.</td>
+                <td><span class="tag">Minimum</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">4.2</td>
+                <td><strong>Continuous Behavior Baselines.</strong> Analyzes network and infrastructure telemetry to flag runtime credential misuse after a token leaves the vault. <a href="#q1">See Question 1 &rarr;</a></td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+              <tr>
+                <td class="req-id">4.3</td>
+                <td><strong>Asynchronous Log Reconciliation.</strong> Reconstructs unified identity lineage graphs across multi-cloud environments even when logs arrive late or out of order.</td>
+                <td><span class="tag tag-accent">Advanced</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>4.1 is posture management — comparing what's granted to what's used, at rest. 4.2 is the line into detection and response: what the platform does while the credential is live and in use. A vendor can be excellent at 4.1 and have nothing at all for 4.2; the two get marketed as if they're the same capability, and they aren't.</p>
+
+        <h2>Five questions that separate platforms from feature-washed point tools</h2>
+
+        <p>Each question below maps to one of the Advanced requirements above. They're written to be asked live, in a demo or technical session — not submitted as written RFP line items. A written "yes" to "do you support X" costs a vendor nothing. Walking through the actual architecture in front of your team costs them the ability to bluff.</p>
+
+        <h3 id="q1">Question 1 — How does it track a credential after it leaves the vault?</h3>
+        <div class="callout">
+          <span class="callout-label">Ask this</span>
+          <p>"Once a token is checked out of [your secrets manager] and sitting in an application's active memory, how does your platform monitor what it does next, and how would it detect anomalous use?"</p>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-label">What a real answer includes</div>
+            <ul>
+              <li>Explicit description of an NHIDR-style architecture — detection and response, not just posture</li>
+              <li>Ingestion of secondary telemetry: VPC flow logs, CloudTrail, API gateway events</li>
+              <li>A behavioral baseline per credential — what "normal" looks like for this specific token</li>
+              <li>Concrete examples of anomalies it would flag: bulk queries, access from a new region, off-hours activity</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-label">Red flags</div>
+            <ul>
+              <li>The answer is entirely about vault checkout logging or rotation schedules</li>
+              <li>"We enforce 90-day rotation" offered as the answer to a question about runtime behavior</li>
+              <li>No mention of any telemetry source outside the secrets manager itself</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 id="q2">Question 2 — How does it find an owner for an orphaned credential?</h3>
+        <div class="callout">
+          <span class="callout-label">Ask this</span>
+          <p>"When you discover a shadow service account whose creator has already left the company, how does your platform determine who owns it now?"</p>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-label">What a real answer includes</div>
+            <ul>
+              <li>A cross-system relational engine: Git blame, IaC configs, pipeline commit metadata, CMDB</li>
+              <li>A ranked suggestion of the team that actively maintains the code calling that token</li>
+              <li>Logic that works even when the account's name doesn't match any naming convention</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-label">Red flags</div>
+            <ul>
+              <li>"Your team assigns ownership manually in our dashboard" is the entire answer</li>
+              <li>Owner matching relies on exact string-matching against directory account names</li>
+              <li>No mention of source code, IaC, or pipeline metadata as inputs</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 id="q3">Question 3 — Can it see SaaS-to-SaaS connections without a network proxy?</h3>
+        <div class="callout">
+          <span class="callout-label">Ask this</span>
+          <p>"Can you map an OAuth token connecting [Salesforce] to [Slack] or a GitHub repository — end to end — without sitting inline on the network?"</p>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-label">What a real answer includes</div>
+            <ul>
+              <li>Direct API-level access to marketplace consent records and OAuth scopes from each SaaS tenant</li>
+              <li>A connection graph spanning multiple SaaS platforms, not just cloud infrastructure accounts</li>
+              <li>No requirement to route traffic through an appliance, agent, or browser extension</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-label">Red flags</div>
+            <ul>
+              <li>Visibility stops at the AWS/Azure/GCP boundary or container runtime</li>
+              <li>SaaS-to-SaaS mapping requires installing a proxy, CASB agent, or browser extension</li>
+              <li>"We can see it if it shows up in your SSO logs" — most app-to-app OAuth grants never do</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 id="q4">Question 4 — What proves a stale credential is actually safe to kill?</h3>
+        <div class="callout">
+          <span class="callout-label">Ask this</span>
+          <p>"Before I revoke this credential, what evidence does your platform give me that it's actually unused — and over what time window?"</p>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-label">What a real answer includes</div>
+            <ul>
+              <li>A defined rolling observation window (30, 60, or 90 days) with zero-usage confirmation across it</li>
+              <li>A simulated or staged revocation step before the real one executes</li>
+              <li>An audit trail of the evidence, suitable for a change-management ticket</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-label">Red flags</div>
+            <ul>
+              <li>An immediate delete/revoke button with no historical verification</li>
+              <li>"Revoke it and see what breaks" offered as the methodology</li>
+              <li>No rolling window — just a single point-in-time usage check</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 id="q5">Question 5 — How does it govern AI agents and MCP servers?</h3>
+        <div class="callout">
+          <span class="callout-label">Ask this</span>
+          <p>"Walk me through what happens in your platform when an AI orchestrator spins up a new MCP connection and mints a session token to call three different internal systems."</p>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-label">What a real answer includes</div>
+            <ul>
+              <li>Recognition of orchestrator footprints (LangChain, Copilot Studio, custom agents) as a distinct identity class</li>
+              <li>Tracing of the parent-to-sub-token inheritance chain as it's created</li>
+              <li>Least-agency constraints — time-bound, scoped, revocable — applied to the agent's downstream access</li>
+              <li>Explicit reference to OWASP Agentic AI risk categories, especially ASI03</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-label">Red flags</div>
+            <ul>
+              <li>"An AI token is just a string — our database treats it like any other API key"</li>
+              <li>No distinction between a long-lived service account and an ephemeral, multi-hop agent session</li>
+              <li>No way to constrain or time-box what an agent's minted tokens can do downstream</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>For more on what "good" looks like for category 3 specifically — including how ASI01 through ASI03, ASI04, and ASI07–ASI10 map to concrete architectural controls — see the <a href="/guides/owasp-agentic-ai-identity-controls/">OWASP agentic AI identity controls guide</a>.</p>
+
+        <h2>Turning this into an RFP</h2>
+
+        <p>The cleanest way to use this matrix is to treat the Minimum requirements as pass/fail gates — a platform that can't do 1.1, 2.1, 3.1, and 4.1 isn't a serious candidate for this category, regardless of what else it offers. Score the Advanced requirements on a scale (0–3 works well: no capability, roadmap only, partial/manual, native and automated) rather than pass/fail, because most vendors will land somewhere in the middle and the gradient is the useful signal.</p>
+
+        <p>Run the five screening questions as a live technical session with every vendor on your shortlist, using identical phrasing each time. Written RFP responses are useful for the Minimum rows, where the answer is close to binary. For the Advanced rows and the five questions, the value is in watching how a vendor's solution architect responds in real time — whether they can go two layers deeper than the marketing deck, or whether the conversation quietly redirects back to rotation policies and dashboards.</p>
+
+        <p>If you're evaluating against compliance frameworks alongside this matrix — SOC 2, NIST 800-53, PCI DSS 4.0.1, ISO 27001:2022, the EU AI Act, or DORA — the <a href="/guides/nhi-audit-compliance-mapping/">NHI audit and compliance mapping guide</a> shows how categories 2 and 4 in particular map to specific control citations auditors will ask about.</p>
+
+        <div class="download-cta">
+          <span class="page-label verdict-label">Download the working version</span>
+          <p>The full requirements matrix — all 12 items, organized by category, with the Minimum/Advanced split and columns for capability level, vendor response, and architecture notes across up to three vendors — is available as an editable spreadsheet. Drop in your shortlist and score every vendor against the same 12 lines.</p>
+          <div class="newsletter-form">
+            <input type="email" id="dl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="dl-submit">Get the spreadsheet</button>
+          </div>
+          <div id="dl-msg" style="display:none;"></div>
+        </div>
+
+        <hr>
+
+        <p>Related: the <a href="/landscape/compliance/">compliance landscape page</a> covers the broader shift toward continuous machine accountability referenced in categories 2 and 4. The <a href="/vendors/">vendor index</a> notes which platforms have native architecture for the Advanced requirements above versus partner-dependent or roadmap capabilities.</p>
+
+  <div class="newsletter-block">
+            <h3>Stay ahead of the NHI security curve</h3>
+            <p>Non-human identity security moves fast — service accounts, API keys, workload identities, secrets sprawl. Get practical analysis on what's changing and what to do about it. Biweekly.</p>
+                <form id="nl-form">
+                <input
+                    type="email"
+                    id="nl-email"
+                    name="email"
+                    placeholder="your@email.com"
+                    required
+                    autocomplete="email"
+                    />
+                <button type="submit" id="nl-submit">Subscribe</button>
+                </form>
+            <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>
