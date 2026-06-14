@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <title>NHI Security Practitioner Guides | Non-Human Identity Software</title>
+  <meta name="description" content="Practitioner guides for non-human identity security programs. NHI discovery, secrets vs. workload identity, AI agent governance, and the problems vendor documentation ignores.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/guides/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .guide-list { list-style: none; padding: 0; margin-bottom: 32px; }
+    .guide-list li { border-bottom: var(--hairline); }
+    .guide-list li:last-child { border-bottom: none; }
+    .guide-list a {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+    .guide-list a:hover .guide-title { color: var(--accent); }
+    .guide-body { flex: 1; }
+    .guide-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .guide-title { font-size: var(--small); font-weight: 700; margin-bottom: 4px; }
+    .guide-desc { font-size: 12px; color: var(--mid); line-height: 1.55; }
+    .guide-arrow { color: var(--border); font-size: 11px; padding-top: 4px; flex-shrink: 0; }
+    .guide-list a:hover .guide-arrow { color: var(--accent); }
+    .section-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: 16px 0 8px;
+      border-bottom: 1px solid var(--charcoal);
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-head::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 12px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Guides</span>
+        </div>
+
+        <span class="page-label">Practitioner Guides</span>
+        <h1>NHI Security Guides: Past the Basics</h1>
+
+        <p class="lead">Vendor documentation explains how a product works. It doesn't explain why NHI discovery stalls when you can't find anyone who owns the credentials you've found, or why your secrets management program is technically functional but still leaves a large portion of your NHI attack surface ungoverned. These guides address the operational problems vendor content skips.</p>
+
+        <div class="section-intro">
+          <p>These guides assume you're past the "what is NHI" stage. They're for practitioners dealing with the implementation problems that come after the initial deployment.</p>
+        </div>
+
+        <div class="section-head" style="margin-top:32px;">Discovery and inventory</div>
+        <ul class="guide-list">
+          <li>
+            <a href="/guides/nhi-discovery/">
+              <div class="guide-body">
+                <span class="guide-label">Discovery</span>
+                <div class="guide-title">NHI Discovery in Environments You Didn't Build</div>
+                <div class="guide-desc">How to run a meaningful NHI discovery program in a complex enterprise environment with legacy systems, multiple cloud providers, SaaS sprawl, and no single authoritative inventory. What the tools find, what they miss, and how to handle the ownership problem when you discover credentials that no one claims.</div>
+              </div>
+              <span class="guide-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="section-head">Architecture and tooling choices</div>
+        <ul class="guide-list">
+          <li>
+            <a href="/guides/secrets-vs-workload-identity/">
+              <div class="guide-body">
+                <span class="guide-label">Architecture</span>
+                <div class="guide-title">When Secrets Management Is the Wrong Answer</div>
+                <div class="guide-desc">The case for workload identity over secrets management, what it actually takes to implement SPIFFE/SPIRE in a real production environment, and why most organizations will need both for the foreseeable future. For platform engineers deciding where their next investment should go.</div>
+              </div>
+              <span class="guide-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

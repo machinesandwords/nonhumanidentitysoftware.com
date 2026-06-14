@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <title>CyberArk Conjur vs. HashiCorp Vault — Secrets Management Comparison | Non-Human Identity Software</title>
+  <meta name="description" content="Independent comparison of CyberArk Conjur and HashiCorp Vault. PAM ecosystem depth vs. open-source flexibility. What the IBM acquisition actually means for Vault Enterprise buyers.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CyberArk Conjur vs. HashiCorp Vault",
+    "description": "Independent comparison of CyberArk Conjur and HashiCorp Vault for enterprise secrets management.",
+    "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/",
+    "datePublished": "2026-06-13",
+    "dateModified": "2026-06-13",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/comparisons/">Comparisons</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>CyberArk vs. HashiCorp Vault</span>
+        </div>
+
+        <span class="page-label">Secrets Management Comparison</span>
+        <h1>CyberArk Conjur vs. HashiCorp Vault: The Changed Calculus</h1>
+
+        <p class="lead">This comparison looked different two years ago. CyberArk Conjur and HashiCorp Vault were straightforward: one came from the PAM and compliance world, one from the open-source developer infrastructure world, and you chose based on your environment. The IBM acquisition of HashiCorp in 2024 introduced a variable that didn't previously exist.</p>
+
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>CyberArk Conjur</th>
+                <th>HashiCorp Vault</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Open source</td>
+                <td class="compare-loss">No</td>
+                <td class="compare-win">Community Edition (BSL license)</td>
+              </tr>
+              <tr>
+                <td>Dynamic secrets</td>
+                <td>Supported</td>
+                <td class="compare-win">Broader, more mature coverage</td>
+              </tr>
+              <tr>
+                <td>Auth backends</td>
+                <td>CyberArk-ecosystem focused</td>
+                <td class="compare-win">LDAP, Kubernetes, AWS, Azure, GCP, OIDC, JWT, and more</td>
+              </tr>
+              <tr>
+                <td>PAM integration</td>
+                <td class="compare-win">Native (same vendor)</td>
+                <td>Integration required</td>
+              </tr>
+              <tr>
+                <td>Compliance and audit depth</td>
+                <td class="compare-win">Enterprise-grade, built in</td>
+                <td>Enterprise tier required</td>
+              </tr>
+              <tr>
+                <td>Integration ecosystem</td>
+                <td>Growing</td>
+                <td class="compare-win">Largest in category</td>
+              </tr>
+              <tr>
+                <td>SPIFFE / workload identity</td>
+                <td class="compare-win">Workload Identity Manager (native)</td>
+                <td>Vault Enterprise 2.0 native</td>
+              </tr>
+              <tr>
+                <td>Licensing clarity (2026)</td>
+                <td class="compare-win">Clear enterprise pricing</td>
+                <td>BSL license change creates uncertainty</td>
+              </tr>
+              <tr>
+                <td>Roadmap ownership</td>
+                <td class="compare-win">CyberArk-aligned</td>
+                <td>IBM-aligned (unclear)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>The IBM acquisition: what it actually means</h2>
+
+        <p>HashiCorp changed its license from MPL to BSL in 2023. IBM acquired HashiCorp in 2024. Both events matter for Enterprise customers, but they matter differently.</p>
+
+        <p>The BSL restriction is narrow: it prohibits using Vault in a product or service that competes with HashiCorp. That doesn't affect most enterprise deployments. If you're using Vault to manage your own application credentials, you're not affected by the competitive restriction clause.</p>
+
+        <p>The IBM ownership question is harder. IBM's enterprise software portfolio and HashiCorp's platform-engineering-focused roadmap don't obviously align. HashiCorp's products were built for developers and platform engineers. IBM's enterprise software motion is built around large account relationships, complex procurement, and long integration timelines. Those are different cultures with different priorities, and it's not yet clear which one wins in the roadmap.</p>
+
+        <p>For organizations already on Vault, migration cost is high and the practical impact on most deployments is limited. For organizations evaluating Vault Enterprise on a new contract, ask IBM directly: what's the roadmap for the next 24 months, and who owns product decisions?</p>
+
+        <h2>Where Conjur wins</h2>
+
+        <p>Two scenarios favor Conjur clearly. First, organizations already running CyberArk PAM: Conjur's native integration means a unified policy model, audit trail, and governance layer across human and machine credentials. The operational value of a single vendor for both is real, especially in regulated industries where compliance documentation and audit trail continuity matter.</p>
+
+        <p>Second, organizations where procurement committee confidence is a real factor. CyberArk's enterprise security reputation translates to easier procurement in financial services, healthcare, and government environments where the buying committee includes people who haven't heard of HashiCorp but have heard of CyberArk.</p>
+
+        <h2>Where Vault wins</h2>
+
+        <p>Vault's integration ecosystem is still the best in the category. Native authentication backends for Kubernetes, AWS, Azure, GCP, LDAP, Active Directory, GitHub, and dozens of others. Dynamic secrets for databases and cloud providers, generating short-lived credentials on demand rather than storing long-lived ones, are more broadly implemented in Vault than in any competitor. For platform engineering teams building multi-environment secrets infrastructure that needs to work across heterogeneous systems, Vault's flexibility is not matched.</p>
+
+        <p>The community and open-source ecosystem are also genuine assets, even under BSL. The volume of community-built Vault integrations, the institutional knowledge accumulated by platform engineers who've been running it in production for years: those represent real switching costs.</p>
+
+        <h2>What neither covers</h2>
+
+        <p>Neither platform solves the credential discovery problem. Neither will find the credentials in your environment that were never put in a vault. That's the province of NHI governance platforms. Secrets management governs what's in the vault. It doesn't govern what isn't.</p>
+
+        <div class="verdict">
+          <span class="verdict-label">Verdict</span>
+          <p>Existing CyberArk PAM customers or organizations with strong compliance and audit requirements in regulated industries: Conjur is the more natural choice. Platform engineering teams that need integration flexibility, dynamic secrets, and a developer-native API across heterogeneous infrastructure: Vault remains the stronger choice, IBM diligence required. New Vault Enterprise evaluations should include explicit questions about the IBM roadmap, not as a dealbreaker, but as a changed risk profile that needs to be understood before signing. Both platforms should sit alongside NHI governance tooling, not instead of it.</p>
+        </div>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

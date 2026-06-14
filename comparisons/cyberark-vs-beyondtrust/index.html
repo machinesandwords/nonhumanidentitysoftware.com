@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <title>CyberArk vs. BeyondTrust for NHI — PAM Platform Comparison | Non-Human Identity Software</title>
+  <meta name="description" content="Independent comparison of CyberArk and BeyondTrust for non-human identity use cases. What each PAM platform delivers, what each leaves uncovered, and when you need a purpose-built NHI platform regardless.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-beyondtrust/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CyberArk vs. BeyondTrust for NHI",
+    "description": "What each PAM platform delivers for non-human identity governance and where both fall short.",
+    "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-beyondtrust/",
+    "datePublished": "2026-06-13",
+    "dateModified": "2026-06-13",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/comparisons/">Comparisons</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>CyberArk vs. BeyondTrust for NHI</span>
+        </div>
+
+        <span class="page-label">PAM Platforms for NHI Use Cases</span>
+        <h1>CyberArk vs. BeyondTrust for NHI: What Your PAM Actually Covers</h1>
+
+        <p class="lead">If you're already running CyberArk or BeyondTrust for PAM, your vendor will tell you it covers non-human identities too. That's true. The important question is how much it covers, and whether what's left uncovered is where your actual NHI risk lives.</p>
+
+        <div class="callout">
+          <span class="callout-label">Framing this comparison correctly</span>
+          <p>This comparison is about using PAM platforms for NHI governance, not about PAM selection for privileged human access. If you're choosing between CyberArk and BeyondTrust for PAM, that's a different evaluation. The question here is narrower: if you run one of these platforms, how far does it take you on NHI, and when do you need something purpose-built regardless?</p>
+        </div>
+
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>CyberArk</th>
+                <th>BeyondTrust</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Machine identity portfolio breadth</td>
+                <td class="compare-win">CLM (Venafi), secrets (Conjur), workload identity</td>
+                <td>Service accounts, application credentials</td>
+              </tr>
+              <tr>
+                <td>Certificate lifecycle management</td>
+                <td class="compare-win">Full (Venafi/CyberArk)</td>
+                <td>Not in scope</td>
+              </tr>
+              <tr>
+                <td>Secrets management</td>
+                <td class="compare-win">CyberArk Conjur</td>
+                <td>Password Safe application credential management</td>
+              </tr>
+              <tr>
+                <td>Workload identity (SPIFFE)</td>
+                <td class="compare-win">Workload Identity Manager</td>
+                <td>Not in scope</td>
+              </tr>
+              <tr>
+                <td>Service account discovery</td>
+                <td class="compare-win">Automated discovery and context</td>
+                <td>Discovery via Password Safe</td>
+              </tr>
+              <tr>
+                <td>SaaS OAuth / API key governance</td>
+                <td class="compare-loss">Not in scope</td>
+                <td class="compare-loss">Not in scope</td>
+              </tr>
+              <tr>
+                <td>AI agent identity governance</td>
+                <td class="compare-loss">Early stage</td>
+                <td class="compare-loss">Not in scope</td>
+              </tr>
+              <tr>
+                <td>Unified human + machine policy</td>
+                <td class="compare-win">Single platform</td>
+                <td>Partial</td>
+              </tr>
+              <tr>
+                <td>Post-Venafi integration maturity</td>
+                <td>Still integrating (complex portfolio)</td>
+                <td class="compare-win">Simpler, more coherent portfolio</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>What CyberArk actually delivers on NHI</h2>
+
+        <p>CyberArk has the most comprehensive machine identity portfolio of any PAM vendor. The Venafi acquisition brought the CLM market leader into the stack. Conjur covers enterprise secrets management. Workload Identity Manager adds SPIFFE-based ephemeral identity for cloud workloads. The 2025 Secure Workload Access Solution attempts to unify these under a single view for multi-cloud machine identity governance.</p>
+
+        <p>The integration is real but not complete. CyberArk acquired Venafi in 2024 and the post-acquisition roadmap is being built in real time. When you evaluate CyberArk for NHI, ask specifically which product layer covers your use case and don't assume the different components already operate as a unified platform. They're moving in that direction. They're not there yet.</p>
+
+        <h2>What BeyondTrust actually delivers on NHI</h2>
+
+        <p>BeyondTrust's NHI coverage is narrower and more honest about its scope. Password Safe covers automated discovery and management of privileged accounts including service accounts and application credentials in environments where BeyondTrust already manages privileged human access. That's a meaningful extension of the PAM model.</p>
+
+        <p>The scope limit is clear: BeyondTrust doesn't cover certificates, workload identity, SaaS OAuth tokens, or AI agent credentials. For organizations whose NHI problem is primarily service account sprawl and application credential rotation in on-premises environments under existing PAM management, Password Safe covers a real portion of the problem. For organizations with modern cloud environments, SaaS integration sprawl, or AI agent deployment, it doesn't.</p>
+
+        <h2>What neither covers</h2>
+
+        <p>This matters more than the comparison between the two platforms. Both share the same structural limitation: they govern NHIs within the perimeter of their PAM deployment, not the broader universe of credentials across cloud, SaaS, and development environments.</p>
+
+        <p>Neither platform finds the OAuth token granted to a third-party SaaS integration by a developer three years ago. Neither finds the API key hardcoded in a CI/CD pipeline. Neither governs AI agent credentials that weren't created through a formal provisioning process. For those scenarios, purpose-built NHI governance platforms go considerably further.</p>
+
+        <p>The right question for PAM platform evaluations isn't which PAM covers NHI better. It's: what NHI coverage gap remains after my PAM investment, and what do I need to close it?</p>
+
+        <div class="verdict">
+          <span class="verdict-label">Verdict</span>
+          <p>CyberArk is the stronger choice if machine identity is a significant program requirement and you're willing to navigate the post-Venafi integration complexity. The CLM depth and workload identity capability are genuine advantages BeyondTrust doesn't have. BeyondTrust is a reasonable NHI extension for organizations whose NHI risk is primarily service account governance in environments already under BeyondTrust PAM management. Neither is a substitute for purpose-built NHI governance when your exposure includes SaaS integration sprawl, cloud IAM proliferation, or AI agent identity. Know what your PAM covers. Then figure out what it doesn't.</p>
+        </div>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

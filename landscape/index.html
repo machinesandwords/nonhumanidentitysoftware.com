@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>Non-Human Identity Security Market Landscape — Independent Guide</title>
+  <meta name="description" content="How the NHI security market is structured. Vendor categories, architectural trade-offs, and a framework for deciding which platform fits your environment.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/landscape/">
+
+  <meta property="og:title" content="Non-Human Identity Security Market Landscape — Independent Guide">
+  <meta property="og:description" content="How the NHI security market is structured. Vendor categories, architectural trade-offs, and a framework for deciding which platform fits your environment.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/landscape/">
+  <meta property="og:type" content="article">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Non-Human Identity Security Market Landscape",
+    "description": "How the NHI security market is structured. Vendor categories, buyer trade-offs, and a framework for deciding which platform fits your environment.",
+    "url": "https://nonhumanidentitysoftware.com/landscape/",
+    "datePublished": "2026-06-13",
+    "dateModified": "2026-06-13",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Landscape", "item": "https://nonhumanidentitysoftware.com/landscape/" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .two-col-contrast {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: var(--hairline);
+      margin: 24px 0;
+    }
+    .contrast-block {
+      background: var(--surface);
+      padding: 20px 24px;
+    }
+    .contrast-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .contrast-block p {
+      font-size: var(--small);
+      color: var(--mid);
+      margin-bottom: 0;
+    }
+    .three-col-contrast {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: var(--hairline);
+      margin: 24px 0;
+    }
+    @media (max-width: 640px) {
+      .two-col-contrast, .three-col-contrast { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Landscape</span>
+        </div>
+
+        <span class="page-label">Landscape</span>
+        <h1>The NHI Security Market: What It Is, What It Isn't, and What You Actually Need</h1>
+
+        <p class="lead">The non-human identity security market formed fast and named itself badly. "NHI" is an umbrella that covers at least five distinct problems with different buyers, different tooling, and different failure modes. Before you take vendor calls, you need to know which problem is yours.</p>
+
+        <h2>Why this category exists</h2>
+
+        <p>Secrets vaults, PAM platforms, and PKI infrastructure have managed machine credentials for years. What changed is the volume and the blind spots. Cloud-native systems spin up identities faster than any manual process can track. SaaS integrations create OAuth tokens and API keys that no one approved and no one is rotating. AI agents now operate on inherited human credentials, so your audit logs can't tell "the employee did this" from "the employee's AI assistant did this."</p>
+
+        <p>None of that shows up in a typical IAM inventory. NHI security is the category that exists to find it.</p>
+
+        <div class="callout">
+          <span class="callout-label">How bad is the sprawl?</span>
+          <p>Entro Labs found NHI populations grew 44% year-over-year between 2024 and 2025. An audit of one Fortune 500 financial institution found 4.2 million non-human identities against 50,000 human accounts. GitGuardian found 28.65 million hardcoded secrets added to public GitHub in 2025 alone. These aren't projections. They're what teams find when they actually look.</p>
+        </div>
+
+        <h2>Three buyers, three different problems</h2>
+
+        <p>The most common mistake in an NHI evaluation is treating all of this as one problem. It isn't. Which problem is yours determines which vendor conversations are worth having.</p>
+
+        <div class="three-col-contrast">
+          <div class="contrast-block">
+            <div class="contrast-label">Discovery and governance</div>
+            <p>You don't know what machine identities exist, who owns them, or what they're allowed to do. The primary risk is credential sprawl you can't see. You need inventory first, then accountability. The buying team is security. The goal is reducing exposure from identities that shouldn't exist or shouldn't have the access they have.</p>
+          </div>
+          <div class="contrast-block">
+            <div class="contrast-label">Secrets and workload identity</div>
+            <p>You know credentials exist and need to store, rotate, and govern them, or you're building cloud-native systems and want to eliminate static secrets entirely. The buying team is platform engineering or DevSecOps. The goal is a credential infrastructure that doesn't create risk through age, reuse, or misconfiguration.</p>
+          </div>
+          <div class="contrast-block">
+            <div class="contrast-label">AI agent identity</div>
+            <p>You're deploying autonomous AI agents and discovering that neither your IAM stack nor your secrets vault was designed for an identity that makes independent decisions. The buying team is security architecture. The goal is governing something that didn't exist in any prior governance framework.</p>
+          </div>
+        </div>
+
+        <p>These problems share a name and some tooling. They don't share a solution. A secrets vault won't tell you a service account hasn't been touched in 180 days. An NHI governance platform won't enforce access policy at runtime. Neither was designed for an agent that escalates its own permissions through tool use.</p>
+
+        <h2>How the market is organized</h2>
+
+        <p>Five categories. Overlapping at the edges. Here's what each one actually does.</p>
+
+        <h3>NHI governance and discovery platforms</h3>
+
+        <p>These start with the inventory question: what machine identities exist across your environment, regardless of how they were created? They find API keys, OAuth tokens, service accounts, and automated credentials across cloud environments, SaaS applications, on-premises systems, and CI/CD pipelines. Then they enrich the inventory: who owns this credential, what does it have access to, when was it last used, and what's the blast radius if it's compromised?</p>
+
+        <p>The pure-play NHI platforms, Astrix, Oasis, Entro, Clutch, Token Security, were built specifically for this. Their discovery depth and risk context are genuinely ahead of what PAM platforms have bolted on. Their limitation: they tell you what's wrong. Fixing it still requires action in the underlying system where the credential lives.</p>
+
+        <h3>Secrets management</h3>
+
+        <p>Secrets vaults store credentials and control who can retrieve them. They handle rotation, audit logging, and access policy for the credentials inside them. HashiCorp Vault is the dominant platform for organizations that need flexibility across environments. The cloud-native alternatives, AWS Secrets Manager, Azure Key Vault, Google Secret Manager, are the natural fit for organizations standardized on a single cloud.</p>
+
+        <p>Secrets management is a mature, well-understood category. The procurement question isn't whether you need one. It's whether it's sufficient, given that most secrets managers only govern credentials that were put in them deliberately. Which describes a fraction of the credentials in most environments.</p>
+
+        <h3>Workload identity and access management</h3>
+
+        <p>Workload identity replaces static secrets with cryptographic proof of what a workload is. Instead of a service knowing a password, it proves its identity through a short-lived document issued by a trusted authority. SPIFFE is the open standard. Aembit is the most purpose-built commercial platform. The major cloud providers have native implementations.</p>
+
+        <p>Architecturally, this is superior to secrets management for cloud-native systems. You can't steal a credential that doesn't exist. The tradeoff is real though: it requires engineering investment that secrets vaults don't, and it doesn't help you with legacy systems that can't participate in cryptographic attestation.</p>
+
+        <h3>Certificate lifecycle management</h3>
+
+        <p>Certificates are a specific type of machine identity with a specific failure mode: expiry causing outages. CLM platforms handle discovery, issuance, renewal, and revocation at enterprise scale. CyberArk absorbed the market leader in this category through its $1.54 billion Venafi acquisition. Keyfactor and AppViewX are the credible independent alternatives.</p>
+
+        <p>CLM is a distinct procurement category in regulated industries where certificate governance is a compliance requirement. It's increasingly being absorbed into broader machine identity platforms, but the purchasing pattern remains separate.</p>
+
+        <h3>PAM and IAM with NHI extension</h3>
+
+        <p>Established PAM and IAM vendors have added NHI coverage to their platforms rather than building distinct products. CyberArk, BeyondTrust, Saviynt, and Microsoft Entra have all extended into non-human identity. These work well for service account governance in environments already under PAM management. They're weakest at the discovery problem, finding credentials that were never in the PAM system, and at AI agent governance, which predates the architectural design of every platform in this category.</p>
+
+        <h2>The AI agent problem deserves its own section</h2>
+
+        <p>AI agent identity is the fastest-moving and least-solved problem in the market. Here's why it's different.</p>
+
+        <p>A service account has a fixed scope. It calls specific APIs and nothing else. An AI agent operating autonomously doesn't work that way: it can follow a chain of tool calls that escalates access, and it can take actions that weren't anticipated when it was provisioned. Governance built for fixed-scope identities doesn't map onto something that makes its own decisions.</p>
+
+        <p>The Cloud Security Alliance found in 2025 that only 23% of organizations have a formal strategy for agent identity management. Oasis Security's Agentic Access Management, Astrix's AI Agent Control Plane, and Microsoft's Entra Agent ID are all attempts to govern this. None is fully mature. If you need this now, you're ahead of the tooling.</p>
+
+        <h2>Where the market is going</h2>
+
+        <p>Consolidation is happening from two directions. PAM incumbents are acquiring point solutions to build end-to-end machine identity coverage. NHI pure-plays are expanding scope to avoid being cornered into a single problem layer.</p>
+
+        <p>The practical implication for buyers: the category you're buying into today looks different in 18 months. Startups you evaluate now might be acquired. Platform vendors extending into NHI might eventually close the gap with pure-plays. Acquisition risk should be a named evaluation criterion, not an afterthought. Ask every pure-play NHI vendor what continuity looks like if they're acquired in the next 24 months.</p>
+
+        <h2>Where to go next</h2>
+
+        <p>The <a href="/landscape/vendors/">vendor index</a> covers every significant platform by category. The <a href="/comparisons/">comparisons</a> cover the most frequently co-evaluated pairs: Astrix vs. Oasis, Entro vs. Clutch, CyberArk vs. HashiCorp Vault, GitGuardian vs. Astrix. The <a href="/guides/">guides</a> go deeper on the operational problems: running NHI discovery in environments you didn't build, when secrets management is structurally the wrong answer, and what AI agent governance actually requires in practice.</p>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

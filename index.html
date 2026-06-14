@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>Non-Human Identity Software — Independent Buyer's Guide</title>
+  <meta name="description" content="Vendor-neutral analysis of non-human identity security platforms, secrets management tools, and workload identity software for enterprise security buyers.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/">
+
+  <meta property="og:title" content="Non-Human Identity Software — Independent Buyer's Guide">
+  <meta property="og:description" content="Vendor-neutral analysis of NHI security platforms, secrets management, and workload identity software for enterprise security buyers.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Non-Human Identity Software",
+    "url": "https://nonhumanidentitysoftware.com",
+    "description": "An independent guide to non-human identity security software. Vendor-neutral analysis for security practitioners evaluating NHI governance, secrets management, and workload identity platforms."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Non-Human Identity Software",
+    "url": "https://nonhumanidentitysoftware.com",
+    "description": "Vendor-neutral analysis of non-human identity security platforms for enterprise security buyers."
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+  <script src="/nav.js" defer></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <div class="content">
+
+        <span class="page-label">Home</span>
+        <h1>Your machines have an identity problem. Most security teams don't know it yet.</h1>
+
+        <p class="lead">The NHI market is moving in two directions at once. The discovery and governance platforms that defined the category since 2021 are getting absorbed into broader machine identity platforms. At the same time, a layer of the problem nothing was built for, AI agents that make their own access decisions, is only now taking shape. The old model treated machine identity as inventory: find the credential, vault it, rotate it on a schedule. What's replacing it is continuous governance: not a static inventory of what exists, but a live read on what's being accessed and whether it should be. That's the test worth applying to every platform in this market: does it tell you what existed yesterday, or what's happening right now?</p>
+
+        <h2>The problem hiding in plain sight</h2>
+
+        <p>Ask your security team how many service accounts are active in your environment. Then ask how many are owned by someone who still works there. Then ask when the credentials were last rotated.</p>
+
+        <p>Most teams can't answer any of those questions. Not because the data doesn't exist, but because no one built the infrastructure to ask it. For every human in your environment, there are 40 to 100 non-human identities, service accounts, API keys, OAuth tokens, certificates, automation scripts, and now AI agents, and your human IAM program doesn't govern any of them. It handles provisioning, deprovisioning, MFA, role assignment. It was not designed for the API key a developer created three years ago and connected to your Salesforce instance, or the OAuth token a SaaS vendor is still using to pull data from a system the original integration owner left eighteen months ago.</p>
+
+        <p>That gap is what non-human identity security closes. And it is a bigger gap than most organizations realize before they look.</p>
+
+        <h2>What this site covers</h2>
+
+        <p>NHI security is not one thing. It spans discovery and governance platforms that find what machine identities exist and who owns them; secrets vaults that store and rotate credentials; workload identity systems that replace static secrets with short-lived cryptographic attestations; certificate lifecycle tools; and the emerging problem of AI agent identity, where an autonomous agent making decisions on your behalf needs its own identity, its own scope, and its own audit trail.</p>
+
+        <p>Your problem probably isn't all of these. The landscape tells you which one it is.</p>
+
+        <h2>Start here</h2>
+
+        <div class="card-grid">
+
+          <a href="/landscape/" style="text-decoration:none;" class="card">
+            <div class="card-label">Landscape</div>
+            <div class="card-value" style="font-size:13px; font-weight:700; color:var(--charcoal); margin-bottom:4px;">Market overview</div>
+            <div class="card-sub">How the NHI market is structured, what each vendor category actually solves, and where the lines between them are actively shifting.</div>
+          </a>
+
+          <a href="/landscape/vendors/" style="text-decoration:none;" class="card">
+            <div class="card-label">Vendors</div>
+            <div class="card-value" style="font-size:13px; font-weight:700; color:var(--charcoal); margin-bottom:4px;">Vendor index</div>
+            <div class="card-sub">Every significant NHI platform organized by category: governance, secrets management, workload identity, CLM, and PAM adjacents.</div>
+          </a>
+
+          <a href="/comparisons/" style="text-decoration:none;" class="card">
+            <div class="card-label">Comparisons</div>
+            <div class="card-value" style="font-size:13px; font-weight:700; color:var(--charcoal); margin-bottom:4px;">Head-to-head</div>
+            <div class="card-sub">Astrix vs. Oasis, Entro vs. Clutch, CyberArk vs. HashiCorp Vault, GitGuardian vs. Astrix. Direct verdicts, not summaries.</div>
+          </a>
+
+          <a href="/guides/" style="text-decoration:none;" class="card">
+            <div class="card-label">Guides</div>
+            <div class="card-value" style="font-size:13px; font-weight:700; color:var(--charcoal); margin-bottom:4px;">Practitioner guides</div>
+            <div class="card-sub">Running NHI discovery in environments you didn't build. When secrets management is the wrong answer. What AI agent governance actually requires.</div>
+          </a>
+
+        </div>
+
+        <h2>Why independent</h2>
+
+        <p>This market is young, growing fast, and consolidating already. Vendors get acquired. Scope and pricing shift. That makes independent coverage more useful here than in a settled category, not less.</p>
+
+        <p>Most NHI security content comes from one of three places: vendors making the case for their category, analysts whose methodology you can't evaluate, or media properties with advertising relationships to the platforms they write about.</p>
+
+        <p>This site has none of those relationships. No sponsored content. No affiliate arrangements. Vendor inclusion is editorially determined.</p>
+
+        <p>That means the vendor index includes platforms with weak products. The comparisons say who wins and who doesn't. The guides address the problems vendor documentation skips because acknowledging them would complicate the sales process.</p>
+
+        <p>When this site has an opinion, it says so. When the evidence is thin, it says that too.</p>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly. <a href="/subscribe/">See what's in the paid edition &rarr;</a></p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button">Subscribe free</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Non-Human Identity Software is an independent publication. No sponsored content. No affiliate arrangements. Vendor coverage is editorially determined.</p>
+      <p>&copy; 2026 Machines &amp; Words. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/newsletter.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>NHI Security Platform Comparisons | Non-Human Identity Software</title>
+  <meta name="description" content="Independent head-to-head comparisons of non-human identity security platforms. Astrix vs. Oasis, Entro vs. Clutch, CyberArk vs. HashiCorp Vault, GitGuardian vs. Astrix. No vendor affiliation.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/">
+
+  <meta property="og:title" content="NHI Security Platform Comparisons | Non-Human Identity Software">
+  <meta property="og:description" content="Independent head-to-head comparisons of non-human identity security platforms. No vendor affiliation.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/comparisons/">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://nonhumanidentitysoftware.com/comparisons/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "NHI Security Platform Comparisons",
+    "description": "Independent head-to-head comparisons of non-human identity security platforms.",
+    "url": "https://nonhumanidentitysoftware.com/comparisons/",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "url": "https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/", "name": "Astrix vs. Oasis Security" },
+      { "@type": "ListItem", "position": 2, "url": "https://nonhumanidentitysoftware.com/comparisons/entro-vs-clutch/", "name": "Entro Security vs. Clutch Security" },
+      { "@type": "ListItem", "position": 3, "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/", "name": "CyberArk vs. HashiCorp Vault" },
+      { "@type": "ListItem", "position": 4, "url": "https://nonhumanidentitysoftware.com/comparisons/gitguardian-vs-astrix/", "name": "GitGuardian vs. Astrix Security" },
+      { "@type": "ListItem", "position": 5, "url": "https://nonhumanidentitysoftware.com/comparisons/aembit-vs-hashicorp-vault/", "name": "Aembit vs. HashiCorp Vault" },
+      { "@type": "ListItem", "position": 6, "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-beyondtrust/", "name": "CyberArk vs. BeyondTrust for NHI" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .comparison-list { list-style: none; padding: 0; margin-bottom: 32px; }
+    .comparison-list li { border-bottom: var(--hairline); }
+    .comparison-list li:last-child { border-bottom: none; }
+    .comparison-list a {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+    .comparison-list a:hover .comparison-list-name { color: var(--accent); }
+    .comparison-list-body { flex: 1; }
+    .comparison-list-name { font-size: var(--small); font-weight: 700; margin-bottom: 2px; }
+    .comparison-list-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+    .comparison-list-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .comparison-list-arrow { color: var(--border); font-size: 11px; padding-top: 2px; flex-shrink: 0; }
+    .comparison-list a:hover .comparison-list-arrow { color: var(--accent); }
+    .section-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: 16px 0 8px;
+      border-bottom: 1px solid var(--charcoal);
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-head::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 12px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
+    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Comparisons</span>
+        </div>
+
+        <span class="page-label">Head-to-Head Comparisons</span>
+        <h1>NHI Security Platform Comparisons</h1>
+
+        <p class="lead">Vendor positioning in this market is genuinely confusing. Every NHI governance platform claims broad coverage. Every secrets manager claims to address "the full NHI lifecycle." These comparisons cut through that. Each one covers a pairing where the two platforms are genuinely co-evaluated by real buyers, and each one tells you directly which one wins in which environment.</p>
+
+        <div class="section-intro">
+          <p>Start with the <a href="/landscape/vendors/">vendor index</a> to understand the full market. Come back here once you have a shortlist and need to understand the specific trade-offs between two platforms. Each comparison is written for the buyer decision, not the marketing narrative.</p>
+        </div>
+
+
+        <div class="section-head" style="margin-top:32px;">NHI governance and discovery</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/astrix-vs-oasis/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">NHI governance</span>
+                <div class="comparison-list-name">Astrix vs. Oasis Security</div>
+                <div class="comparison-list-desc">The two most frequently co-evaluated NHI governance platforms. Astrix leads on SaaS integration coverage. Oasis leads on cloud, Kubernetes, and on-premises breadth. The comparison that tells you which one actually covers your attack surface.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons/entro-vs-clutch/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">NHI governance</span>
+                <div class="comparison-list-name">Entro Security vs. Clutch Security</div>
+                <div class="comparison-list-desc">SDLC-integrated governance with ownership context vs. cross-environment control plane with zero-trust enforcement. The question is where you want to anchor your NHI program and what you need it to do first.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="section-head">Secrets management</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/cyberark-vs-hashicorp-vault/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Secrets management</span>
+                <div class="comparison-list-name">CyberArk Conjur vs. HashiCorp Vault</div>
+                <div class="comparison-list-desc">PAM ecosystem depth and compliance pedigree vs. open-source flexibility and the largest integration ecosystem in the category. Includes a direct assessment of what the IBM acquisition actually means for Vault Enterprise buyers today.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons/gitguardian-vs-astrix/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Secrets detection vs. NHI governance</span>
+                <div class="comparison-list-name">GitGuardian vs. Astrix Security</div>
+                <div class="comparison-list-desc">Not true substitutes, but frequently co-evaluated by security teams deciding where to start their NHI program. Which one covers your most urgent risk, and when do you need both?</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="section-head">Workload identity</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/aembit-vs-hashicorp-vault/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Workload identity vs. secrets management</span>
+                <div class="comparison-list-name">Aembit vs. HashiCorp Vault</div>
+                <div class="comparison-list-desc">The architectural choice between ephemeral workload identity and static credential storage. Not a feature comparison. A decision about which model fits your environment and whether you can actually operate either one.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="section-head">PAM platforms for NHI use cases</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/cyberark-vs-beyondtrust/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">PAM with NHI extension</span>
+                <div class="comparison-list-name">CyberArk vs. BeyondTrust for NHI</div>
+                <div class="comparison-list-desc">What each PAM platform actually delivers on service account management and machine credential governance, what each leaves uncovered, and when you need a purpose-built NHI platform regardless of which PAM you run.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="newsletter-block">
+          <span class="page-label">The NHI Register</span>
+          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>
