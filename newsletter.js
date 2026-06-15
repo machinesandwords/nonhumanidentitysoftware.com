@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const WORKER_URL = 'https://newsletter.nonhumanidentitysoftware.com';
   const GROUP_ID = '189858273326793780'; // Defender Free
 
+  const DOWNLOAD_URL = '/guides/nhi-rfp-framework/nhi-rfp-evaluation-matrix.xlsx';
+  const DOWNLOAD_FILENAME = 'nhi-rfp-evaluation-matrix.xlsx';
+
   if (!submitBtn || !emailInput || !msgEl) return;
 
   submitBtn.addEventListener('click', async function () {
@@ -30,7 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const data = await response.json();
 
       if (data.message === 'Subscribed') {
-        showMessage('Thanks — check your inbox for the spreadsheet.', false);
+        triggerDownload(DOWNLOAD_URL, DOWNLOAD_FILENAME);
+        showMessage('Thanks — your download should start automatically. If it doesn\'t, ', false, true);
         emailInput.value = '';
       } else {
         showMessage(data.detail || 'Something went wrong. Please try again.', true);
@@ -43,9 +47,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  function showMessage(text, isError) {
+  function triggerDownload(url, filename) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function showMessage(text, isError, includeLink) {
     msgEl.textContent = text;
     msgEl.classList.toggle('error', isError);
+
+    if (includeLink) {
+      const link = document.createElement('a');
+      link.href = DOWNLOAD_URL;
+      link.download = DOWNLOAD_FILENAME;
+      link.textContent = 'click here';
+      msgEl.appendChild(link);
+      msgEl.appendChild(document.createTextNode('.'));
+    }
+
     msgEl.style.display = 'block';
   }
 });
