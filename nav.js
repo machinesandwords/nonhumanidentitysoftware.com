@@ -16,21 +16,20 @@
     <div class="nav-section">
       <div class="nav-section-label">Landscape</div>
       <a href="/landscape/" class="nav-item depth-0">Market overview</a>
-      <a href="/landscape/vendor-index/" class="nav-item depth-1">&#9500; Vendor index</a>
-      <a href="/landscape/market-direction/" class="nav-item depth-1">&#9492; Market direction</a>
-      <a href="/landscape/compliance/" class="nav-item depth-1">&#9492; Compliance & governance</a>
+      <a href="/landscape/vendor-index/" class="nav-item depth-1">├ Vendor index</a>
+      <a href="/landscape/market-direction/" class="nav-item depth-1">├ Market direction</a>
+      <a href="/landscape/compliance/" class="nav-item depth-1">└ Compliance & governance</a>
     </div>
 
     <div class="nav-divider"></div>
 
-        <div class="nav-section">
-      <div class="nav-section-label">Tools</div>
-      <a href="/tools/" class="nav-item depth-0">All tools</a>
-      <a href="/tools/vendor-comparison/" class="nav-item depth-1">&#9500; Vendor index</a>
-      <a href="/tools/market-direction/" class="nav-item depth-1">&#9500; TBD direction</a>
-      <a href="/tools/risk-self-check/" class="nav-item depth-1">&#9500; Risk self check</a>
-      <a href="/tools/index.html/" class="nav-item depth-1">└ more</a>
-    </div>
+<div class="nav-section">
+  <div class="nav-section-label">Tools</div>
+  <a href="/tools/" class="nav-item depth-0">All tools</a>
+  <a href="/tools/risk-self-check/" class="nav-item depth-1">├ Risk self-check</a>
+  <a href="/tools/ratio-calculator/" class="nav-item depth-1">├ NHI ratio calculator</a>
+  <a href="/tools/" class="nav-item depth-1">└ more</a>
+</div>
 
     <div class="nav-divider"></div>
 
@@ -46,16 +45,13 @@
 
     <div class="nav-divider"></div>
 
-    <div class="nav-section">
-      <div class="nav-section-label">Guides</div>
-      <a href="/guides/" class="nav-item depth-0">All guides</a>
-      <a href="/guides/nhi-audit-compliance-mapping/" class="nav-item depth-1">&#9500; NHI audit compliance mapping</a>
-      <a href="/guides/nhi-vs-secrets-managers-vs-cnapp/" class="nav-item depth-1">&#9500; NHI vs secrets vs cnapp</a>
-      <a href="/guides/nhi-rfp-framework/" class="nav-item depth-1">&#9500; RFP Framework</a>
-      <a href="/guides/owasp-agentic-ai-identity-controls/" class="nav-item depth-1">&#9500; OWASP agentic controls</a>
-      <a href="/guides/nhi-rollout/" class="nav-item depth-1">&#9500; Rolling out discovery</a>
-      <a href="/guides/" class="nav-item depth-0">&#9492; more</a>
-      </div>
+<div class="nav-section">
+  <div class="nav-section-label">Guides</div>
+  <a href="/guides/" class="nav-item depth-0">All guides</a>
+  <a href="/guides/nhi-rollout/" class="nav-item depth-1">├ NHI rollout without breaking production</a>
+  <a href="/guides/nhi-audit-compliance-mapping/" class="nav-item depth-1">├ Audit &amp; compliance mapping</a>
+  <a href="/guides/" class="nav-item depth-1">└ more</a>
+</div>
 
     <div class="nav-divider"></div>
 
