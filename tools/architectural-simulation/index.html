@@ -1,285 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NHI Safe-Fail Proxy Router Simulator</title>
-    <style>
-        :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --border: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --safe-color: #10b981;
-            --danger-color: #ef4444;
-            --accent-color: #3b82f6;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
+  <title>What Happens When You Cut Off an Orphaned Identity? — Proxy Routing Simulator | Non-Human Identity Software</title>
+  <meta name="description" content="Simulate shadow logging vs. hard block routing for an orphaned NHI's traffic, and see the effect on security visibility, pipeline stability, and your audit trail.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/architectural-simulation/">
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
+  <meta property="og:title" content="What Happens When You Cut Off an Orphaned Identity? | Non-Human Identity Software">
+  <meta property="og:description" content="Simulate shadow logging vs. hard block routing for orphaned NHI traffic, and see the effect on visibility, pipeline stability, and your audit trail.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/architectural-simulation/">
+  <meta property="og:type" content="website">
 
-        h2 { margin-top: 0; font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-        
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
-            background: rgba(0,0,0,0.2);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-        .control-group { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-        
-        select, input[type="range"] {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-        }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://nonhumanidentitysoftware.com/tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Proxy Routing Simulator", "item": "https://nonhumanidentitysoftware.com/tools/architectural-simulation/" }
+    ]
+  }
+  </script>
 
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
 
-        .metric-card {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-        }
+  <style>
+    /* ── Controls ───────────────────────────────────────────── */
+    .calc-section {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .calc-section h3 { margin-bottom: 4px; }
+    .calc-section-note { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
 
-        .metric-val { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
-        .metric-card.safe .metric-val { color: var(--safe-color); }
-        .metric-card.danger .metric-val { color: var(--danger-color); }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .control-group { display: flex; flex-direction: column; gap: 8px; }
+    .control-group label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .calc-select, .calc-range {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      padding: 10px 12px;
+      border: var(--hairline);
+      background: var(--bg);
+      color: var(--charcoal);
+    }
+    .calc-select { cursor: pointer; }
+    .calc-range { width: 100%; padding: 0; accent-color: var(--accent); cursor: pointer; }
+    .control-value { font-size: var(--small); color: var(--mid); }
 
-        /* Architecture Diagram Canvas Style */
-        .diagram-box {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #0b0f19;
-            padding: 20px;
-            position: relative;
-            min-height: 340px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-            overflow: hidden;
-        }
+    @media (max-width: 640px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
 
-        .node {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            padding: 12px 20px;
-            text-align: center;
-            min-width: 180px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
+    /* ── Metrics ────────────────────────────────────────────── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .metric-card {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 16px;
+      text-align: center;
+    }
+    .metric-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+    .metric-card-value { font-size: 28px; font-weight: 700; line-height: 1; }
+    .metric-card-value.positive { color: #2e7d32; }
+    .metric-card-value.negative { color: #b91c1c; }
+    .metric-card-value.state { font-size: 15px; color: var(--accent); padding-top: 6px; }
+    .metric-card-value.state.negative { color: #b91c1c; }
 
-        .node.active-proxy { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
-        .node.destination { border-color: var(--border); }
-        .node.ledger { border-color: var(--safe-color); background: rgba(16, 185, 129, 0.05); }
+    @media (max-width: 640px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
 
-        .split-row {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            gap: 20px;
-        }
+    /* ── Diagram ────────────────────────────────────────────── */
+    .proxy-diagram {
+      border: var(--hairline);
+      background: var(--bg);
+      padding: 32px 20px;
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .proxy-node {
+      border: 2px solid var(--border);
+      background: var(--surface);
+      padding: 12px 24px;
+      text-align: center;
+      min-width: 220px;
+      font-size: var(--small);
+      font-weight: 700;
+      transition: border-color 0.2s, background 0.2s, opacity 0.2s;
+    }
+    .proxy-node-sub {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--mid);
+      display: block;
+      margin-top: 4px;
+      transition: color 0.2s;
+    }
+    .proxy-node.proxy-router { border-color: var(--accent); background: var(--accent-pale); }
+    .proxy-connector { width: 2px; height: 28px; background: var(--border); }
+    .proxy-branch { width: 100%; max-width: 360px; height: 32px; display: block; }
+    .proxy-branch line { stroke: var(--border); stroke-width: 2; }
+    .proxy-split {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 360px;
+      gap: 16px;
+    }
+    .proxy-split .proxy-node { min-width: 0; flex: 1; }
 
-        /* Flow Lines and Data Packets */
-        .connector-line {
-            position: absolute;
-            background: var(--border);
-            z-index: 1;
-        }
+    @media (max-width: 640px) {
+      .proxy-node { min-width: 0; width: 100%; }
+      .proxy-split { flex-direction: column; }
+      .proxy-branch { display: none; }
+      .proxy-connector { height: 16px; }
+    }
 
-        .packet {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            z-index: 3;
-        }
+    /* ── Export block ───────────────────────────────────────── */
+    .export-block {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .export-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .export-text p { font-size: var(--small); color: var(--mid); line-height: 1.7; margin: 0; }
+    .export-text strong { color: var(--charcoal); }
+    .export-link { display: inline-block; margin-top: 8px; }
 
-        @keyframes flowDown {
-            0% { top: 45px; opacity: 1; }
-            100% { top: 115px; opacity: 0; }
-        }
+    .btn-export {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: var(--small);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 16px 28px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .btn-export:hover:not(:disabled) { background: var(--accent-dim); }
+    .btn-export:disabled { background: var(--border); color: var(--faint); cursor: default; }
 
-        @keyframes flowLeft {
-            0% { top: 140px; left: 50%; width: 2px; height: 2px; background: var(--safe-color); }
-            50% { top: 200px; left: 25%; }
-            100% { top: 250px; left: 25%; opacity: 0; }
-        }
+    @media (max-width: 640px) {
+      .export-row { flex-direction: column; align-items: stretch; gap: 16px; }
+      .btn-export { width: 100%; text-align: center; }
+    }
 
-        @keyframes flowRight {
-            0% { top: 140px; left: 50%; width: 2px; height: 2px; }
-            50% { top: 200px; left: 75%; }
-            100% { top: 250px; left: 75%; opacity: 0; }
-        }
+    /* ── Modal ──────────────────────────────────────────────── */
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-dim); }
+    .btn-primary:disabled { background: var(--border); color: var(--faint); cursor: default; }
+    .btn-block { width: 100%; }
 
-        .pane-desc { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-top: 4px; display: block;}
-    </style>
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 42, 40, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 28px;
+      max-width: 380px;
+      width: 100%;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--faint);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+    .modal-close:hover { color: var(--charcoal); }
+    .modal-box h3 { margin-bottom: 8px; padding-right: 20px; }
+    .modal-box p { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
+    .modal-box input[type="email"] {
+      width: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      padding: 10px 12px;
+      border: var(--hairline);
+      background: var(--bg);
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+    .modal-box input[type="email"]:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .modal-disclaimer { font-size: 11px; color: var(--faint); margin-top: 12px; line-height: 1.6; }
+    .modal-error { font-size: 11px; color: #b45309; margin-bottom: 8px; display: none; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Interactive Architecture Tool: NHI Remediator Proxy Logic</h2>
-    
-    <div class="controls">
-        <div class="control-group">
-            <label for="routingMode">Routing Enforcement Mode</label>
-            <select id="routingMode" onchange="updateSimulation()">
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tools/">Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Proxy Routing Simulator</span>
+        </div>
+
+        <span class="page-label">Tool</span>
+        <h1>What Happens When You Cut Off an Orphaned Identity?</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">Shadow logging vs. hard block, side by side</p>
+
+        <p class="lead">
+          <a href="/guides/nhi-rollout/#phase-4">Phase 4 of the NHI rollout guide</a>
+          argues for shadow logging over an outright revocation when an orphaned
+          identity is still making active calls — the audit trail from a scoped
+          deny is the signal, not the block itself. This simulates both routing
+          modes for the same traffic, so the difference shows up in the metrics
+          instead of staying an abstract argument.
+        </p>
+
+        <div class="calc-section">
+          <h3>Simulation inputs</h3>
+          <p class="calc-section-note">Neither input changes anything in your environment — this is a model of the tradeoff, not a live connection.</p>
+          <div class="controls-grid">
+            <div class="control-group">
+              <label for="routing-mode">Routing enforcement mode</label>
+              <select class="calc-select" id="routing-mode">
                 <option value="shadow">Shadow Logging (Safe-Fail Mode)</option>
                 <option value="block">Hard Block (Legacy IAM Mode)</option>
-            </select>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="traffic-slider">Active orphan request volume (req/sec)</label>
+              <input type="range" class="calc-range" id="traffic-slider" min="10" max="500" value="140" step="10">
+              <span class="control-value" id="traffic-display">140 req/sec</span>
+            </div>
+          </div>
         </div>
-        <div class="control-group">
-            <label for="trafficSlider">Active Orphan Request Volume (req/sec)</label>
-            <input type="range" id="trafficSlider" min="10" max="500" value="140" oninput="updateSimulation()">
-            <span id="trafficVal" style="font-size: 0.85rem; color: var(--text-muted)">140 req/sec</span>
-        </div>
-    </div>
 
-    <div class="metrics-grid">
-        <div class="metric-card" id="coverageCard">
-            <label>Security Insight Coverage</label>
-            <div class="metric-val" id="metricCoverage">100%</div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-card-label">Security insight coverage</div>
+            <div class="metric-card-value" id="metric-coverage">100%</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Induced pipeline outages</div>
+            <div class="metric-card-value" id="metric-outages">0%</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-card-label">Telemetry collection state</div>
+            <div class="metric-card-value state" id="metric-state">Active Auditing</div>
+          </div>
         </div>
-        <div class="metric-card safe" id="downtimeCard">
-            <label>Induced Pipeline Outages</label>
-            <div class="metric-val" id="metricDowntime">0%</div>
-        </div>
-        <div class="metric-card" id="handlingCard">
-            <label>Telemetry Collection State</label>
-            <div class="metric-val" id="metricState" style="font-size: 1.3rem; padding-top: 8px;">Active Auditing</div>
-        </div>
-    </div>
 
-    <div class="diagram-box" id="canvas">
-        <div class="connector-line" style="top: 70px; left: 50%; width: 2px; height: 50px;"></div>
-        <div id="leftLine" class="connector-line" style="top: 155px; left: 25%; width: 26%; height: 2px; transform: rotate(20deg); transform-origin: right center;"></div>
-        <div id="rightLine" class="connector-line" style="top: 155px; left: 50%; width: 26%; height: 2px; transform: rotate(-20deg); transform-origin: left center;"></div>
-
-        <div class="node">
+        <div class="proxy-diagram">
+          <div class="proxy-node">
             Incoming Orphan Requests
-            <span class="pane-desc" id="flowInputDisplay">140 token calls/sec</span>
-        </div>
-        
-        <div class="node active-proxy" id="proxyNode">
+            <span class="proxy-node-sub" id="node-input">140 token calls/sec</span>
+          </div>
+          <div class="proxy-connector"></div>
+          <div class="proxy-node proxy-router">
             Inline Proxy Router
-            <span class="pane-desc" id="proxySub">Mode: Passive Telemetry Copy</span>
-        </div>
-        
-        <div class="split-row">
-            <div class="node ledger" id="leftNode">
-                Remediation Ledger
-                <span class="pane-desc" id="leftSub">Logging Context IP & Payload</span>
+            <span class="proxy-node-sub" id="node-proxy">Mode: Passive Telemetry Copy</span>
+          </div>
+          <svg class="proxy-branch" viewBox="0 0 360 32" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="180" y1="0" x2="60" y2="32"></line>
+            <line x1="180" y1="0" x2="300" y2="32"></line>
+          </svg>
+          <div class="proxy-split">
+            <div class="proxy-node" id="node-ledger">
+              Remediation Ledger
+              <span class="proxy-node-sub" id="node-ledger-sub">Logging Context IP &amp; Payload</span>
             </div>
-            <div class="node destination" id="rightNode">
-                Production Database
-                <span class="pane-desc" id="rightSub">Status: 200 OK (Passing)</span>
+            <div class="proxy-node" id="node-db">
+              Production Database
+              <span class="proxy-node-sub" id="node-db-sub">Status: 200 OK (Passing)</span>
             </div>
+          </div>
         </div>
+
+        <p>
+          The 0%/100% split on induced outages isn't a forecast for any specific
+          environment — it's the structural point: a scoped deny that only blocks
+          actions inconsistent with the identity's role doesn't touch the request
+          path shown here at all, while a hard block severs it entirely regardless
+          of whether anything downstream still depends on it.
+        </p>
+
+        <div class="export-block">
+          <div class="export-row">
+            <div class="export-text">
+              <p><strong>Export this scenario.</strong> Download the selected mode, traffic volume, and resulting metrics as a PDF. Requires a free subscription.</p>
+            </div>
+            <button type="button" class="btn-export" id="export-pdf-btn">Export PDF →</button>
+          </div>
+          <a href="/subscribe/" class="export-link" style="font-size:11px; color:var(--accent);">See what's in the paid edition →</a>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
     </div>
-</div>
+  </footer>
 
-<script>
-    let animationInterval;
+  <!-- Email-gate modal -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h3>Get your PDF</h3>
+      <p>Enter your email and your results will open as a printable PDF in a new tab.</p>
+      <div class="modal-error" id="modal-error"></div>
+      <input type="email" id="modal-email" placeholder="your@email.com" aria-label="Email address">
+      <button type="button" class="btn btn-primary btn-block" id="modal-submit">Export as PDF</button>
+      <p class="modal-disclaimer">We'll also add you to occasional NHI security research emails. Unsubscribe anytime.</p>
+    </div>
+  </div>
 
-    function updateSimulation() {
-        const mode = document.getElementById('routingMode').value;
-        const traffic = document.getElementById('trafficSlider').value;
-        
-        document.getElementById('trafficVal').innerText = `${traffic} req/sec`;
-        document.getElementById('flowInputDisplay').innerText = `${traffic} token calls/sec`;
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
 
-        const mCoverage = document.getElementById('metricCoverage');
-        const mDowntime = document.getElementById('metricDowntime');
-        const mState = document.getElementById('metricState');
-        const dCard = document.getElementById('downtimeCard');
-        
-        const proxySub = document.getElementById('proxySub');
-        const leftNode = document.getElementById('leftNode');
-        const rightNode = document.getElementById('rightNode');
-        const leftSub = document.getElementById('leftSub');
-        const rightSub = document.getElementById('rightSub');
+  <script>
+    const MODES = {
+      shadow: {
+        label: 'Shadow Logging (Safe-Fail Mode)',
+        coverage: 100,
+        outages: 0,
+        state: 'Active Auditing',
+        stateNegative: false,
+        proxySub: 'Mode: Passive Telemetry Copy',
+        ledgerSub: 'Logging Context IP & Payload',
+        ledgerActive: true,
+        dbSub: 'Status: 200 OK (Passing)',
+        dbNegative: false,
+      },
+      block: {
+        label: 'Hard Block (Legacy IAM Mode)',
+        coverage: 20,
+        outages: 100,
+        state: 'Pipeline Dropped',
+        stateNegative: true,
+        proxySub: 'Mode: Immediate TCP Reset',
+        ledgerSub: 'Zero Data Collected',
+        ledgerActive: false,
+        dbSub: 'Status: 401 Unauthorized (Crash)',
+        dbNegative: true,
+      }
+    };
 
-        clearInterval(animationInterval);
+    const routingMode = document.getElementById('routing-mode');
+    const trafficSlider = document.getElementById('traffic-slider');
+    const trafficDisplay = document.getElementById('traffic-display');
 
-        if (mode === 'shadow') {
-            // Shadow Mode Metrics
-            mCoverage.innerText = "100%";
-            mCoverage.style.color = "var(--safe-color)";
-            mDowntime.innerText = "0%";
-            dCard.className = "metric-card safe";
-            mState.innerText = "Active Auditing";
-            mState.style.color = "var(--accent-color)";
+    const metricCoverage = document.getElementById('metric-coverage');
+    const metricOutages = document.getElementById('metric-outages');
+    const metricState = document.getElementById('metric-state');
 
-            // Node states UI update
-            proxySub.innerText = "Mode: Passive Telemetry Copy";
-            leftNode.style.opacity = "1";
-            leftNode.style.borderColor = "var(--safe-color)";
-            leftSub.innerText = "Logging Context IP & Payload";
-            rightNode.style.borderColor = "var(--border)";
-            rightNode.style.background = "var(--bg-card)";
-            rightSub.innerText = "Status: 200 OK (Passing)";
-            document.getElementById('leftLine').style.display = "block";
+    const nodeInput = document.getElementById('node-input');
+    const nodeProxy = document.getElementById('node-proxy');
+    const nodeLedger = document.getElementById('node-ledger');
+    const nodeLedgerSub = document.getElementById('node-ledger-sub');
+    const nodeDb = document.getElementById('node-db');
+    const nodeDbSub = document.getElementById('node-db-sub');
 
-            triggerPackets('shadow', traffic);
+    function render() {
+      const mode = MODES[routingMode.value];
+      const traffic = trafficSlider.value;
+
+      trafficDisplay.textContent = traffic + ' req/sec';
+      nodeInput.textContent = traffic + ' token calls/sec';
+
+      metricCoverage.textContent = mode.coverage + '%';
+      metricCoverage.className = 'metric-card-value ' + (mode.coverage >= 50 ? 'positive' : 'negative');
+
+      metricOutages.textContent = mode.outages + '%';
+      metricOutages.className = 'metric-card-value ' + (mode.outages === 0 ? 'positive' : 'negative');
+
+      metricState.textContent = mode.state;
+      metricState.className = 'metric-card-value state' + (mode.stateNegative ? ' negative' : '');
+
+      nodeProxy.textContent = mode.proxySub;
+
+      nodeLedgerSub.textContent = mode.ledgerSub;
+      nodeLedger.style.borderColor = mode.ledgerActive ? '#2e7d32' : 'var(--border)';
+      nodeLedger.style.background = mode.ledgerActive ? 'var(--surface)' : 'var(--bg)';
+      nodeLedger.style.opacity = mode.ledgerActive ? '1' : '0.5';
+
+      nodeDbSub.textContent = mode.dbSub;
+      nodeDb.style.borderColor = mode.dbNegative ? '#b91c1c' : 'var(--border)';
+      nodeDb.style.background = mode.dbNegative ? '#fdf2f2' : 'var(--surface)';
+    }
+
+    routingMode.addEventListener('change', render);
+    trafficSlider.addEventListener('input', render);
+    render();
+
+    /* ── Export / email-gate modal ─────────────────────────── */
+    const overlay = document.getElementById('modal-overlay');
+    const modalEmail = document.getElementById('modal-email');
+    const modalError = document.getElementById('modal-error');
+    const modalSubmit = document.getElementById('modal-submit');
+
+    document.getElementById('export-pdf-btn').addEventListener('click', () => {
+      overlay.hidden = false;
+      modalEmail.focus();
+    });
+    document.getElementById('modal-close').addEventListener('click', () => { overlay.hidden = true; });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.hidden = true; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.hidden = true; });
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    const WORKER_URL = 'https://newsletter.nonhumanidentitysoftware.com';
+    const GROUP_ID = '189858273326793780'; // Defender Free
+
+    function buildPrintableHTML() {
+      const mode = MODES[routingMode.value];
+      const traffic = trafficSlider.value;
+      const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy Routing Simulation — ${date}</title>
+<style>
+  body { font-family: 'Space Mono', monospace; color: #2a2a28; padding: 48px; max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  .meta { font-size: 11px; color: #9b9b98; margin-bottom: 32px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .scenario { border: 1px solid #7B3FA6; background: #F0E8F7; padding: 20px; margin-bottom: 24px; font-size: 13px; line-height: 1.8; }
+  .scenario strong { color: #7B3FA6; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #d8d8d6; }
+  th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b6b68; }
+  .positive { color: #2e7d32; font-weight: 700; }
+  .negative { color: #b91c1c; font-weight: 700; }
+  .footer-note { font-size: 11px; color: #9b9b98; line-height: 1.6; margin-top: 40px; border-top: 1px solid #d8d8d6; padding-top: 16px; }
+  @media print { body { padding: 24px; } }
+</style>
+</head>
+<body>
+  <h1>Proxy Routing Simulation \u2014 Results</h1>
+  <div class="meta">Generated ${date} \u00b7 nonhumanidentitysoftware.com/tools/architectural-simulation/</div>
+
+  <div class="scenario">
+    <strong>Routing mode:</strong> ${mode.label}<br>
+    <strong>Orphan request volume:</strong> ${traffic} req/sec
+  </div>
+
+  <table>
+    <thead><tr><th>Metric</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Security insight coverage</td><td class="${mode.coverage >= 50 ? 'positive' : 'negative'}">${mode.coverage}%</td></tr>
+      <tr><td>Induced pipeline outages</td><td class="${mode.outages === 0 ? 'positive' : 'negative'}">${mode.outages}%</td></tr>
+      <tr><td>Telemetry collection state</td><td class="${mode.stateNegative ? 'negative' : 'positive'}">${mode.state}</td></tr>
+      <tr><td>Proxy router</td><td>${mode.proxySub}</td></tr>
+      <tr><td>Remediation ledger</td><td>${mode.ledgerSub}</td></tr>
+      <tr><td>Production database</td><td>${mode.dbSub}</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    This is a model of the tradeoff between shadow logging and hard block
+    routing for orphaned NHI traffic, not a measurement of any specific
+    environment. See Phase 4 of the NHI rollout guide at
+    nonhumanidentitysoftware.com/guides/nhi-rollout/#phase-4 for the underlying
+    Conditional Deny pattern.
+  </div>
+
+  <script>window.onload = function(){ window.print(); };<\/script>
+</body>
+</html>`;
+    }
+
+    modalSubmit.addEventListener('click', async () => {
+      const email = modalEmail.value.trim();
+
+      if (!isValidEmail(email)) {
+        modalError.textContent = 'Enter a valid email address.';
+        modalError.style.display = 'block';
+        return;
+      }
+      modalError.style.display = 'none';
+
+      const tab = window.open('', '_blank');
+
+      modalSubmit.disabled = true;
+      modalSubmit.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, group_id: GROUP_ID }),
+        });
+        const data = await response.json();
+
+        if (data.message === 'Subscribed') {
+          if (tab) {
+            tab.document.open();
+            tab.document.write(buildPrintableHTML());
+            tab.document.close();
+          }
+          overlay.hidden = true;
+          modalEmail.value = '';
         } else {
-            // Hard Block Mode Metrics
-            mCoverage.innerText = "20%";
-            mCoverage.style.color = "var(--danger-color)";
-            mDowntime.innerText = "100%";
-            dCard.className = "metric-card danger";
-            mState.innerText = "Pipeline Dropped";
-            mState.style.color = "var(--danger-color)";
-
-            // Node states UI update
-            proxySub.innerText = "Mode: Immediate TCP Reset";
-            leftNode.style.opacity = "0.2";
-            leftNode.style.borderColor = "var(--border)";
-            leftSub.innerText = "Zero Data Collected";
-            rightNode.style.borderColor = "var(--danger-color)";
-            rightNode.style.background = "rgba(239, 68, 68, 0.05)";
-            rightSub.innerText = "Status: 401 Unauthorized (Crash)";
-            document.getElementById('leftLine').style.display = "none";
-
-            triggerPackets('block', traffic);
+          if (tab) tab.close();
+          modalError.textContent = data.detail || 'Something went wrong. Please try again.';
+          modalError.style.display = 'block';
         }
+      } catch (err) {
+        if (tab) tab.close();
+        modalError.textContent = 'Something went wrong. Please try again.';
+        modalError.style.display = 'block';
+      } finally {
+        modalSubmit.disabled = false;
+        modalSubmit.textContent = 'Export as PDF';
+      }
+    });
+  </script>
+
+</body>
+</html>

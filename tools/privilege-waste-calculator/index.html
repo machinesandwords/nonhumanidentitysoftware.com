@@ -6,14 +6,14 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-  <title>How Many Non-Human Identities Do You Actually Have? — NHI Ratio Calculator | Non-Human Identity Software</title>
-  <meta name="description" content="Estimate your organization's own NHI-to-human identity ratio based on your environment — applications, cloud accounts, CI/CD pipelines, and SaaS integrations — rather than an industry-wide average.">
-  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/ratio-calculator/">
+  <title>How Many Dormant Permissions Are You Carrying? — Privilege Waste Calculator | Non-Human Identity Software</title>
+  <meta name="description" content="Turn your environment's scale and your access-analyzer unused-permissions percentage into an actual count of dormant permissions, including how many are high-risk.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/privilege-waste-calculator/">
 
-  <meta property="og:title" content="How Many Non-Human Identities Do You Actually Have? | Non-Human Identity Software">
-  <meta property="og:description" content="Estimate your own NHI-to-human ratio based on your environment, not an industry-wide average.">
+  <meta property="og:title" content="How Many Dormant Permissions Are You Carrying? | Non-Human Identity Software">
+  <meta property="og:description" content="Turn your environment's scale and unused-permissions percentage into an actual count of dormant permissions, including how many are high-risk.">
   <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
-  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/ratio-calculator/">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/privilege-waste-calculator/">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
       { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://nonhumanidentitysoftware.com/tools/" },
-      { "@type": "ListItem", "position": 3, "name": "NHI Ratio Calculator", "item": "https://nonhumanidentitysoftware.com/tools/ratio-calculator/" }
+      { "@type": "ListItem", "position": 3, "name": "Privilege Waste Calculator", "item": "https://nonhumanidentitysoftware.com/tools/privilege-waste-calculator/" }
     ]
   }
   </script>
@@ -89,6 +89,34 @@
     details.calc-section .calc-section-note { margin-top: 12px; }
     details.calc-section .calc-row:first-of-type { margin-top: 4px; }
 
+    /* ── Range / what-if ────────────────────────────────────── */
+    .range-row { padding: 10px 0; }
+    .range-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 16px;
+    }
+    .range-row-label { font-size: var(--small); }
+    .range-row-sub { font-size: 11px; color: var(--faint); display: block; margin-top: 2px; }
+    .range-value { font-weight: 700; color: var(--accent); font-size: var(--small); flex-shrink: 0; }
+    .range-row input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .whatif-result {
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+      background: var(--bg);
+      padding: 14px 16px;
+      margin-top: 16px;
+      font-size: var(--small);
+      line-height: 1.7;
+    }
+    .whatif-result strong { color: var(--accent); }
+
     /* ── Results ────────────────────────────────────────────── */
     .results-block {
       background: var(--accent-pale);
@@ -116,6 +144,15 @@
     }
     .results-ratio span { color: var(--accent); }
     .results-sub { font-size: var(--small); color: var(--mid); }
+    .results-highlight {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      font-size: var(--small);
+    }
+    .results-highlight strong { color: #b91c1c; }
 
     /* ── Breakdown table ────────────────────────────────────── */
     .breakdown-table { width: 100%; border-collapse: collapse; margin: 4px 0; }
@@ -127,6 +164,7 @@
     }
     .breakdown-table th { color: var(--mid); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
     .breakdown-table td.num, .breakdown-table th.num { text-align: right; font-family: 'Space Mono', monospace; }
+    .breakdown-table tr.indent td:first-child { padding-left: 24px; color: var(--mid); }
     .breakdown-table tr.total td { font-weight: 700; border-top: 2px solid var(--charcoal); border-bottom: none; }
 
     /* ── Export block ───────────────────────────────────────── */
@@ -167,6 +205,7 @@
     @media (max-width: 640px) {
       .export-row { flex-direction: column; align-items: stretch; gap: 16px; }
       .btn-export { width: 100%; text-align: center; }
+      .range-row-top { flex-direction: column; gap: 4px; }
     }
 
     /* ── Modal ──────────────────────────────────────────────── */
@@ -257,19 +296,20 @@
           <span class="breadcrumb-sep">/</span>
           <a href="/tools/">Tools</a>
           <span class="breadcrumb-sep">/</span>
-          <span>NHI Ratio Calculator</span>
+          <span>Privilege Waste Calculator</span>
         </div>
 
         <span class="page-label">Tool</span>
-        <h1>How Many Non-Human Identities Do You Actually Have?</h1>
-        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">An estimate based on your environment, not an industry average</p>
+        <h1>How Many Dormant Permissions Are You Carrying?</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">From "the list is long" to an actual number</p>
 
         <p class="lead">
-          "NHIs outnumber humans 10:1" — or 20:1, or 50:1, depending on which
-          vendor's report you read. Those figures describe someone else's
-          environment. This calculator estimates yours: enter a few counts from
-          your own infrastructure, and adjust the assumptions below if you have
-          better numbers than the defaults.
+          Pull the unused-permissions report from AWS IAM Access Analyzer, Azure
+          Access Reviews, or GCP Policy Analyzer and the list is usually long —
+          but "long" isn't a number anyone can act on. Enter your environment's
+          scale and that percentage, and this turns it into an actual count,
+          including how many of those dormant permissions are the kind that
+          matter most if something goes wrong.
         </p>
 
         <div class="calc-section">
@@ -277,81 +317,76 @@
           <p class="calc-section-note">Rough counts are fine — this is an estimate, not an audit.</p>
 
           <div class="calc-row">
-            <span class="calc-row-label">Human employees with system access<span class="calc-row-sub">Engineering, IT, and anyone with credentials to internal systems</span></span>
-            <input type="number" class="calc-input" id="humans" value="500" min="0">
+            <span class="calc-row-label">Non-human identities with assigned permissions<span class="calc-row-sub">Service accounts, IAM roles, function execution roles, etc.</span></span>
+            <input type="number" class="calc-input" id="identities" value="400" min="0">
           </div>
           <div class="calc-row">
-            <span class="calc-row-label">Applications / microservices<span class="calc-row-sub">Each one typically holds its own credentials</span></span>
-            <input type="number" class="calc-input" id="apps" value="80" min="0">
+            <span class="calc-row-label">Average permissions per identity<span class="calc-row-sub">Individual permissions or policy statements, not just attached policies</span></span>
+            <input type="number" class="calc-input" id="perms-per" value="25" min="0">
           </div>
           <div class="calc-row">
-            <span class="calc-row-label">Cloud accounts / projects<span class="calc-row-sub">AWS accounts, GCP projects, Azure subscriptions — combined</span></span>
-            <input type="number" class="calc-input" id="cloud" value="12" min="0">
-          </div>
-          <div class="calc-row">
-            <span class="calc-row-label">CI/CD pipelines<span class="calc-row-sub">Build and deployment pipelines with their own credentials</span></span>
-            <input type="number" class="calc-input" id="pipelines" value="40" min="0">
-          </div>
-          <div class="calc-row">
-            <span class="calc-row-label">SaaS integrations<span class="calc-row-sub">Third-party apps connected via OAuth — Slack, Salesforce, M365, etc.</span></span>
-            <input type="number" class="calc-input" id="saas" value="25" min="0">
+            <span class="calc-row-label">Share of permissions flagged as unused<span class="calc-row-sub">From Access Analyzer / Access Advisor / Policy Analyzer, typically a 90-day window</span></span>
+            <input type="number" class="calc-input" id="unused-pct" value="35" min="0" max="100">
           </div>
         </div>
 
         <details class="calc-section">
           <summary>Assumptions (adjust if you have better numbers)</summary>
           <p class="calc-section-note">
-            These multipliers are illustrative starting points based on common
-            patterns in cloud-native environments — not measurements of your
-            environment specifically. If you've run a discovery scan or pulled
-            numbers from your cloud console, replace these with your own.
+            "High-risk" here means action types like delete, create-user, attach-policy,
+            and other write/admin-tier actions — the ones where an unused grant is
+            most worth prioritizing first.
           </p>
 
           <div class="calc-row">
-            <span class="calc-row-label">NHIs per application/microservice<span class="calc-row-sub">Database service accounts, API keys for dependencies, deployment tokens</span></span>
-            <input type="number" class="calc-input" id="apps-mult" value="3" min="0" step="0.5">
-          </div>
-          <div class="calc-row">
-            <span class="calc-row-label">NHIs per cloud account/project<span class="calc-row-sub">IAM roles, service accounts, instance profiles, function execution roles</span></span>
-            <input type="number" class="calc-input" id="cloud-mult" value="15" min="0" step="0.5">
-          </div>
-          <div class="calc-row">
-            <span class="calc-row-label">NHIs per CI/CD pipeline<span class="calc-row-sub">Build credentials, deployment tokens</span></span>
-            <input type="number" class="calc-input" id="pipelines-mult" value="2" min="0" step="0.5">
-          </div>
-          <div class="calc-row">
-            <span class="calc-row-label">NHIs per SaaS integration<span class="calc-row-sub">The integration's own service identity, plus any sub-connections it creates</span></span>
-            <input type="number" class="calc-input" id="saas-mult" value="2" min="0" step="0.5">
+            <span class="calc-row-label">Share of dormant permissions that are high-risk action types<span class="calc-row-sub">Delete, admin, create-user, attach-policy, and similar</span></span>
+            <input type="number" class="calc-input" id="highrisk-pct" value="20" min="0" max="100">
           </div>
         </details>
 
         <div class="results-block">
-          <span class="results-label">Your estimated ratio</span>
-          <div class="results-ratio"><span id="ratio-value">9.6</span> : 1</div>
-          <div class="results-sub" id="ratio-sub">~<span id="total-nhis">4,800</span> estimated non-human identities for <span id="total-humans">500</span> human employees</div>
+          <span class="results-label">Estimated dormant permissions</span>
+          <div class="results-ratio" id="dormant-value">3,500</div>
+          <div class="results-sub" id="dormant-sub">~35% of 10,000 total permissions across 400 identities</div>
+          <div class="results-highlight" id="highrisk-highlight"><strong id="highrisk-value">700</strong> of these are high-risk action types</div>
         </div>
 
-        <h3>Where the estimate comes from</h3>
+        <h3>Where the number comes from</h3>
         <div class="table-wrap">
           <table class="breakdown-table">
             <thead>
-              <tr>
-                <th>Source</th>
-                <th class="num">Count</th>
-                <th class="num">× Multiplier</th>
-                <th class="num">≈ NHIs</th>
-              </tr>
+              <tr><th>Category</th><th class="num">Count</th></tr>
             </thead>
-            <tbody id="breakdown-body">
-              <!-- populated by JS -->
-            </tbody>
+            <tbody id="breakdown-body"></tbody>
           </table>
         </div>
+
+        <div class="calc-section">
+          <h3>What if you addressed some of this next review cycle?</h3>
+          <p class="calc-section-note">See what removing a share of dormant permissions would leave for the next cycle.</p>
+          <div class="range-row">
+            <div class="range-row-top">
+              <span class="range-row-label">Share of dormant permissions addressed this cycle<span class="range-row-sub">Assumes high-risk and lower-risk permissions are addressed proportionally</span></span>
+              <span class="range-value" id="whatif-pct">50%</span>
+            </div>
+            <input type="range" id="whatif-slider" min="0" max="100" value="50" step="5">
+          </div>
+          <div class="whatif-result" id="whatif-result"></div>
+        </div>
+
+        <p>
+          This is the aggregate version of the usage-delta matrix from
+          <a href="/guides/nhi-rollout/#phase-3">Phase 3 of the NHI rollout guide</a>
+          — pulling the per-identity list and finding it long is the starting
+          point; this is roughly how long. The same guide's shadow-policy
+          dry-run is the mechanism for safely removing what shows up here without
+          breaking anything that turns out to still be needed.
+        </p>
 
         <div class="export-block">
           <div class="export-row">
             <div class="export-text">
-              <p><strong>Export your estimate.</strong> Download this breakdown — including your inputs and assumptions — as a PDF to share with your team. Requires a free subscription.</p>
+              <p><strong>Export this breakdown.</strong> Download this — including your inputs and the what-if comparison — as a PDF to share with your team. Requires a free subscription.</p>
             </div>
             <button type="button" class="btn-export" id="export-pdf-btn">Export PDF →</button>
           </div>
@@ -387,73 +422,86 @@
 
   <script>
     const inputs = {
-      humans: document.getElementById('humans'),
-      apps: document.getElementById('apps'),
-      cloud: document.getElementById('cloud'),
-      pipelines: document.getElementById('pipelines'),
-      saas: document.getElementById('saas'),
-      appsMult: document.getElementById('apps-mult'),
-      cloudMult: document.getElementById('cloud-mult'),
-      pipelinesMult: document.getElementById('pipelines-mult'),
-      saasMult: document.getElementById('saas-mult'),
+      identities: document.getElementById('identities'),
+      permsPer: document.getElementById('perms-per'),
+      unusedPct: document.getElementById('unused-pct'),
+      highRiskPct: document.getElementById('highrisk-pct'),
     };
-
-    const sources = [
-      { key: 'apps', multKey: 'appsMult', label: 'Applications / microservices' },
-      { key: 'cloud', multKey: 'cloudMult', label: 'Cloud accounts / projects' },
-      { key: 'pipelines', multKey: 'pipelinesMult', label: 'CI/CD pipelines' },
-      { key: 'saas', multKey: 'saasMult', label: 'SaaS integrations' },
-    ];
+    const whatifSlider = document.getElementById('whatif-slider');
+    const whatifPct = document.getElementById('whatif-pct');
+    const whatifResult = document.getElementById('whatif-result');
 
     function num(el) {
       const v = parseFloat(el.value);
       return isNaN(v) || v < 0 ? 0 : v;
     }
+    function pct(el) {
+      const v = num(el);
+      return Math.min(v, 100);
+    }
 
     function compute() {
-      const humans = num(inputs.humans);
-      let totalNHIs = 0;
-      const rows = sources.map(s => {
-        const count = num(inputs[s.key]);
-        const mult = num(inputs[s.multKey]);
-        const subtotal = count * mult;
-        totalNHIs += subtotal;
-        return { label: s.label, count, mult, subtotal };
-      });
-      const ratio = humans > 0 ? totalNHIs / humans : 0;
-      return { humans, totalNHIs, ratio, rows };
+      const identities = num(inputs.identities);
+      const permsPer = num(inputs.permsPer);
+      const unusedPct = pct(inputs.unusedPct);
+      const highRiskPct = pct(inputs.highRiskPct);
+
+      const totalPerms = identities * permsPer;
+      const dormant = totalPerms * (unusedPct / 100);
+      const highRiskDormant = dormant * (highRiskPct / 100);
+      const lowerRiskDormant = dormant - highRiskDormant;
+
+      return { identities, permsPer, unusedPct, highRiskPct, totalPerms, dormant, highRiskDormant, lowerRiskDormant };
     }
 
     function formatNum(n) {
       return Math.round(n).toLocaleString('en-US');
     }
 
-    function formatRatio(n) {
-      if (n >= 100) return Math.round(n).toString();
-      return (Math.round(n * 10) / 10).toString();
+    function computeWhatIf(state, addressPct) {
+      const addressed = state.dormant * (addressPct / 100);
+      const addressedHighRisk = state.highRiskDormant * (addressPct / 100);
+      const remaining = state.dormant - addressed;
+      const remainingHighRisk = state.highRiskDormant - addressedHighRisk;
+      return { addressed, addressedHighRisk, remaining, remainingHighRisk };
     }
 
     function render() {
-      const { humans, totalNHIs, ratio, rows } = compute();
+      const state = compute();
 
-      document.getElementById('ratio-value').textContent = formatRatio(ratio);
-      document.getElementById('total-nhis').textContent = formatNum(totalNHIs);
-      document.getElementById('total-humans').textContent = formatNum(humans);
+      document.getElementById('dormant-value').textContent = formatNum(state.dormant);
+      document.getElementById('dormant-sub').textContent =
+        `~${state.unusedPct}% of ${formatNum(state.totalPerms)} total permissions across ${formatNum(state.identities)} identities`;
+      document.getElementById('highrisk-value').textContent = formatNum(state.highRiskDormant);
 
       const tbody = document.getElementById('breakdown-body');
       tbody.innerHTML = '';
+      const rows = [
+        { label: 'Total permissions across environment', value: state.totalPerms, cls: '' },
+        { label: 'Dormant (unused) permissions', value: state.dormant, cls: '' },
+        { label: 'Of which, high-risk action types', value: state.highRiskDormant, cls: 'indent' },
+        { label: 'Of which, lower-risk action types', value: state.lowerRiskDormant, cls: 'indent' },
+      ];
       rows.forEach(r => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${r.label}</td><td class="num">${formatNum(r.count)}</td><td class="num">${r.mult}</td><td class="num">${formatNum(r.subtotal)}</td>`;
+        if (r.cls) tr.className = r.cls;
+        tr.innerHTML = `<td>${r.label}</td><td class="num">${formatNum(r.value)}</td>`;
         tbody.appendChild(tr);
       });
-      const totalTr = document.createElement('tr');
-      totalTr.className = 'total';
-      totalTr.innerHTML = `<td>Total estimated NHIs</td><td></td><td></td><td class="num">${formatNum(totalNHIs)}</td>`;
-      tbody.appendChild(totalTr);
+
+      const addressPct = parseInt(whatifSlider.value, 10);
+      whatifPct.textContent = addressPct + '%';
+      const wi = computeWhatIf(state, addressPct);
+
+      if (addressPct === 0 || state.dormant === 0) {
+        whatifResult.innerHTML = `Addressing dormant permissions this cycle would reduce the <strong>${formatNum(state.dormant)}</strong> currently dormant. Move the slider to see the effect.`;
+      } else {
+        whatifResult.innerHTML = `Addressing <strong>${addressPct}%</strong> of dormant permissions this cycle removes <strong>${formatNum(wi.addressed)}</strong> permissions (including <strong>${formatNum(wi.addressedHighRisk)}</strong> high-risk ones), leaving <strong>${formatNum(wi.remaining)}</strong> dormant (<strong>${formatNum(wi.remainingHighRisk)}</strong> high-risk) for the next cycle.`;
+      }
     }
 
     Object.values(inputs).forEach(el => el.addEventListener('input', render));
+    whatifSlider.addEventListener('input', render);
     render();
 
     /* ── Export / email-gate modal ─────────────────────────── */
@@ -478,58 +526,76 @@
     const GROUP_ID = '189858273326793780'; // Defender Free
 
     function buildPrintableHTML() {
-      const { humans, totalNHIs, ratio, rows } = compute();
+      const state = compute();
+      const addressPct = parseInt(whatifSlider.value, 10);
+      const wi = computeWhatIf(state, addressPct);
       const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-      const rowsHTML = rows.map(r =>
-        `<tr><td>${r.label}</td><td style="text-align:right">${formatNum(r.count)}</td><td style="text-align:right">${r.mult}</td><td style="text-align:right">${formatNum(r.subtotal)}</td></tr>`
+      const rowsHTML = [
+        { label: 'Total permissions across environment', value: state.totalPerms, indent: false },
+        { label: 'Dormant (unused) permissions', value: state.dormant, indent: false },
+        { label: 'Of which, high-risk action types', value: state.highRiskDormant, indent: true },
+        { label: 'Of which, lower-risk action types', value: state.lowerRiskDormant, indent: true },
+      ].map(r =>
+        `<tr><td${r.indent ? ' style="padding-left:20px;color:#6b6b68;"' : ''}>${r.label}</td><td style="text-align:right">${formatNum(r.value)}</td></tr>`
       ).join('');
+
+      const whatifText = (addressPct === 0 || state.dormant === 0)
+        ? 'No what-if scenario was selected.'
+        : `Addressing ${addressPct}% of dormant permissions this cycle removes ${formatNum(wi.addressed)} permissions (including ${formatNum(wi.addressedHighRisk)} high-risk ones), leaving ${formatNum(wi.remaining)} dormant (${formatNum(wi.remainingHighRisk)} high-risk) for the next cycle.`;
 
       return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>NHI Ratio Estimate — ${date}</title>
+<title>Privilege Waste Estimate — ${date}</title>
 <style>
   body { font-family: 'Space Mono', monospace; color: #2a2a28; padding: 48px; max-width: 640px; margin: 0 auto; }
   h1 { font-size: 18px; margin-bottom: 4px; }
   .meta { font-size: 11px; color: #9b9b98; margin-bottom: 32px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .ratio-block { border: 1px solid #7B3FA6; background: #F0E8F7; padding: 24px; text-align: center; margin-bottom: 32px; }
+  .ratio-block { border: 1px solid #7B3FA6; background: #F0E8F7; padding: 24px; text-align: center; margin-bottom: 24px; }
   .ratio-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7B3FA6; margin-bottom: 8px; }
   .ratio-value { font-size: 40px; font-weight: 700; }
-  .ratio-value span { color: #7B3FA6; }
   .ratio-sub { font-size: 12px; color: #6b6b68; margin-top: 6px; }
+  .highlight { display: inline-block; margin-top: 12px; padding: 6px 14px; background: #fff; border: 1px solid #7B3FA6; font-size: 12px; }
+  .highlight strong { color: #b91c1c; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; }
   th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #d8d8d6; }
   th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b6b68; }
-  tr.total td { font-weight: 700; border-top: 2px solid #2a2a28; border-bottom: none; }
+  .whatif { border: 1px solid #d8d8d6; border-left: 3px solid #7B3FA6; padding: 14px 16px; font-size: 12px; line-height: 1.6; margin-bottom: 24px; }
+  .whatif strong { display: block; margin-bottom: 4px; color: #7B3FA6; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
   .footer-note { font-size: 11px; color: #9b9b98; line-height: 1.6; margin-top: 40px; border-top: 1px solid #d8d8d6; padding-top: 16px; }
   @media print { body { padding: 24px; } }
 </style>
 </head>
 <body>
-  <h1>NHI-to-Human Identity Ratio — Estimate</h1>
-  <div class="meta">Generated ${date} · nonhumanidentitysoftware.com/tools/ratio-calculator/</div>
+  <h1>Privilege Waste \u2014 Estimate</h1>
+  <div class="meta">Generated ${date} \u00b7 nonhumanidentitysoftware.com/tools/privilege-waste-calculator/</div>
 
   <div class="ratio-block">
-    <div class="ratio-label">Estimated ratio</div>
-    <div class="ratio-value"><span>${formatRatio(ratio)}</span> : 1</div>
-    <div class="ratio-sub">~${formatNum(totalNHIs)} estimated non-human identities for ${formatNum(humans)} human employees</div>
+    <div class="ratio-label">Estimated dormant permissions</div>
+    <div class="ratio-value">${formatNum(state.dormant)}</div>
+    <div class="ratio-sub">~${state.unusedPct}% of ${formatNum(state.totalPerms)} total permissions across ${formatNum(state.identities)} identities</div>
+    <div class="highlight"><strong>${formatNum(state.highRiskDormant)}</strong> of these are high-risk action types</div>
   </div>
 
   <table>
-    <thead><tr><th>Source</th><th style="text-align:right">Count</th><th style="text-align:right">× Multiplier</th><th style="text-align:right">≈ NHIs</th></tr></thead>
-    <tbody>
-      ${rowsHTML}
-      <tr class="total"><td>Total estimated NHIs</td><td></td><td></td><td style="text-align:right">${formatNum(totalNHIs)}</td></tr>
-    </tbody>
+    <thead><tr><th>Category</th><th style="text-align:right">Count</th></tr></thead>
+    <tbody>${rowsHTML}</tbody>
   </table>
 
+  <div class="whatif">
+    <strong>What if (${addressPct}% addressed this cycle)</strong>
+    ${whatifText}
+  </div>
+
   <div class="footer-note">
-    This is an estimate based on the inputs and assumptions above, not a discovered inventory.
-    Multipliers reflect common patterns in cloud-native environments and may not match your
-    environment exactly — adjust them at nonhumanidentitysoftware.com/tools/ratio-calculator/
-    if you have your own numbers (for example, from a cloud IAM console or an NHI discovery scan).
+    This is an estimate based on the inputs and assumptions above, not a
+    discovered inventory. The "unused" percentage should come from your cloud
+    provider's access-analysis tooling (AWS IAM Access Analyzer, Azure Access
+    Reviews, GCP Policy Analyzer) \u2014 adjust the inputs at
+    nonhumanidentitysoftware.com/tools/privilege-waste-calculator/ if you have
+    your own numbers.
   </div>
 
   <script>window.onload = function(){ window.print(); };<\/script>
@@ -547,8 +613,6 @@
       }
       modalError.style.display = 'none';
 
-      // Open the tab synchronously, within the click handler, so popup
-      // blockers don't kill it once we're past the await below.
       const tab = window.open('', '_blank');
 
       modalSubmit.disabled = true;
