@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>What Does This OAuth Grant Actually Allow? — OAuth Scope Decoder | Non-Human Identity Software</title>
+  <meta name="description" content="Decode the OAuth scopes a third-party app was granted on Microsoft 365, Google Workspace, or Salesforce into plain English, with a risk read for the combination.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/oauth-scope-decoder/">
+
+  <meta property="og:title" content="What Does This OAuth Grant Actually Allow? | Non-Human Identity Software">
+  <meta property="og:description" content="Decode OAuth scopes granted to a third-party app into plain English, with a risk read for the combination.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/oauth-scope-decoder/">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://nonhumanidentitysoftware.com/tools/" },
+      { "@type": "ListItem", "position": 3, "name": "OAuth Scope Decoder", "item": "https://nonhumanidentitysoftware.com/tools/oauth-scope-decoder/" }
+    ]
+  }
+  </script>
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .tag-critical { border-color: #b91c1c; color: #b91c1c; }
+
+    /* ── Platform tabs ──────────────────────────────────────── */
+    .platform-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .platform-tab {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 10px 16px;
+      border: var(--hairline);
+      background: var(--surface);
+      color: var(--mid);
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .platform-tab:hover { border-color: var(--accent); }
+    .platform-tab.active { border-color: var(--accent); background: var(--accent-pale); color: var(--accent); }
+
+    /* ── Scope checklist ────────────────────────────────────── */
+    .calc-section {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .calc-section h3 { margin-bottom: 4px; }
+    .calc-section-note { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
+
+    .scope-list { display: flex; flex-direction: column; gap: 8px; }
+    .scope-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border: var(--hairline);
+      cursor: pointer;
+      font-size: var(--small);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .scope-option:hover { border-color: var(--accent); }
+    .scope-option.selected { border-color: var(--accent); background: var(--accent-pale); }
+    .scope-option input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .scope-option-body { line-height: 1.6; }
+    .scope-name { font-weight: 700; }
+
+    .offline-toggle {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: var(--small);
+      margin-top: 16px;
+    }
+    .offline-toggle input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* ── Results ────────────────────────────────────────────── */
+    .results-block {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 28px 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .results-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .results-risk { font-size: 40px; font-weight: 700; line-height: 1; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .results-risk.low { color: #2e7d32; }
+    .results-risk.medium { color: #b45309; }
+    .results-risk.high { color: #b91c1c; }
+    .results-risk.none { color: var(--faint); font-size: 20px; }
+    .results-sub { font-size: var(--small); color: var(--mid); }
+
+    .offline-callout {
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: var(--small);
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+    .offline-callout strong { display: block; margin-bottom: 4px; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── Breakdown table ────────────────────────────────────── */
+    .breakdown-table { width: 100%; border-collapse: collapse; margin: 4px 0; }
+    .breakdown-table th, .breakdown-table td {
+      text-align: left;
+      padding: 10px 8px;
+      font-size: var(--small);
+      border-bottom: var(--hairline);
+      vertical-align: top;
+    }
+    .breakdown-table th { color: var(--mid); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── Export + buttons (shared pattern) ─────────────────── */
+    .export-actions { display: flex; }
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dim); }
+    .btn-primary:disabled { background: var(--border); color: var(--faint); cursor: default; }
+    .btn-block { width: 100%; }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(42, 42, 40, 0.6);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; padding: 20px;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box { background: var(--surface); border: var(--hairline); padding: 28px; max-width: 380px; width: 100%; position: relative; }
+    .modal-close { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 18px; color: var(--faint); cursor: pointer; line-height: 1; padding: 4px; }
+    .modal-close:hover { color: var(--charcoal); }
+    .modal-box h3 { margin-bottom: 8px; padding-right: 20px; }
+    .modal-box p { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
+    .modal-box input[type="email"] {
+      width: 100%; font-family: 'Space Mono', monospace; font-size: var(--small);
+      padding: 10px 12px; border: var(--hairline); background: var(--bg); color: var(--charcoal); margin-bottom: 12px;
+    }
+    .modal-box input[type="email"]:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .modal-disclaimer { font-size: 11px; color: var(--faint); margin-top: 12px; line-height: 1.6; }
+    .modal-error { font-size: 11px; color: #b45309; margin-bottom: 8px; display: none; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tools/">Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>OAuth Scope Decoder</span>
+        </div>
+
+        <span class="page-label">Tool</span>
+        <h1>What Does This OAuth Grant Actually Allow?</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">Decode connected-app permissions into plain English</p>
+
+        <p class="lead">
+          Most Microsoft 365, Google Workspace, and Salesforce admin consoles
+          have a page listing connected third-party apps and the scopes each
+          one was granted. The scope names themselves — <code>Mail.ReadWrite</code>,
+          <code>Directory.Read.All</code>, <code>gmail.modify</code> — aren't
+          self-explanatory. Select the platform and the scopes a connected app
+          has, and this shows what that combination actually grants.
+        </p>
+
+        <div class="calc-section">
+          <h3>Platform</h3>
+          <p class="calc-section-note">Each platform has its own scope naming — select one to see its common scopes.</p>
+          <div class="platform-tabs">
+            <button type="button" class="platform-tab active" data-platform="graph">Microsoft 365 (Graph)</button>
+            <button type="button" class="platform-tab" data-platform="google">Google Workspace</button>
+            <button type="button" class="platform-tab" data-platform="salesforce">Salesforce</button>
+          </div>
+
+          <div class="scope-list" id="scope-list"></div>
+
+          <label class="offline-toggle">
+            <input type="checkbox" id="offline-toggle">
+            <span>This grant also includes <strong>offline access / a refresh token</strong> — meaning the app can continue accessing data without the user being actively signed in.</span>
+          </label>
+        </div>
+
+        <div class="results-block">
+          <span class="results-label">Overall risk for this combination</span>
+          <div class="results-risk none" id="risk-value">Select scopes below</div>
+          <div class="results-sub" id="risk-sub"></div>
+        </div>
+
+        <div id="offline-callout-wrap"></div>
+
+        <div id="breakdown-wrap" style="display:none;">
+          <h3>What's actually granted</h3>
+          <div class="table-wrap">
+            <table class="breakdown-table">
+              <thead>
+                <tr><th>Scope</th><th>What it grants</th><th>Risk</th></tr>
+              </thead>
+              <tbody id="breakdown-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <p>
+          For the bigger picture — where this fits relative to what your secrets
+          manager or CNAPP already covers — the <a href="/tools/risk-self-check/">risk
+          self-check</a>'s Section D covers SaaS-to-SaaS OAuth as its own category.
+        </p>
+
+        <div class="newsletter-block">
+          <span class="page-label">Export your results</span>
+          <p>Save this breakdown as a PDF — useful for documenting what a connected app was found to have access to.</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-primary" id="export-pdf-btn" disabled>Export as PDF</button>
+          </div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <!-- Email-gate modal -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h3>Get your PDF</h3>
+      <p>Enter your email and your results will open as a printable PDF in a new tab.</p>
+      <div class="modal-error" id="modal-error"></div>
+      <input type="email" id="modal-email" placeholder="your@email.com" aria-label="Email address">
+      <button type="button" class="btn btn-primary btn-block" id="modal-submit">Export as PDF</button>
+      <p class="modal-disclaimer">We'll also add you to occasional NHI security research emails. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+  <script>
+    const SCOPES = {
+      graph: {
+        platformName: 'Microsoft 365 (Microsoft Graph)',
+        scopes: [
+          { id: 'User.Read', label: 'Sign in and read the user\u2019s basic profile', risk: 'low' },
+          { id: 'Mail.Read', label: 'Read the user\u2019s mail', risk: 'medium' },
+          { id: 'Mail.ReadWrite', label: 'Read, create, update, and delete the user\u2019s mail', risk: 'high' },
+          { id: 'Mail.Send', label: 'Send mail as the signed-in user', risk: 'high' },
+          { id: 'Calendars.ReadWrite', label: 'Full read/write access to the user\u2019s calendars', risk: 'medium' },
+          { id: 'Files.ReadWrite.All', label: 'Read and write all files the user can access, including shared and org-wide files', risk: 'high' },
+          { id: 'Directory.Read.All', label: 'Read directory data \u2014 users, groups, and org structure (read-only)', risk: 'medium' },
+          { id: 'Directory.ReadWrite.All', label: 'Read and write directory data \u2014 create or modify users, groups, and role assignments', risk: 'high' },
+          { id: 'User.Read.All', label: 'Read full profiles of every user in the organization (read-only)', risk: 'medium' },
+          { id: 'Group.ReadWrite.All', label: 'Create, read, update, and delete groups, including membership', risk: 'high' },
+        ]
+      },
+      google: {
+        platformName: 'Google Workspace',
+        scopes: [
+          { id: 'userinfo.email', full: 'https://www.googleapis.com/auth/userinfo.email', label: 'View the user\u2019s email address', risk: 'low' },
+          { id: 'gmail.readonly', full: 'https://www.googleapis.com/auth/gmail.readonly', label: 'Read all Gmail messages and settings', risk: 'medium' },
+          { id: 'gmail.modify', full: 'https://www.googleapis.com/auth/gmail.modify', label: 'Read, send, and manage Gmail \u2014 everything except permanent deletion', risk: 'high' },
+          { id: 'drive.readonly', full: 'https://www.googleapis.com/auth/drive.readonly', label: 'View files and folders in Google Drive', risk: 'medium' },
+          { id: 'drive', full: 'https://www.googleapis.com/auth/drive', label: 'View, edit, create, and delete all of the user\u2019s Drive files', risk: 'high' },
+          { id: 'calendar', full: 'https://www.googleapis.com/auth/calendar', label: 'View and edit events on all of the user\u2019s calendars', risk: 'medium' },
+          { id: 'admin.directory.user', full: 'https://www.googleapis.com/auth/admin.directory.user', label: 'View and manage user accounts across the organization (admin-level)', risk: 'high' },
+          { id: 'spreadsheets', full: 'https://www.googleapis.com/auth/spreadsheets', label: 'View and edit all Google Sheets the user can access', risk: 'medium' },
+        ]
+      },
+      salesforce: {
+        platformName: 'Salesforce',
+        scopes: [
+          { id: 'id', label: 'Provides access to the identity URL service (basic user identity)', risk: 'low' },
+          { id: 'web', label: 'Allows the app to use Salesforce web-based flows (Visualforce, etc.) on behalf of the user', risk: 'low' },
+          { id: 'chatter_api', label: 'Access the Chatter REST API only', risk: 'low' },
+          { id: 'content', label: 'Access the Content REST API \u2014 files and libraries', risk: 'medium' },
+          { id: 'wave_api', label: 'Access the Analytics (Tableau CRM / Wave) REST API', risk: 'medium' },
+          { id: 'api', label: 'Access and manage org data via REST, SOAP, Bulk, and other Salesforce APIs \u2014 broad data access', risk: 'high' },
+          { id: 'full', label: 'Full access to all data and APIs the user has permission to \u2014 equivalent to the user\u2019s own access', risk: 'high' },
+        ]
+      }
+    };
+
+    const RISK_RANK = { low: 1, medium: 2, high: 3 };
+    const RISK_DISPLAY = { low: 'LOW', medium: 'MEDIUM', high: 'HIGH' };
+    const RISK_TAG_CLASS = { low: 'tag-positive', medium: 'tag-caution', high: 'tag-critical' };
+
+    const selections = { graph: new Set(), google: new Set(), salesforce: new Set() };
+    let activePlatform = 'graph';
+
+    const scopeListEl = document.getElementById('scope-list');
+    const tabs = document.querySelectorAll('.platform-tab');
+
+    function renderScopeList() {
+      scopeListEl.innerHTML = '';
+      const platform = SCOPES[activePlatform];
+      platform.scopes.forEach(scope => {
+        const id = 'scope-' + activePlatform + '-' + scope.id.replace(/[^a-zA-Z0-9]/g, '');
+        const label = document.createElement('label');
+        label.className = 'scope-option' + (selections[activePlatform].has(scope.id) ? ' selected' : '');
+        label.innerHTML = `
+          <input type="checkbox" id="${id}" ${selections[activePlatform].has(scope.id) ? 'checked' : ''}>
+          <span class="scope-option-body"><span class="scope-name">${scope.id}</span> \u2014 ${scope.label}</span>
+        `;
+        const checkbox = label.querySelector('input');
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) selections[activePlatform].add(scope.id);
+          else selections[activePlatform].delete(scope.id);
+          label.classList.toggle('selected', checkbox.checked);
+          render();
+        });
+        scopeListEl.appendChild(label);
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activePlatform = tab.dataset.platform;
+        renderScopeList();
+        render();
+      });
+    });
+
+    const offlineToggle = document.getElementById('offline-toggle');
+    offlineToggle.addEventListener('change', render);
+
+    const riskValue = document.getElementById('risk-value');
+    const riskSub = document.getElementById('risk-sub');
+    const offlineCalloutWrap = document.getElementById('offline-callout-wrap');
+    const breakdownWrap = document.getElementById('breakdown-wrap');
+    const breakdownBody = document.getElementById('breakdown-body');
+    const exportBtn = document.getElementById('export-pdf-btn');
+
+    function getSelectedScopes() {
+      const platform = SCOPES[activePlatform];
+      return platform.scopes.filter(s => selections[activePlatform].has(s.id));
+    }
+
+    function render() {
+      const selected = getSelectedScopes();
+      const offlineChecked = offlineToggle.checked;
+
+      if (selected.length === 0) {
+        riskValue.className = 'results-risk none';
+        riskValue.textContent = 'Select scopes below';
+        riskSub.textContent = '';
+        breakdownWrap.style.display = 'none';
+        offlineCalloutWrap.innerHTML = '';
+        exportBtn.disabled = true;
+        return;
+      }
+
+      let maxRisk = 'low';
+      selected.forEach(s => { if (RISK_RANK[s.risk] > RISK_RANK[maxRisk]) maxRisk = s.risk; });
+
+      riskValue.className = 'results-risk ' + maxRisk;
+      riskValue.textContent = RISK_DISPLAY[maxRisk];
+      riskSub.textContent = selected.length + ' scope' + (selected.length > 1 ? 's' : '') + ' selected on ' + SCOPES[activePlatform].platformName;
+
+      if (offlineChecked) {
+        offlineCalloutWrap.innerHTML = `<div class="offline-callout"><strong>Offline access changes the picture</strong>This grant doesn't expire when the user signs out or even changes their password \u2014 the app retains a refresh token until the grant is explicitly revoked from the admin console. The risk level above reflects what the scopes allow; offline access determines how long that access persists without anyone noticing.</div>`;
+      } else {
+        offlineCalloutWrap.innerHTML = '';
+      }
+
+      breakdownWrap.style.display = 'block';
+      breakdownBody.innerHTML = '';
+      selected.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td><code>${s.id}</code></td><td>${s.label}</td><td><span class="tag ${RISK_TAG_CLASS[s.risk]}">${RISK_DISPLAY[s.risk]}</span></td>`;
+        breakdownBody.appendChild(tr);
+      });
+
+      exportBtn.disabled = false;
+    }
+
+    renderScopeList();
+    render();
+
+    /* ── Export / email-gate modal ─────────────────────────── */
+    const overlay = document.getElementById('modal-overlay');
+    const modalEmail = document.getElementById('modal-email');
+    const modalError = document.getElementById('modal-error');
+    const modalSubmit = document.getElementById('modal-submit');
+
+    exportBtn.addEventListener('click', () => {
+      overlay.hidden = false;
+      modalEmail.focus();
+    });
+    document.getElementById('modal-close').addEventListener('click', () => { overlay.hidden = true; });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.hidden = true; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.hidden = true; });
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    const WORKER_URL = 'https://newsletter.nonhumanidentitysoftware.com';
+    const GROUP_ID = '189858273326793780'; // Defender Free
+
+    function buildPrintableHTML() {
+      const selected = getSelectedScopes();
+      const offlineChecked = offlineToggle.checked;
+      let maxRisk = 'low';
+      selected.forEach(s => { if (RISK_RANK[s.risk] > RISK_RANK[maxRisk]) maxRisk = s.risk; });
+
+      const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const riskColors = { low: '#2e7d32', medium: '#b45309', high: '#b91c1c' };
+
+      const rowsHTML = selected.map(s =>
+        `<tr><td><code>${s.id}</code></td><td>${s.label}</td><td style="color:${riskColors[s.risk]};font-weight:700;">${RISK_DISPLAY[s.risk]}</td></tr>`
+      ).join('');
+
+      const offlineHTML = offlineChecked
+        ? `<div class="offline-note"><strong>Offline access included</strong>This grant retains a refresh token and does not expire when the user signs out or changes their password \u2014 it persists until explicitly revoked from the admin console.</div>`
+        : '';
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OAuth Scope Decoder — ${date}</title>
+<style>
+  body { font-family: 'Space Mono', monospace; color: #2a2a28; padding: 48px; max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  .meta { font-size: 11px; color: #9b9b98; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .platform { font-size: 12px; color: #6b6b68; margin-bottom: 32px; }
+  .risk-block { border: 1px solid #7B3FA6; background: #F0E8F7; padding: 24px; text-align: center; margin-bottom: 24px; }
+  .risk-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7B3FA6; margin-bottom: 8px; }
+  .risk-value { font-size: 36px; font-weight: 700; color: ${riskColors[maxRisk]}; }
+  code { background: #f4f4f3; border: 1px solid #d8d8d6; padding: 1px 4px; font-size: 11px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #d8d8d6; vertical-align: top; }
+  th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b6b68; }
+  .offline-note { border: 1px solid #d8d8d6; border-left: 3px solid #7B3FA6; padding: 14px 16px; font-size: 12px; margin-bottom: 24px; line-height: 1.6; }
+  .offline-note strong { display: block; margin-bottom: 4px; color: #7B3FA6; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .footer-note { font-size: 11px; color: #9b9b98; line-height: 1.6; margin-top: 40px; border-top: 1px solid #d8d8d6; padding-top: 16px; }
+  @media print { body { padding: 24px; } }
+</style>
+</head>
+<body>
+  <h1>OAuth Scope Decoder \u2014 Results</h1>
+  <div class="meta">Generated ${date} \u00b7 nonhumanidentitysoftware.com/tools/oauth-scope-decoder/</div>
+  <div class="platform">Platform: ${SCOPES[activePlatform].platformName}</div>
+
+  <div class="risk-block">
+    <div class="risk-label">Overall risk for this combination</div>
+    <div class="risk-value">${RISK_DISPLAY[maxRisk]}</div>
+  </div>
+
+  ${offlineHTML}
+
+  <table>
+    <thead><tr><th>Scope</th><th>What it grants</th><th>Risk</th></tr></thead>
+    <tbody>${rowsHTML}</tbody>
+  </table>
+
+  <div class="footer-note">
+    This reflects what the listed scopes permit according to each platform's
+    published OAuth scope documentation, not what a specific app has done with
+    that access. Exact scope behavior can change between API versions \u2014 verify
+    against current provider documentation for anything used in a compliance or
+    incident context.
+  </div>
+
+  <script>window.onload = function(){ window.print(); };<\/script>
+</body>
+</html>`;
+    }
+
+    modalSubmit.addEventListener('click', async () => {
+      const email = modalEmail.value.trim();
+
+      if (!isValidEmail(email)) {
+        modalError.textContent = 'Enter a valid email address.';
+        modalError.style.display = 'block';
+        return;
+      }
+      modalError.style.display = 'none';
+
+      const tab = window.open('', '_blank');
+
+      modalSubmit.disabled = true;
+      modalSubmit.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, group_id: GROUP_ID }),
+        });
+        const data = await response.json();
+
+        if (data.message === 'Subscribed') {
+          if (tab) {
+            tab.document.open();
+            tab.document.write(buildPrintableHTML());
+            tab.document.close();
+          }
+          overlay.hidden = true;
+          modalEmail.value = '';
+        } else {
+          if (tab) tab.close();
+          modalError.textContent = data.detail || 'Something went wrong. Please try again.';
+          modalError.style.display = 'block';
+        }
+      } catch (err) {
+        if (tab) tab.close();
+        modalError.textContent = 'Something went wrong. Please try again.';
+        modalError.style.display = 'block';
+      } finally {
+        modalSubmit.disabled = false;
+        modalSubmit.textContent = 'Export as PDF';
+      }
+    });
+  </script>
+
+</body>
+</html>

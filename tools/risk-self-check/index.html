@@ -1,574 +1,526 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Where Is Your Machine Identity Risk Concentrated? — Self-Check</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
-<style>
-  :root {
-    --bg:           #f4f4f3;
-    --surface:      #ffffff;
-    --border:       #d8d8d6;
-    --charcoal:     #2a2a28;
-    --mid:          #6b6b68;
-    --faint:        #9b9b98;
-    --accent:       #7B3FA6;
-    --accent-dim:   #5C2E7D;
-    --accent-pale:  #F0E8F7;
-    --hairline:     1px solid #d8d8d6;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-    --h1:    20px;
-    --h2:    16px;
-    --h3:    14px;
-    --body:  14px;
-    --small: 12px;
+  <title>Where Is Your Machine Identity Risk Concentrated? — Risk Self-Check | Non-Human Identity Software</title>
+  <meta name="description" content="A nine-question self-check that surfaces where machine identity risk is likely concentrated today, and points to the specific checks and guide sections worth reading next.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/risk-self-check/">
 
-    --content-max: 720px;
-  }
+  <meta property="og:title" content="Where Is Your Machine Identity Risk Concentrated? | Non-Human Identity Software">
+  <meta property="og:description" content="A nine-question self-check that surfaces where machine identity risk is likely concentrated today, and points to specific checks and guide sections worth reading next.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/risk-self-check/">
+  <meta property="og:type" content="website">
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: var(--body); }
-  body {
-    font-family: 'Space Mono', monospace;
-    font-weight: 400;
-    color: var(--charcoal);
-    background: var(--bg);
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    padding: 40px 20px 80px;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { color: var(--accent-dim); text-decoration: underline; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  .content { width: 100%; max-width: var(--content-max); margin: 0 auto; }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://nonhumanidentitysoftware.com/tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Risk Self-Check", "item": "https://nonhumanidentitysoftware.com/tools/risk-self-check/" }
+    ]
+  }
+  </script>
 
-  .page-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 8px;
-    display: block;
-  }
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
 
-  h1 {
-    font-size: var(--h1);
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--charcoal);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-  }
-  h2 {
-    font-size: var(--h2);
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--charcoal);
-    margin-top: 8px;
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
-  }
-  h3 {
-    font-size: var(--h3);
-    font-weight: 700;
-    color: var(--charcoal);
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  p { margin-bottom: 16px; }
-  p:last-child { margin-bottom: 0; }
+  <style>
+    /* ── Progress ───────────────────────────────────────────── */
+    .progress-wrap {
+      position: sticky;
+      top: 44px;
+      background: var(--bg);
+      padding: 12px 0;
+      margin-bottom: 24px;
+      z-index: 10;
+    }
+    .progress-label {
+      font-size: var(--small);
+      color: var(--mid);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-track { height: 4px; background: var(--border); width: 100%; }
+    .progress-fill { height: 4px; background: var(--accent); width: 0%; transition: width 0.2s ease; }
 
-  .lead {
-    font-size: 14px;
-    color: var(--mid);
-    margin-bottom: 36px;
-    border-left: 2px solid var(--accent);
-    padding-left: 16px;
-    font-style: italic;
-    line-height: 1.8;
-  }
+    /* ── Question cards ─────────────────────────────────────── */
+    .qcard {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .qcard-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .qoptions { display: flex; flex-direction: column; gap: 8px; }
+    .qoption {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border: var(--hairline);
+      cursor: pointer;
+      font-size: var(--small);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .qoption:hover { border-color: var(--accent); }
+    .qoption.selected { border-color: var(--accent); background: var(--accent-pale); }
+    .qoption input[type="radio"] {
+      accent-color: var(--accent);
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .qoption span { line-height: 1.6; }
 
-  /* ── Progress ───────────────────────────────────────────── */
-  .progress-wrap {
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    padding: 12px 0;
-    margin-bottom: 24px;
-    z-index: 10;
-  }
-  .progress-label {
-    font-size: var(--small);
-    color: var(--mid);
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .progress-track {
-    height: 4px;
-    background: var(--border);
-    width: 100%;
-  }
-  .progress-fill {
-    height: 4px;
-    background: var(--accent);
-    width: 0%;
-    transition: width 0.2s ease;
-  }
+    /* ── Buttons ────────────────────────────────────────────── */
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
+      text-transform: uppercase;
+    }
+    .btn-primary { background: var(--accent); color: #fff; width: 100%; }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-dim); }
+    .btn-primary:disabled { background: var(--border); color: var(--faint); cursor: default; }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      margin-top: 32px;
+    }
+    .btn-secondary:hover { background: var(--accent-pale); }
 
-  /* ── Question cards ─────────────────────────────────────── */
-  .qcard {
-    background: var(--surface);
-    border: var(--hairline);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .qcard-tag {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
-    display: block;
-  }
-  .qoptions { display: flex; flex-direction: column; gap: 8px; }
-  .qoption {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 12px;
-    border: var(--hairline);
-    cursor: pointer;
-    font-size: var(--small);
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .qoption:hover { border-color: var(--accent); }
-  .qoption.selected {
-    border-color: var(--accent);
-    background: var(--accent-pale);
-  }
-  .qoption input[type="radio"] {
-    accent-color: var(--accent);
-    width: 15px;
-    height: 15px;
-    margin-top: 2px;
-    flex-shrink: 0;
-    cursor: pointer;
-  }
-  .qoption span { line-height: 1.6; }
+    /* ── Results ────────────────────────────────────────────── */
+    .results-intro { font-size: var(--small); color: var(--mid); margin-bottom: 24px; }
+    .result-cluster {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .result-cluster.secondary {
+      background: var(--surface);
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+    }
+    .result-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .result-title { font-size: var(--h3); font-weight: 700; margin-bottom: 12px; color: var(--charcoal); }
+    .result-cluster h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+      margin-top: 16px;
+    }
+    .result-cluster h4:first-of-type { margin-top: 0; }
+    .result-cluster p { font-size: var(--small); color: var(--charcoal); margin-bottom: 0; line-height: 1.7; }
+    .result-guide { margin-top: 16px; padding-top: 16px; border-top: var(--hairline); font-size: var(--small); }
+    .result-guide a { font-weight: 700; }
 
-  /* ── Buttons ────────────────────────────────────────────── */
-  .btn {
-    font-family: 'Space Mono', monospace;
-    font-size: var(--small);
-    font-weight: 700;
-    padding: 12px 20px;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: background 0.15s, color 0.15s;
-    text-transform: uppercase;
-  }
-  .btn-primary { background: var(--accent); color: #fff; width: 100%; }
-  .btn-primary:hover:not(:disabled) { background: var(--accent-dim); }
-  .btn-primary:disabled {
-    background: var(--border);
-    color: var(--faint);
-    cursor: default;
-  }
-  .btn-secondary {
-    background: var(--surface);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    margin-top: 32px;
-  }
-  .btn-secondary:hover { background: var(--accent-pale); }
-
-  /* ── Results ────────────────────────────────────────────── */
-  .results { margin-top: 40px; }
-  .results-intro {
-    font-size: var(--small);
-    color: var(--mid);
-    margin-bottom: 24px;
-  }
-  .result-cluster {
-    background: var(--accent-pale);
-    border: 1px solid var(--accent);
-    padding: 20px 24px;
-    margin-bottom: 20px;
-  }
-  .result-cluster.secondary {
-    background: var(--surface);
-    border: var(--hairline);
-    border-left: 3px solid var(--accent);
-  }
-  .result-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 4px;
-    display: block;
-  }
-  .result-title {
-    font-size: var(--h3);
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--charcoal);
-  }
-  .result-cluster h4 {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 4px;
-    margin-top: 16px;
-  }
-  .result-cluster h4:first-of-type { margin-top: 0; }
-  .result-cluster p {
-    font-size: var(--small);
-    color: var(--charcoal);
-    margin-bottom: 0;
-    line-height: 1.7;
-  }
-  .result-guide {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: var(--hairline);
-    font-size: var(--small);
-  }
-  .result-guide a { font-weight: 700; }
-
-  .no-concentration {
-    background: var(--surface);
-    border: var(--hairline);
-    border-left: 3px solid #2e7d32;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-    font-size: var(--small);
-  }
-
-  @media (max-width: 600px) {
-    body { padding: 24px 16px 60px; }
-  }
-</style>
+    .no-concentration {
+      background: var(--surface);
+      border: var(--hairline);
+      border-left: 3px solid #2e7d32;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      font-size: var(--small);
+    }
+    .no-concentration p { margin-bottom: 0; }
+  </style>
 </head>
 <body>
-<div class="content">
-  <span class="page-label">Tools / NHI Risk Self-Check</span>
-  <h1>Where Is Your Machine Identity Risk Concentrated?</h1>
-  <p class="lead">
-    Machine identity risk is rarely spread evenly across an organization —
-    it tends to concentrate in one or two areas, depending on how credentials
-    are created, tracked, and managed today. These nine questions surface
-    where that concentration is likely to be, and point to specific checks
-    worth running and guide sections worth reading based on the answers.
-    This is a starting point for figuring out where to look first, not a
-    verdict on what to buy.
-  </p>
 
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="progress-text">0 of 9 answered</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tools/">Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Risk Self-Check</span>
+        </div>
+
+        <span class="page-label">Tool</span>
+        <h1>Where Is Your Machine Identity Risk Concentrated?</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">A nine-question self-check</p>
+
+        <p class="lead">
+          Machine identity risk is rarely spread evenly across an organization —
+          it tends to concentrate in one or two areas, depending on how credentials
+          are created, tracked, and managed today. These nine questions surface
+          where that concentration is likely to be, and point to specific checks
+          worth running and guide sections worth reading based on the answers.
+          This is a starting point for figuring out where to look first, not a
+          verdict on what to buy.
+        </p>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progress-text">0 of 9 answered</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+
+        <form id="self-check-form">
+
+          <div class="qcard" data-q="1" data-cluster="A">
+            <span class="qcard-tag">Question 1 — Third-Party Credential Provisioning</span>
+            <h3>When someone needs to connect an internal application to a third-party service — Stripe, SendGrid, OpenAI, and similar — what's the actual workflow for creating that credential?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q1" value="0"><span>Centralized request/approval process; the credential is registered as part of that process.</span></label>
+              <label class="qoption"><input type="radio" name="q1" value="1"><span>Depends on the team — some go through a process, others create credentials directly when needed.</span></label>
+              <label class="qoption"><input type="radio" name="q1" value="2"><span>Individual developers generally create these directly, as needed.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="2" data-cluster="B">
+            <span class="qcard-tag">Question 2 — Departing-Employee Credential Mapping</span>
+            <h3>If someone who'd created several service accounts, API keys, or webhook integrations left tomorrow, how would you identify everything they created?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q2" value="0"><span>Systematic — credentials are tagged or registered with an owner at creation.</span></label>
+              <label class="qoption"><input type="radio" name="q2" value="1"><span>Possible, but it would take real effort: searching logs, asking around, tribal knowledge.</span></label>
+              <label class="qoption"><input type="radio" name="q2" value="2"><span>No reliable way to do this.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="3" data-cluster="C">
+            <span class="qcard-tag">Question 3 — Orphaned and Idle Service Accounts</span>
+            <h3>How does your organization handle service accounts or API keys that are no longer actively used but still have access?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q3" value="0"><span>Identified and reviewed or deprecated on a regular cadence.</span></label>
+              <label class="qoption"><input type="radio" name="q3" value="1"><span>Identified occasionally, but rarely removed — concern about breaking something keeps them active.</span></label>
+              <label class="qoption"><input type="radio" name="q3" value="2"><span>No real process for identifying these.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="4" data-cluster="A">
+            <span class="qcard-tag">Question 4 — Vault Coverage</span>
+            <h3>Roughly what share of active credentials live in a centralized vault (HashiCorp Vault, AWS Secrets Manager, or similar) versus config files, environment variables, or code?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q4" value="0"><span>The large majority — vault use is close to universal.</span></label>
+              <label class="qoption"><input type="radio" name="q4" value="1"><span>A meaningful share lives outside the vault, for specific known reasons.</span></label>
+              <label class="qoption"><input type="radio" name="q4" value="2"><span>Most credentials live outside a centralized vault.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="5" data-cluster="A">
+            <span class="qcard-tag">Question 5 — Leak Detection Timing</span>
+            <h3>When a credential does end up committed to a repository in plaintext, how is that usually caught?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q5" value="0"><span>Pre-commit — hooks or local scanning catch it before it's pushed.</span></label>
+              <label class="qoption"><input type="radio" name="q5" value="1"><span>Post-push — caught by scanning after the commit lands, but before it reaches production.</span></label>
+              <label class="qoption"><input type="radio" name="q5" value="2"><span>Reactively, if at all — there's no reliable detection in place.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="6" data-cluster="C">
+            <span class="qcard-tag">Question 6 — Rotation Posture</span>
+            <h3>What's the current state of credential rotation for production systems?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q6" value="0"><span>Automated rotation covers the large majority of production credentials.</span></label>
+              <label class="qoption"><input type="radio" name="q6" value="1"><span>Some automation exists, but a lot still runs through manual tickets — and a forced rotation would probably break a few things.</span></label>
+              <label class="qoption"><input type="radio" name="q6" value="2"><span>Rotation is almost entirely manual, with real uncertainty about what would break if it were enforced.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="7" data-cluster="C">
+            <span class="qcard-tag">Question 7 — Trust in Automated Enforcement</span>
+            <h3>If a tool started automatically restricting access for identities it flagged as over-privileged or unused, what would need to be true before your team trusted it in production?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q7" value="0"><span>A dry-run/validation period that proves the policy won't break anything before it's enforced.</span></label>
+              <label class="qoption"><input type="radio" name="q7" value="1"><span>That, plus a fairly long validation window and easy rollback.</span></label>
+              <label class="qoption"><input type="radio" name="q7" value="2"><span>Automated enforcement feels too risky regardless of safeguards — manual review only, for now.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="8" data-cluster="F">
+            <span class="qcard-tag">Question 8 — Agentic AI Visibility</span>
+            <h3>How would you describe visibility into AI agents, MCP implementations, or LLM-based tools (Copilot Studio, LangChain, agent frameworks) accessing systems or data?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q8" value="0"><span>Good visibility — what's in use and how it authenticates is well understood.</span></label>
+              <label class="qoption"><input type="radio" name="q8" value="1"><span>These tools are known to be in use, but not the full picture of how they access credentials or data.</span></label>
+              <label class="qoption"><input type="radio" name="q8" value="2"><span>Limited visibility — likely an incomplete picture of what's in use at all.</span></label>
+            </div>
+          </div>
+
+          <div class="qcard" data-q="9" data-cluster="D">
+            <span class="qcard-tag">Question 9 — SaaS-to-SaaS OAuth Oversight</span>
+            <h3>When one SaaS platform requests OAuth access to another — a marketing tool requesting access to Microsoft 365 or Salesforce, for example — what oversight exists?</h3>
+            <div class="qoptions">
+              <label class="qoption"><input type="radio" name="q9" value="0"><span>Formal review and approval before access is granted.</span></label>
+              <label class="qoption"><input type="radio" name="q9" value="1"><span>Some oversight, but inconsistent across teams.</span></label>
+              <label class="qoption"><input type="radio" name="q9" value="2"><span>Generally, individual users can grant this access without review.</span></label>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="see-results" disabled>See results (0/9 answered)</button>
+        </form>
+
+        <div id="results" hidden>
+          <h2>Where to look first</h2>
+          <p class="results-intro" id="results-intro"></p>
+          <div id="results-content"></div>
+          <button type="button" class="btn btn-secondary" id="retake">Retake</button>
+        </div>
+
+        <div class="newsletter-block">
+          <span class="page-label">Stay current</span>
+          <p>The Shadow Inventory covers the NHI security market the way vendors hope you won't read it. Monthly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+      </article>
+    </main>
   </div>
 
-  <form id="self-check-form">
-
-    <div class="qcard" data-q="1" data-cluster="A">
-      <span class="qcard-tag">Question 1 — Third-Party Credential Provisioning</span>
-      <h3>When someone needs to connect an internal application to a third-party service — Stripe, SendGrid, OpenAI, and similar — what's the actual workflow for creating that credential?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q1" value="0"><span>Centralized request/approval process; the credential is registered as part of that process.</span></label>
-        <label class="qoption"><input type="radio" name="q1" value="1"><span>Depends on the team — some go through a process, others create credentials directly when needed.</span></label>
-        <label class="qoption"><input type="radio" name="q1" value="2"><span>Individual developers generally create these directly, as needed.</span></label>
-      </div>
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
     </div>
+  </footer>
 
-    <div class="qcard" data-q="2" data-cluster="B">
-      <span class="qcard-tag">Question 2 — Departing-Employee Credential Mapping</span>
-      <h3>If someone who'd created several service accounts, API keys, or webhook integrations left tomorrow, how would you identify everything they created?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q2" value="0"><span>Systematic — credentials are tagged or registered with an owner at creation.</span></label>
-        <label class="qoption"><input type="radio" name="q2" value="1"><span>Possible, but it would take real effort: searching logs, asking around, tribal knowledge.</span></label>
-        <label class="qoption"><input type="radio" name="q2" value="2"><span>No reliable way to do this.</span></label>
-      </div>
-    </div>
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
 
-    <div class="qcard" data-q="3" data-cluster="C">
-      <span class="qcard-tag">Question 3 — Orphaned and Idle Service Accounts</span>
-      <h3>How does your organization handle service accounts or API keys that are no longer actively used but still have access?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q3" value="0"><span>Identified and reviewed or deprecated on a regular cadence.</span></label>
-        <label class="qoption"><input type="radio" name="q3" value="1"><span>Identified occasionally, but rarely removed — concern about breaking something keeps them active.</span></label>
-        <label class="qoption"><input type="radio" name="q3" value="2"><span>No real process for identifying these.</span></label>
-      </div>
-    </div>
+  <script>
+    const clusterMax = { A: 6, B: 2, C: 6, D: 2, F: 2 };
 
-    <div class="qcard" data-q="4" data-cluster="A">
-      <span class="qcard-tag">Question 4 — Vault Coverage</span>
-      <h3>Roughly what share of active credentials live in a centralized vault (HashiCorp Vault, AWS Secrets Manager, or similar) versus config files, environment variables, or code?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q4" value="0"><span>The large majority — vault use is close to universal.</span></label>
-        <label class="qoption"><input type="radio" name="q4" value="1"><span>A meaningful share lives outside the vault, for specific known reasons.</span></label>
-        <label class="qoption"><input type="radio" name="q4" value="2"><span>Most credentials live outside a centralized vault.</span></label>
-      </div>
-    </div>
-
-    <div class="qcard" data-q="5" data-cluster="A">
-      <span class="qcard-tag">Question 5 — Leak Detection Timing</span>
-      <h3>When a credential does end up committed to a repository in plaintext, how is that usually caught?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q5" value="0"><span>Pre-commit — hooks or local scanning catch it before it's pushed.</span></label>
-        <label class="qoption"><input type="radio" name="q5" value="1"><span>Post-push — caught by scanning after the commit lands, but before it reaches production.</span></label>
-        <label class="qoption"><input type="radio" name="q5" value="2"><span>Reactively, if at all — there's no reliable detection in place.</span></label>
-      </div>
-    </div>
-
-    <div class="qcard" data-q="6" data-cluster="C">
-      <span class="qcard-tag">Question 6 — Rotation Posture</span>
-      <h3>What's the current state of credential rotation for production systems?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q6" value="0"><span>Automated rotation covers the large majority of production credentials.</span></label>
-        <label class="qoption"><input type="radio" name="q6" value="1"><span>Some automation exists, but a lot still runs through manual tickets — and a forced rotation would probably break a few things.</span></label>
-        <label class="qoption"><input type="radio" name="q6" value="2"><span>Rotation is almost entirely manual, with real uncertainty about what would break if it were enforced.</span></label>
-      </div>
-    </div>
-
-    <div class="qcard" data-q="7" data-cluster="C">
-      <span class="qcard-tag">Question 7 — Trust in Automated Enforcement</span>
-      <h3>If a tool started automatically restricting access for identities it flagged as over-privileged or unused, what would need to be true before your team trusted it in production?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q7" value="0"><span>A dry-run/validation period that proves the policy won't break anything before it's enforced.</span></label>
-        <label class="qoption"><input type="radio" name="q7" value="1"><span>That, plus a fairly long validation window and easy rollback.</span></label>
-        <label class="qoption"><input type="radio" name="q7" value="2"><span>Automated enforcement feels too risky regardless of safeguards — manual review only, for now.</span></label>
-      </div>
-    </div>
-
-    <div class="qcard" data-q="8" data-cluster="F">
-      <span class="qcard-tag">Question 8 — Agentic AI Visibility</span>
-      <h3>How would you describe visibility into AI agents, MCP implementations, or LLM-based tools (Copilot Studio, LangChain, agent frameworks) accessing systems or data?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q8" value="0"><span>Good visibility — what's in use and how it authenticates is well understood.</span></label>
-        <label class="qoption"><input type="radio" name="q8" value="1"><span>These tools are known to be in use, but not the full picture of how they access credentials or data.</span></label>
-        <label class="qoption"><input type="radio" name="q8" value="2"><span>Limited visibility — likely an incomplete picture of what's in use at all.</span></label>
-      </div>
-    </div>
-
-    <div class="qcard" data-q="9" data-cluster="D">
-      <span class="qcard-tag">Question 9 — SaaS-to-SaaS OAuth Oversight</span>
-      <h3>When one SaaS platform requests OAuth access to another — a marketing tool requesting access to Microsoft 365 or Salesforce, for example — what oversight exists?</h3>
-      <div class="qoptions">
-        <label class="qoption"><input type="radio" name="q9" value="0"><span>Formal review and approval before access is granted.</span></label>
-        <label class="qoption"><input type="radio" name="q9" value="1"><span>Some oversight, but inconsistent across teams.</span></label>
-        <label class="qoption"><input type="radio" name="q9" value="2"><span>Generally, individual users can grant this access without review.</span></label>
-      </div>
-    </div>
-
-    <button type="button" class="btn btn-primary" id="see-results" disabled>See results (0/9 answered)</button>
-  </form>
-
-  <div class="results" id="results" hidden>
-    <h2>Where to look first</h2>
-    <p class="results-intro" id="results-intro"></p>
-    <div id="results-content"></div>
-    <button type="button" class="btn btn-secondary" id="retake">Retake</button>
-  </div>
-</div>
-
-<script>
-  const clusterMax = { A: 6, B: 2, C: 6, D: 2, F: 2 };
-
-  const clusterContent = {
-    A: {
-      label: 'Section A — Discovery & Inventory',
-      title: 'Start with what isn\u2019t in the vault yet.',
-      checkLabel: 'Self-check, today',
-      check: 'Run an open-source secret scanner (trufflehog, gitleaks, git-secrets) across full repository history \u2014 not just the current branch. Most exposed credentials live in commits that were "removed" but never purged. Also check CI build logs, which frequently print environment variables on failed builds.',
-      ceilingLabel: 'Where this hits a ceiling',
-      ceiling: 'A scan run today finds what exists today. New code ships tomorrow, and private repos, forks, and developer laptops routinely sit outside whatever\u2019s being scanned. The underlying gap isn\u2019t "did we scan" \u2014 it\u2019s continuous visibility into every place code can exist.',
-      guide: 'Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 1, Low-Impact Discovery (event-driven cloud ingestion and webhook-based diff scanning).'
-    },
-    B: {
-      label: 'Section B — Ownership & Accountability',
-      title: 'Find out whether ownership can survive someone leaving.',
-      checkLabel: 'Self-check, today',
-      check: 'For a credential or identity that needs an owner, run a git blame/log trace against the repo or IaC file where it\u2019s declared (<code>git log -S "&lt;identifier&gt;" --pretty=format:"%h - %an, %ae : %ad" -n 1</code>) and cross-reference the author\u2019s email against your identity provider for current team membership.',
-      ceilingLabel: 'Where this hits a ceiling',
-      ceiling: 'This works when the credential\u2019s origin is in version control and the original author is still at the organization and still on a relevant team. For credentials created via console or CLI with no IaC trail \u2014 or where the creator has left and the team has been reorganized \u2014 the trail goes cold and ownership becomes whoever\u2019s willing to claim it.',
-      guide: 'Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 2, Ownership and Context Mapping (git blame lineage trace, Kubernetes pod-spec extraction).'
-    },
-    C: {
-      label: 'Section C — Lifecycle & Privilege Management',
-      title: 'Pull the list your cloud provider already has.',
-      checkLabel: 'Self-check, today',
-      check: 'AWS IAM Access Analyzer / Access Advisor, Azure Access Reviews, and GCP Policy Analyzer all surface permissions unused for 90+ days, natively, for free. Pull that list \u2014 it\u2019s usually long on the first run.',
-      ceilingLabel: 'Where this hits a ceiling',
-      ceiling: 'Native tooling tells you what\u2019s unused, not whether removing it is safe, who\u2019s accountable for the decision, or whether the same list regrows next quarter. That triage-and-recurring-review layer is a process gap an organization can close with a quarterly cadence before buying anything.',
-      guide: 'Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 3, the Usage Delta Audit and shadow-policy dry-run.'
-    },
-    C_enforcement: {
-      extra: true,
-      label: 'Also relevant',
-      title: 'On automated enforcement specifically',
-      checkLabel: null,
-      check: 'Your answer on trusting automated enforcement points directly at Phase 4 (Enforcement Without Downtime) \u2014 specifically the Conditional Deny pattern for orphaned identities, which is designed around exactly the kind of staged, observable rollout that builds the trust a dry-run period is meant to establish.',
-      ceilingLabel: null,
-      ceiling: '',
-      guide: null
-    },
-    D: {
-      label: 'Section D — Runtime & Ecosystem',
-      title: 'Check what each SaaS platform already shows you about itself.',
-      checkLabel: 'Self-check, today',
-      check: 'Most major SaaS platforms have an admin page listing third-party apps with OAuth access and the scopes granted \u2014 Microsoft 365 admin center, Google Workspace admin console, and Salesforce Connected Apps / OAuth usage are common starting points. Pull that list per platform and check for anything unrecognized or with broader scope than its function needs.',
-      ceilingLabel: 'Where this hits a ceiling',
-      ceiling: 'Each platform\u2019s list only shows grants made *to* that platform. There\u2019s no single place that shows the full graph of which SaaS apps can talk to which other SaaS apps across the organization \u2014 and a token revoked on one side doesn\u2019t necessarily get cleaned up on the other.',
-      guide: 'Guide: NHI Security vs. Secrets Managers vs. CNAPP \u2014 this is the scenario where dedicated NHI tooling differentiates most clearly from self-built mechanisms.'
-    },
-    F: {
-      label: 'Section F — Agentic AI',
-      title: 'Inventory what each agent was actually issued.',
-      checkLabel: 'Self-check, today',
-      check: 'For each AI agent or LLM-orchestrator integration in use, check what credential or API key it was issued and what scopes that credential carries. Most agent frameworks (LangChain, Copilot Studio connectors, and similar) require an explicit credential or connection configuration that can be inventoried like any other service credential.',
-      ceilingLabel: 'Where this hits a ceiling',
-      ceiling: 'A credential\u2019s scope tells you what an agent *can* do, not what it has actually done or what it might delegate to other agents or tools it calls. That behavioral and delegation layer isn\u2019t something a credential inventory captures \u2014 and tooling for it is still immature across the board.',
-      guide: 'Guide: OWASP Top 10 for Agentic Applications \u2014 NHI Identity Controls, ASI04.'
-    }
-  };
-
-  const clusterMap = {
-    q1: 'A', q4: 'A', q5: 'A',
-    q2: 'B',
-    q3: 'C', q6: 'C', q7: 'C',
-    q9: 'D',
-    q8: 'F'
-  };
-
-  const form = document.getElementById('self-check-form');
-  const seeResultsBtn = document.getElementById('see-results');
-  const progressText = document.getElementById('progress-text');
-  const progressFill = document.getElementById('progress-fill');
-  const results = document.getElementById('results');
-  const resultsContent = document.getElementById('results-content');
-  const resultsIntro = document.getElementById('results-intro');
-  const retakeBtn = document.getElementById('retake');
-
-  function getAnswers() {
-    const answers = {};
-    for (let i = 1; i <= 9; i++) {
-      const selected = form.querySelector(`input[name="q${i}"]:checked`);
-      if (selected) answers['q' + i] = parseInt(selected.value, 10);
-    }
-    return answers;
-  }
-
-  function updateProgress() {
-    const answers = getAnswers();
-    const count = Object.keys(answers).length;
-    progressText.textContent = count + ' of 9 answered';
-    progressFill.style.width = (count / 9 * 100) + '%';
-    seeResultsBtn.textContent = `See results (${count}/9 answered)`;
-    seeResultsBtn.disabled = count < 9;
-  }
-
-  form.addEventListener('change', (e) => {
-    if (e.target.type === 'radio') {
-      const card = e.target.closest('.qcard');
-      card.querySelectorAll('.qoption').forEach(opt => opt.classList.remove('selected'));
-      e.target.closest('.qoption').classList.add('selected');
-      updateProgress();
-    }
-  });
-
-  function computeClusters() {
-    const answers = getAnswers();
-    const totals = { A: 0, B: 0, C: 0, D: 0, F: 0 };
-    for (const [q, cluster] of Object.entries(clusterMap)) {
-      totals[cluster] += answers[q];
-    }
-    const normalized = {};
-    for (const c of Object.keys(totals)) {
-      normalized[c] = totals[c] / clusterMax[c];
-    }
-    return { totals, normalized, answers };
-  }
-
-  function renderResults() {
-    const { normalized, answers } = computeClusters();
-    const sorted = Object.entries(normalized).sort((a, b) => b[1] - a[1]);
-    const [primaryKey, primaryScore] = sorted[0];
-    const [secondaryKey, secondaryScore] = sorted[1];
-
-    resultsContent.innerHTML = '';
-
-    if (primaryScore === 0) {
-      resultsIntro.textContent = 'Nothing here stands out as an immediate concentration \u2014 that\u2019s a good sign. The checks below are still worth a periodic look.';
-      const div = document.createElement('div');
-      div.className = 'no-concentration';
-      div.innerHTML = '<p>None of the nine areas scored as an obvious gap based on these answers. This self-check covers the most common areas, not all of them \u2014 it doesn\u2019t rule out risk in areas outside its scope (third-party/vendor account offboarding and cross-tenant SaaS trust relationships aren\u2019t covered here).</p>';
-      resultsContent.appendChild(div);
-    } else {
-      resultsIntro.textContent = 'Based on these answers, here\u2019s where to look first:';
-
-      const primary = clusterContent[primaryKey];
-      resultsContent.appendChild(renderCluster(primary, true));
-
-      const showSecondary = secondaryScore > 0 && (primaryScore - secondaryScore) <= 0.34;
-      if (showSecondary) {
-        const secondary = clusterContent[secondaryKey];
-        resultsContent.appendChild(renderCluster(secondary, false));
+    const clusterContent = {
+      A: {
+        label: 'Section A — Discovery & Inventory',
+        title: 'Start with what isn\u2019t in the vault yet.',
+        checkLabel: 'Self-check, today',
+        check: 'Run an open-source secret scanner (trufflehog, gitleaks, git-secrets) across full repository history \u2014 not just the current branch. Most exposed credentials live in commits that were "removed" but never purged. Also check CI build logs, which frequently print environment variables on failed builds.',
+        ceilingLabel: 'Where this hits a ceiling',
+        ceiling: 'A scan run today finds what exists today. New code ships tomorrow, and private repos, forks, and developer laptops routinely sit outside whatever\u2019s being scanned. The underlying gap isn\u2019t "did we scan" \u2014 it\u2019s continuous visibility into every place code can exist.',
+        guide: '<a href="/guides/nhi-rollout/#phase-1">Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 1, Low-Impact Discovery</a> (event-driven cloud ingestion and webhook-based diff scanning).'
+      },
+      B: {
+        label: 'Section B — Ownership & Accountability',
+        title: 'Find out whether ownership can survive someone leaving.',
+        checkLabel: 'Self-check, today',
+        check: 'For a credential or identity that needs an owner, run a git blame/log trace against the repo or IaC file where it\u2019s declared (<code>git log -S "&lt;identifier&gt;" --pretty=format:"%h - %an, %ae : %ad" -n 1</code>) and cross-reference the author\u2019s email against your identity provider for current team membership.',
+        ceilingLabel: 'Where this hits a ceiling',
+        ceiling: 'This works when the credential\u2019s origin is in version control and the original author is still at the organization and still on a relevant team. For credentials created via console or CLI with no IaC trail \u2014 or where the creator has left and the team has been reorganized \u2014 the trail goes cold and ownership becomes whoever\u2019s willing to claim it.',
+        guide: '<a href="/guides/nhi-rollout/#phase-2">Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 2, Ownership and Context Mapping</a> (git blame lineage trace, Kubernetes pod-spec extraction).'
+      },
+      C: {
+        label: 'Section C — Lifecycle & Privilege Management',
+        title: 'Pull the list your cloud provider already has.',
+        checkLabel: 'Self-check, today',
+        check: 'AWS IAM Access Analyzer / Access Advisor, Azure Access Reviews, and GCP Policy Analyzer all surface permissions unused for 90+ days, natively, for free. Pull that list \u2014 it\u2019s usually long on the first run.',
+        ceilingLabel: 'Where this hits a ceiling',
+        ceiling: 'Native tooling tells you what\u2019s unused, not whether removing it is safe, who\u2019s accountable for the decision, or whether the same list regrows next quarter. That triage-and-recurring-review layer is a process gap an organization can close with a quarterly cadence before buying anything.',
+        guide: '<a href="/guides/nhi-rollout/#phase-3">Guide: Rolling Out NHI Discovery and Governance Without Breaking Production \u2014 Phase 3</a>, the Usage Delta Audit and shadow-policy dry-run.'
+      },
+      C_enforcement: {
+        label: 'Also relevant',
+        title: 'On automated enforcement specifically',
+        checkLabel: null,
+        check: 'Your answer on trusting automated enforcement points directly at <a href="/guides/nhi-rollout/#phase-4">Phase 4, Enforcement Without Downtime</a> \u2014 specifically the Conditional Deny pattern for orphaned identities, which is designed around exactly the kind of staged, observable rollout that builds the trust a dry-run period is meant to establish.',
+        ceilingLabel: null,
+        ceiling: '',
+        guide: null
+      },
+      D: {
+        label: 'Section D — Runtime & Ecosystem',
+        title: 'Check what each SaaS platform already shows you about itself.',
+        checkLabel: 'Self-check, today',
+        check: 'Most major SaaS platforms have an admin page listing third-party apps with OAuth access and the scopes granted \u2014 Microsoft 365 admin center, Google Workspace admin console, and Salesforce Connected Apps / OAuth usage are common starting points. Pull that list per platform and check for anything unrecognized or with broader scope than its function needs.',
+        ceilingLabel: 'Where this hits a ceiling',
+        ceiling: 'Each platform\u2019s list only shows grants made *to* that platform. There\u2019s no single place that shows the full graph of which SaaS apps can talk to which other SaaS apps across the organization \u2014 and a token revoked on one side doesn\u2019t necessarily get cleaned up on the other.',
+        guide: 'Guide: NHI Security vs. Secrets Managers vs. CNAPP \u2014 this is the scenario where dedicated NHI tooling differentiates most clearly from self-built mechanisms.'
+      },
+      F: {
+        label: 'Section F — Agentic AI',
+        title: 'Inventory what each agent was actually issued.',
+        checkLabel: 'Self-check, today',
+        check: 'For each AI agent or LLM-orchestrator integration in use, check what credential or API key it was issued and what scopes that credential carries. Most agent frameworks (LangChain, Copilot Studio connectors, and similar) require an explicit credential or connection configuration that can be inventoried like any other service credential.',
+        ceilingLabel: 'Where this hits a ceiling',
+        ceiling: 'A credential\u2019s scope tells you what an agent *can* do, not what it has actually done or what it might delegate to other agents or tools it calls. That behavioral and delegation layer isn\u2019t something a credential inventory captures \u2014 and tooling for it is still immature across the board.',
+        guide: '<a href="/guides/owasp-agentic-ai-identity-controls/">Guide: OWASP Top 10 for Agentic Applications \u2014 NHI Identity Controls, ASI04</a>.'
       }
+    };
+
+    const clusterMap = {
+      q1: 'A', q4: 'A', q5: 'A',
+      q2: 'B',
+      q3: 'C', q6: 'C', q7: 'C',
+      q9: 'D',
+      q8: 'F'
+    };
+
+    const form = document.getElementById('self-check-form');
+    const seeResultsBtn = document.getElementById('see-results');
+    const progressText = document.getElementById('progress-text');
+    const progressFill = document.getElementById('progress-fill');
+    const results = document.getElementById('results');
+    const resultsContent = document.getElementById('results-content');
+    const resultsIntro = document.getElementById('results-intro');
+    const retakeBtn = document.getElementById('retake');
+
+    function getAnswers() {
+      const answers = {};
+      for (let i = 1; i <= 9; i++) {
+        const selected = form.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) answers['q' + i] = parseInt(selected.value, 10);
+      }
+      return answers;
     }
 
-    // Special case: if Q7 indicated low trust in automation (score >= 1)
-    // and Section C is among the surfaced clusters, add the enforcement note.
-    const surfacedKeys = primaryScore === 0 ? [] : [primaryKey, ((secondaryScore > 0 && (primaryScore - secondaryScore) <= 0.34) ? secondaryKey : null)];
-    if (surfacedKeys.includes('C') && answers.q7 >= 1) {
-      resultsContent.appendChild(renderCluster(clusterContent['C_enforcement'], false));
+    function updateProgress() {
+      const answers = getAnswers();
+      const count = Object.keys(answers).length;
+      progressText.textContent = count + ' of 9 answered';
+      progressFill.style.width = (count / 9 * 100) + '%';
+      seeResultsBtn.textContent = `See results (${count}/9 answered)`;
+      seeResultsBtn.disabled = count < 9;
     }
 
-    results.hidden = false;
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+    form.addEventListener('change', (e) => {
+      if (e.target.type === 'radio') {
+        const card = e.target.closest('.qcard');
+        card.querySelectorAll('.qoption').forEach(opt => opt.classList.remove('selected'));
+        e.target.closest('.qoption').classList.add('selected');
+        updateProgress();
+      }
+    });
 
-  function renderCluster(c, isPrimary) {
-    const div = document.createElement('div');
-    div.className = 'result-cluster' + (isPrimary ? '' : ' secondary');
-    let html = `<span class="result-label">${c.label}</span><div class="result-title">${c.title}</div>`;
-    if (c.checkLabel) {
-      html += `<h4>${c.checkLabel}</h4><p>${c.check}</p>`;
-    } else {
-      html += `<p>${c.check}</p>`;
+    function computeClusters() {
+      const answers = getAnswers();
+      const totals = { A: 0, B: 0, C: 0, D: 0, F: 0 };
+      for (const [q, cluster] of Object.entries(clusterMap)) {
+        totals[cluster] += answers[q];
+      }
+      const normalized = {};
+      for (const c of Object.keys(totals)) {
+        normalized[c] = totals[c] / clusterMax[c];
+      }
+      return { totals, normalized, answers };
     }
-    if (c.ceilingLabel) {
-      html += `<h4>${c.ceilingLabel}</h4><p>${c.ceiling}</p>`;
-    }
-    if (c.guide) {
-      html += `<div class="result-guide">${c.guide}</div>`;
-    }
-    div.innerHTML = html;
-    return div;
-  }
 
-  seeResultsBtn.addEventListener('click', renderResults);
+    function renderCluster(c, isPrimary) {
+      const div = document.createElement('div');
+      div.className = 'result-cluster' + (isPrimary ? '' : ' secondary');
+      let html = `<span class="result-label">${c.label}</span><div class="result-title">${c.title}</div>`;
+      if (c.checkLabel) {
+        html += `<h4>${c.checkLabel}</h4><p>${c.check}</p>`;
+      } else {
+        html += `<p>${c.check}</p>`;
+      }
+      if (c.ceilingLabel) {
+        html += `<h4>${c.ceilingLabel}</h4><p>${c.ceiling}</p>`;
+      }
+      if (c.guide) {
+        html += `<div class="result-guide">${c.guide}</div>`;
+      }
+      div.innerHTML = html;
+      return div;
+    }
 
-  retakeBtn.addEventListener('click', () => {
-    form.reset();
-    form.querySelectorAll('.qoption').forEach(opt => opt.classList.remove('selected'));
-    results.hidden = true;
+    function renderResults() {
+      const { normalized, answers } = computeClusters();
+      const sorted = Object.entries(normalized).sort((a, b) => b[1] - a[1]);
+      const [primaryKey, primaryScore] = sorted[0];
+      const [secondaryKey, secondaryScore] = sorted[1];
+
+      resultsContent.innerHTML = '';
+
+      if (primaryScore === 0) {
+        resultsIntro.textContent = 'Nothing here stands out as an immediate concentration \u2014 that\u2019s a good sign. The checks below are still worth a periodic look.';
+        const div = document.createElement('div');
+        div.className = 'no-concentration';
+        div.innerHTML = '<p>None of the nine areas scored as an obvious gap based on these answers. This self-check covers the most common areas, not all of them \u2014 it doesn\u2019t rule out risk in areas outside its scope (third-party/vendor account offboarding and cross-tenant SaaS trust relationships aren\u2019t covered here).</p>';
+        resultsContent.appendChild(div);
+      } else {
+        resultsIntro.textContent = 'Based on these answers, here\u2019s where to look first:';
+
+        const primary = clusterContent[primaryKey];
+        resultsContent.appendChild(renderCluster(primary, true));
+
+        const showSecondary = secondaryScore > 0 && (primaryScore - secondaryScore) <= 0.34;
+        if (showSecondary) {
+          const secondary = clusterContent[secondaryKey];
+          resultsContent.appendChild(renderCluster(secondary, false));
+        }
+
+        const surfacedKeys = [primaryKey, showSecondary ? secondaryKey : null];
+        if (surfacedKeys.includes('C') && answers.q7 >= 1) {
+          resultsContent.appendChild(renderCluster(clusterContent['C_enforcement'], false));
+        }
+      }
+
+      results.hidden = false;
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    seeResultsBtn.addEventListener('click', renderResults);
+
+    retakeBtn.addEventListener('click', () => {
+      form.reset();
+      form.querySelectorAll('.qoption').forEach(opt => opt.classList.remove('selected'));
+      results.hidden = true;
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     updateProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  </script>
 
-  updateProgress();
-</script>
 </body>
 </html>

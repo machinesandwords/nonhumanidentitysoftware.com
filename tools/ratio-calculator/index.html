@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>How Many Non-Human Identities Do You Actually Have? — NHI Ratio Calculator | Non-Human Identity Software</title>
+  <meta name="description" content="Estimate your organization's own NHI-to-human identity ratio based on your environment — applications, cloud accounts, CI/CD pipelines, and SaaS integrations — rather than an industry-wide average.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/tools/nhi-ratio-calculator/">
+
+  <meta property="og:title" content="How Many Non-Human Identities Do You Actually Have? | Non-Human Identity Software">
+  <meta property="og:description" content="Estimate your own NHI-to-human ratio based on your environment, not an industry-wide average.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/tools/nhi-ratio-calculator/">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://nonhumanidentitysoftware.com/tools/" },
+      { "@type": "ListItem", "position": 3, "name": "NHI Ratio Calculator", "item": "https://nonhumanidentitysoftware.com/tools/nhi-ratio-calculator/" }
+    ]
+  }
+  </script>
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    /* ── Input blocks ───────────────────────────────────────── */
+    .calc-section {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .calc-section h3 { margin-bottom: 4px; }
+    .calc-section-note { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
+    .calc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: var(--hairline);
+    }
+    .calc-row:last-child { border-bottom: none; }
+    .calc-row-label { font-size: var(--small); flex: 1; }
+    .calc-row-sub { font-size: 11px; color: var(--faint); display: block; margin-top: 2px; }
+    .calc-input {
+      width: 80px;
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      padding: 8px 10px;
+      border: var(--hairline);
+      background: var(--bg);
+      color: var(--charcoal);
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .calc-input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+
+    details.calc-section summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: var(--h3);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    details.calc-section summary::before {
+      content: '▸';
+      color: var(--accent);
+      font-size: 11px;
+      transition: transform 0.15s;
+    }
+    details.calc-section[open] summary::before { transform: rotate(90deg); }
+    details.calc-section .calc-section-note { margin-top: 12px; }
+    details.calc-section .calc-row:first-of-type { margin-top: 4px; }
+
+    /* ── Results ────────────────────────────────────────────── */
+    .results-block {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 28px 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .results-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .results-ratio {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .results-ratio span { color: var(--accent); }
+    .results-sub { font-size: var(--small); color: var(--mid); }
+
+    /* ── Breakdown table ────────────────────────────────────── */
+    .breakdown-table { width: 100%; border-collapse: collapse; margin: 4px 0; }
+    .breakdown-table th, .breakdown-table td {
+      text-align: left;
+      padding: 10px 8px;
+      font-size: var(--small);
+      border-bottom: var(--hairline);
+    }
+    .breakdown-table th { color: var(--mid); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .breakdown-table td.num, .breakdown-table th.num { text-align: right; font-family: 'Space Mono', monospace; }
+    .breakdown-table tr.total td { font-weight: 700; border-top: 2px solid var(--charcoal); border-bottom: none; }
+
+    /* ── Export block + modal ───────────────────────────────── */
+    .export-actions { display: flex; }
+    #export-pdf-btn { width: auto; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 42, 40, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--surface);
+      border: var(--hairline);
+      padding: 28px;
+      max-width: 380px;
+      width: 100%;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--faint);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+    .modal-close:hover { color: var(--charcoal); }
+    .modal-box h3 { margin-bottom: 8px; padding-right: 20px; }
+    .modal-box p { font-size: var(--small); color: var(--mid); margin-bottom: 16px; }
+    .modal-box input[type="email"] {
+      width: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      padding: 10px 12px;
+      border: var(--hairline);
+      background: var(--bg);
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+    .modal-box input[type="email"]:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+    .modal-disclaimer { font-size: 11px; color: var(--faint); margin-top: 12px; line-height: 1.6; }
+    .modal-error { font-size: 11px; color: #b45309; margin-bottom: 8px; display: none; }
+
+    /* ── Buttons ────────────────────────────────────────────── */
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dim); }
+    .btn-block { width: 100%; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/tools/">Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>NHI Ratio Calculator</span>
+        </div>
+
+        <span class="page-label">Tool</span>
+        <h1>How Many Non-Human Identities Do You Actually Have?</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">An estimate based on your environment, not an industry average</p>
+
+        <p class="lead">
+          "NHIs outnumber humans 10:1" — or 20:1, or 50:1, depending on which
+          vendor's report you read. Those figures describe someone else's
+          environment. This calculator estimates yours: enter a few counts from
+          your own infrastructure, and adjust the assumptions below if you have
+          better numbers than the defaults.
+        </p>
+
+        <div class="calc-section">
+          <h3>Your environment</h3>
+          <p class="calc-section-note">Rough counts are fine — this is an estimate, not an audit.</p>
+
+          <div class="calc-row">
+            <span class="calc-row-label">Human employees with system access<span class="calc-row-sub">Engineering, IT, and anyone with credentials to internal systems</span></span>
+            <input type="number" class="calc-input" id="humans" value="500" min="0">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">Applications / microservices<span class="calc-row-sub">Each one typically holds its own credentials</span></span>
+            <input type="number" class="calc-input" id="apps" value="80" min="0">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">Cloud accounts / projects<span class="calc-row-sub">AWS accounts, GCP projects, Azure subscriptions — combined</span></span>
+            <input type="number" class="calc-input" id="cloud" value="12" min="0">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">CI/CD pipelines<span class="calc-row-sub">Build and deployment pipelines with their own credentials</span></span>
+            <input type="number" class="calc-input" id="pipelines" value="40" min="0">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">SaaS integrations<span class="calc-row-sub">Third-party apps connected via OAuth — Slack, Salesforce, M365, etc.</span></span>
+            <input type="number" class="calc-input" id="saas" value="25" min="0">
+          </div>
+        </div>
+
+        <details class="calc-section">
+          <summary>Assumptions (adjust if you have better numbers)</summary>
+          <p class="calc-section-note">
+            These multipliers are illustrative starting points based on common
+            patterns in cloud-native environments — not measurements of your
+            environment specifically. If you've run a discovery scan or pulled
+            numbers from your cloud console, replace these with your own.
+          </p>
+
+          <div class="calc-row">
+            <span class="calc-row-label">NHIs per application/microservice<span class="calc-row-sub">Database service accounts, API keys for dependencies, deployment tokens</span></span>
+            <input type="number" class="calc-input" id="apps-mult" value="3" min="0" step="0.5">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">NHIs per cloud account/project<span class="calc-row-sub">IAM roles, service accounts, instance profiles, function execution roles</span></span>
+            <input type="number" class="calc-input" id="cloud-mult" value="15" min="0" step="0.5">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">NHIs per CI/CD pipeline<span class="calc-row-sub">Build credentials, deployment tokens</span></span>
+            <input type="number" class="calc-input" id="pipelines-mult" value="2" min="0" step="0.5">
+          </div>
+          <div class="calc-row">
+            <span class="calc-row-label">NHIs per SaaS integration<span class="calc-row-sub">The integration's own service identity, plus any sub-connections it creates</span></span>
+            <input type="number" class="calc-input" id="saas-mult" value="2" min="0" step="0.5">
+          </div>
+        </details>
+
+        <div class="results-block">
+          <span class="results-label">Your estimated ratio</span>
+          <div class="results-ratio"><span id="ratio-value">9.6</span> : 1</div>
+          <div class="results-sub" id="ratio-sub">~<span id="total-nhis">4,800</span> estimated non-human identities for <span id="total-humans">500</span> human employees</div>
+        </div>
+
+        <h3>Where the estimate comes from</h3>
+        <div class="table-wrap">
+          <table class="breakdown-table">
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th class="num">Count</th>
+                <th class="num">× Multiplier</th>
+                <th class="num">≈ NHIs</th>
+              </tr>
+            </thead>
+            <tbody id="breakdown-body">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="newsletter-block">
+          <span class="page-label">Export your results</span>
+          <p>Save this breakdown — including your inputs and assumptions — as a PDF to share with your team.</p>
+          <div class="export-actions">
+            <button type="button" class="btn btn-primary" id="export-pdf-btn">Export as PDF</button>
+          </div>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <!-- Email-gate modal -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h3>Get your PDF</h3>
+      <p>Enter your email and your results will open as a printable PDF in a new tab.</p>
+      <div class="modal-error" id="modal-error">Enter a valid email address.</div>
+      <input type="email" id="modal-email" placeholder="your@email.com" aria-label="Email address">
+      <button type="button" class="btn btn-primary btn-block" id="modal-submit">Export as PDF</button>
+      <p class="modal-disclaimer">We'll also add you to occasional NHI security research emails. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+  <script>
+    const inputs = {
+      humans: document.getElementById('humans'),
+      apps: document.getElementById('apps'),
+      cloud: document.getElementById('cloud'),
+      pipelines: document.getElementById('pipelines'),
+      saas: document.getElementById('saas'),
+      appsMult: document.getElementById('apps-mult'),
+      cloudMult: document.getElementById('cloud-mult'),
+      pipelinesMult: document.getElementById('pipelines-mult'),
+      saasMult: document.getElementById('saas-mult'),
+    };
+
+    const sources = [
+      { key: 'apps', multKey: 'appsMult', label: 'Applications / microservices' },
+      { key: 'cloud', multKey: 'cloudMult', label: 'Cloud accounts / projects' },
+      { key: 'pipelines', multKey: 'pipelinesMult', label: 'CI/CD pipelines' },
+      { key: 'saas', multKey: 'saasMult', label: 'SaaS integrations' },
+    ];
+
+    function num(el) {
+      const v = parseFloat(el.value);
+      return isNaN(v) || v < 0 ? 0 : v;
+    }
+
+    function compute() {
+      const humans = num(inputs.humans);
+      let totalNHIs = 0;
+      const rows = sources.map(s => {
+        const count = num(inputs[s.key]);
+        const mult = num(inputs[s.multKey]);
+        const subtotal = count * mult;
+        totalNHIs += subtotal;
+        return { label: s.label, count, mult, subtotal };
+      });
+      const ratio = humans > 0 ? totalNHIs / humans : 0;
+      return { humans, totalNHIs, ratio, rows };
+    }
+
+    function formatNum(n) {
+      return Math.round(n).toLocaleString('en-US');
+    }
+
+    function formatRatio(n) {
+      if (n >= 100) return Math.round(n).toString();
+      return (Math.round(n * 10) / 10).toString();
+    }
+
+    function render() {
+      const { humans, totalNHIs, ratio, rows } = compute();
+
+      document.getElementById('ratio-value').textContent = formatRatio(ratio);
+      document.getElementById('total-nhis').textContent = formatNum(totalNHIs);
+      document.getElementById('total-humans').textContent = formatNum(humans);
+
+      const tbody = document.getElementById('breakdown-body');
+      tbody.innerHTML = '';
+      rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.label}</td><td class="num">${formatNum(r.count)}</td><td class="num">${r.mult}</td><td class="num">${formatNum(r.subtotal)}</td>`;
+        tbody.appendChild(tr);
+      });
+      const totalTr = document.createElement('tr');
+      totalTr.className = 'total';
+      totalTr.innerHTML = `<td>Total estimated NHIs</td><td></td><td></td><td class="num">${formatNum(totalNHIs)}</td>`;
+      tbody.appendChild(totalTr);
+    }
+
+    Object.values(inputs).forEach(el => el.addEventListener('input', render));
+    render();
+
+    /* ── Export / email-gate modal ─────────────────────────── */
+    const overlay = document.getElementById('modal-overlay');
+    const modalEmail = document.getElementById('modal-email');
+    const modalError = document.getElementById('modal-error');
+
+    document.getElementById('export-pdf-btn').addEventListener('click', () => {
+      overlay.hidden = false;
+      modalEmail.focus();
+    });
+    document.getElementById('modal-close').addEventListener('click', () => { overlay.hidden = true; });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.hidden = true; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.hidden = true; });
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    const WORKER_URL = 'https://newsletter.nonhumanidentitysoftware.com';
+    const GROUP_ID = '189858273326793780'; // Defender Free
+
+    function buildPrintableHTML() {
+      const { humans, totalNHIs, ratio, rows } = compute();
+      const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      const rowsHTML = rows.map(r =>
+        `<tr><td>${r.label}</td><td style="text-align:right">${formatNum(r.count)}</td><td style="text-align:right">${r.mult}</td><td style="text-align:right">${formatNum(r.subtotal)}</td></tr>`
+      ).join('');
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NHI Ratio Estimate — ${date}</title>
+<style>
+  body { font-family: 'Space Mono', monospace; color: #2a2a28; padding: 48px; max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  .meta { font-size: 11px; color: #9b9b98; margin-bottom: 32px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ratio-block { border: 1px solid #7B3FA6; background: #F0E8F7; padding: 24px; text-align: center; margin-bottom: 32px; }
+  .ratio-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7B3FA6; margin-bottom: 8px; }
+  .ratio-value { font-size: 40px; font-weight: 700; }
+  .ratio-value span { color: #7B3FA6; }
+  .ratio-sub { font-size: 12px; color: #6b6b68; margin-top: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #d8d8d6; }
+  th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b6b68; }
+  tr.total td { font-weight: 700; border-top: 2px solid #2a2a28; border-bottom: none; }
+  .footer-note { font-size: 11px; color: #9b9b98; line-height: 1.6; margin-top: 40px; border-top: 1px solid #d8d8d6; padding-top: 16px; }
+  @media print { body { padding: 24px; } }
+</style>
+</head>
+<body>
+  <h1>NHI-to-Human Identity Ratio — Estimate</h1>
+  <div class="meta">Generated ${date} · nonhumanidentitysoftware.com/tools/nhi-ratio-calculator/</div>
+
+  <div class="ratio-block">
+    <div class="ratio-label">Estimated ratio</div>
+    <div class="ratio-value"><span>${formatRatio(ratio)}</span> : 1</div>
+    <div class="ratio-sub">~${formatNum(totalNHIs)} estimated non-human identities for ${formatNum(humans)} human employees</div>
+  </div>
+
+  <table>
+    <thead><tr><th>Source</th><th style="text-align:right">Count</th><th style="text-align:right">× Multiplier</th><th style="text-align:right">≈ NHIs</th></tr></thead>
+    <tbody>
+      ${rowsHTML}
+      <tr class="total"><td>Total estimated NHIs</td><td></td><td></td><td style="text-align:right">${formatNum(totalNHIs)}</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    This is an estimate based on the inputs and assumptions above, not a discovered inventory.
+    Multipliers reflect common patterns in cloud-native environments and may not match your
+    environment exactly — adjust them at nonhumanidentitysoftware.com/tools/nhi-ratio-calculator/
+    if you have your own numbers (for example, from a cloud IAM console or an NHI discovery scan).
+  </div>
+
+  <script>window.onload = function(){ window.print(); };<\/script>
+</body>
+</html>`;
+    }
+
+    const modalSubmit = document.getElementById('modal-submit');
+
+    modalSubmit.addEventListener('click', async () => {
+      const email = modalEmail.value.trim();
+
+      if (!isValidEmail(email)) {
+        modalError.textContent = 'Enter a valid email address.';
+        modalError.style.display = 'block';
+        return;
+      }
+      modalError.style.display = 'none';
+
+      // Open the tab synchronously, within the click handler, so popup
+      // blockers don't kill it once we're past the await below.
+      const tab = window.open('', '_blank');
+
+      modalSubmit.disabled = true;
+      modalSubmit.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, group_id: GROUP_ID }),
+        });
+        const data = await response.json();
+
+        if (data.message === 'Subscribed') {
+          if (tab) {
+            tab.document.open();
+            tab.document.write(buildPrintableHTML());
+            tab.document.close();
+          }
+          overlay.hidden = true;
+          modalEmail.value = '';
+        } else {
+          if (tab) tab.close();
+          modalError.textContent = data.detail || 'Something went wrong. Please try again.';
+          modalError.style.display = 'block';
+        }
+      } catch (err) {
+        if (tab) tab.close();
+        modalError.textContent = 'Something went wrong. Please try again.';
+        modalError.style.display = 'block';
+      } finally {
+        modalSubmit.disabled = false;
+        modalSubmit.textContent = 'Export as PDF';
+      }
+    });
+  </script>
+
+</body>
+</html>
