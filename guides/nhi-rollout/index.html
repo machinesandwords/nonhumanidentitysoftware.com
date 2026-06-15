@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
+  <title>Rolling Out NHI Discovery and Governance Without Breaking Production | Non-Human Identity Software</title>
+  <meta name="description" content="A phased technical guide to NHI discovery, ownership mapping, usage auditing, and enforcement across AWS, GCP, and Azure — covering the mechanisms that make each phase safe to roll out incrementally.">
+  <link rel="canonical" href="https://nonhumanidentitysoftware.com/guides/nhi-rollout-without-breaking-production/">
+
+  <meta property="og:title" content="Rolling Out NHI Discovery and Governance Without Breaking Production | Non-Human Identity Software">
+  <meta property="og:description" content="The mechanisms behind low-impact NHI discovery, ownership mapping, usage-delta auditing, and staged enforcement — covering AWS, GCP, and Azure.">
+  <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/guides/nhi-rollout-without-breaking-production/">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Rolling Out NHI Discovery and Governance Without Breaking Production",
+    "description": "A phased technical guide to NHI discovery, ownership mapping, usage auditing, and enforcement across AWS, GCP, and Azure.",
+    "url": "https://nonhumanidentitysoftware.com/guides/nhi-rollout-without-breaking-production/",
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://nonhumanidentitysoftware.com/guides/" },
+      { "@type": "ListItem", "position": 3, "name": "Rolling Out NHI Discovery and Governance Without Breaking Production", "item": "https://nonhumanidentitysoftware.com/guides/nhi-rollout-without-breaking-production/" }
+    ]
+  }
+  </script>
+
+  <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js" defer></script>
+
+  <style>
+    .prereq-block {
+      border: var(--hairline);
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      padding: 16px 20px;
+      margin: 24px 0 32px;
+    }
+    .prereq-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .prereq-block ul { margin: 0; padding-left: 18px; }
+    .prereq-block li {
+      font-size: var(--small);
+      color: var(--mid);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+    .prereq-block li:last-child { margin-bottom: 0; }
+    .prereq-block li em { color: var(--faint); font-style: italic; }
+
+    .code-block {
+      background: var(--bg);
+      border: var(--hairline);
+      padding: 12px 16px;
+      margin: 4px 0 20px;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      line-height: 1.7;
+      white-space: pre;
+    }
+    .code-block code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: var(--small);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      <div id="sidebar-nav"></div>
+    </nav>
+
+    <main class="main">
+      <article class="content">
+
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/guides/">Guides</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Rolling Out NHI Discovery and Governance Without Breaking Production</span>
+        </div>
+
+        <span class="page-label">Guide</span>
+        <h1>Rolling Out NHI Discovery and Governance Without Breaking Production</h1>
+        <p style="font-size:var(--body);color:var(--mid);margin-top:-12px;margin-bottom:24px;">A phased approach for platform engineering and security teams</p>
+
+        <p class="lead">Non-human identities don't fail gracefully. There's no login prompt, no "your session expired" message — just a hard crash, a broken CI/CD pipeline, a silent data pipeline going dark, or a pager alert at 2 a.m. That's what keeps high-risk legacy credentials alive indefinitely in most environments, and it's why rolling out NHI discovery and governance has to be staged carefully.</p>
+
+        <p>Most engineering organizations treat rotating a database password or an SSH key as routine: a low-stakes, scheduled task that is well understood. Rotating an unmapped, multi-cloud service account key is a different proposition. The asymmetry between the low cost of leaving a stale credential alone and the high cost of touching it and getting it wrong is exactly what this guide is structured around.</p>
+
+        <p>The four phases below — low-impact discovery, ownership and context mapping, a usage-delta audit, and staged enforcement — describe the actual technical mechanisms involved, regardless of whether they're assembled by a platform team using existing cloud-native tooling or automated by a dedicated NHI platform. The mechanism is the same either way; what differs is how much of it has already been built.</p>
+
+        <div class="prereq-block">
+          <span class="prereq-label">Before you start — what you need, by phase</span>
+          <ul>
+            <li>Read-only access to your cloud provider's audit trail — AWS CloudTrail, GCP Cloud Audit Logs, or Azure Monitor diagnostic logs — for at least one environment <em>(Phase 1)</em></li>
+            <li>Organization-level admin access to your Git provider (GitHub Enterprise or GitLab self-managed) to configure push-event webhooks <em>(Phase 1)</em></li>
+            <li>Read access to your identity provider's directory — Okta, Entra ID, or similar — for ownership cross-referencing <em>(Phase 2)</em></li>
+            <li>Access to your cloud provider's access-analysis tooling — AWS IAM Access Analyzer, Azure Access Reviews, or GCP Policy Analyzer <em>(Phase 3)</em></li>
+            <li>Scoped IAM write access and secrets manager admin access — not needed until enforcement begins <em>(Phase 4)</em></li>
+          </ul>
+        </div>
+
+        <h2 id="phase-1">Phase 1: Low-Impact Discovery</h2>
+
+        <p>The first principle of safe discovery is <strong>event-driven ingestion, not active polling</strong>. Repeatedly sweeping a cloud environment's APIs to enumerate every identity and credential — especially on a tight interval — risks API throttling from the cloud provider, which can disrupt active deployment pipelines that share the same rate limits. The alternative is to consume the audit trail each provider already produces, asynchronously, and react only to the events that matter: identity creation, credential issuance, and privilege changes.</p>
+
+        <p>Each major cloud provider has its own audit trail and its own vocabulary for these events — and getting the vocabulary right matters, both for building accurate detection rules and for not confusing teams who'll recognize the API names on sight.</p>
+
+        <h3>AWS: CloudTrail and EventBridge</h3>
+
+        <p>AWS identity-generation activity flows through CloudTrail, which can be aggregated into a centralized S3 bucket across an organization's accounts. An EventBridge rule can then trigger a near-real-time notification — to a discovery system, a ticketing queue, or a SIEM — whenever specific events occur. The events worth filtering for:</p>
+
+        <ul>
+          <li><code>CreateUser</code>, <code>CreateRole</code> — new IAM identities</li>
+          <li><code>CreateAccessKey</code> — new long-lived credentials for an IAM user</li>
+          <li><code>CreateLoginProfile</code> — console access enabled for a user</li>
+          <li><code>AttachUserPolicy</code>, <code>AttachRolePolicy</code>, <code>PutRolePolicy</code> — privilege grants to an identity</li>
+          <li><code>CreateServiceLinkedRole</code> — AWS-managed service identities</li>
+          <li><code>CreateKeyPair</code> — EC2 SSH key pair generation</li>
+        </ul>
+
+        <p><code>AssumeRole</code> is worth tracking separately. It's extremely high-volume in normal operation, so it's better handled with filters for unusual patterns — cross-account assumption, assumption by a principal that's never assumed that role before — than as a blanket alert.</p>
+
+        <h3>GCP: Cloud Audit Logs and Pub/Sub</h3>
+
+        <p>GCP's equivalent pattern routes Cloud Audit Logs through a sink to Pub/Sub, which a discovery system subscribes to. The key events:</p>
+
+        <ul>
+          <li><code>google.iam.admin.v1.CreateServiceAccount</code> — GCP's identity-creation event; this is the GCP analog of AWS's <code>CreateUser</code>/<code>CreateRole</code>, not an AWS API</li>
+          <li><code>google.iam.admin.v1.CreateServiceAccountKey</code> — credential issuance for an existing service account, analogous to AWS's <code>CreateAccessKey</code></li>
+          <li><code>SetIamPolicy</code> — often more important than account creation itself, since this is where privilege actually gets attached to an identity that may already exist</li>
+        </ul>
+
+        <h3>Azure: Entra ID Audit Logs and Event Hub</h3>
+
+        <p>Azure Monitor Diagnostic Settings can stream Administrative and Security log categories to an Event Hub for asynchronous consumption. The events to watch:</p>
+
+        <ul>
+          <li>"Add application" / "Add service principal" — identity creation via app registration, Azure's primary model for non-human identities</li>
+          <li>"Add password to application" (Microsoft Graph <code>addPassword</code>) — client secret issuance for an application; this is Azure's analog to AWS's <code>CreateAccessKey</code>, not an AWS event</li>
+          <li>"Add service principal credentials" — the certificate-based equivalent of the above</li>
+        </ul>
+
+        <p>Exact event-name strings can shift slightly across API versions, so these should be checked against current provider documentation before being encoded into detection rules. The category-level mapping — which provider owns "service account" as a concept, which owns "app registration plus client secret" — is the durable part.</p>
+
+        <h3>Code Repository Scanning: Webhook-Based Diff Scanning</h3>
+
+        <p>Hardcoded secrets are best caught at the point of introduction rather than through periodic full-history scans, which are resource-intensive and easy to schedule around peak development hours without thinking about coverage gaps. A webhook configured at the organization level on a Git provider fires on every push event, sending a payload containing just the diff — the changed lines — to a scanning system.</p>
+
+        <p>The scan itself looks for two things: high-entropy strings (a heuristic for randomly-generated secrets) and structural patterns matching known credential formats — <code>github_pat_</code> prefixes, AWS access key patterns (<code>AKIA[0-9A-Z]{16}</code>), and similar provider-specific formats. Scanning only the diff keeps this lightweight enough to run on every push without becoming a bottleneck in the development workflow.</p>
+
+        <h2 id="phase-2">Phase 2: Ownership and Context Mapping</h2>
+
+        <p>A list of thousands of discovered credentials is not actionable on its own. Before anything gets touched, the question that matters is: who owns this, and what depends on it? When resource tags don't answer that — which is most of the time — two mechanisms can reconstruct the answer from data that already exists.</p>
+
+        <h3>Git Blame Lineage Trace</h3>
+
+        <p>When a credential or identity reference is found in an application's configuration or infrastructure-as-code, its origin can often be traced directly through version control history:</p>
+
+        <div class="code-block"><pre><code># Locate the commit, author, and timestamp where this identity was introduced
+git log -S "service-account-prod" --pretty=format:"%h - %an, %ae : %ad" -n 1</code></pre></div>
+
+        <p>The author's email can then be cross-referenced against an identity provider (Okta, Entra ID) to determine team membership. If that team maps to an active engineering group — say, Engineering-DataPlatform — ownership of the credential can be routed to that team for review. This can run as a one-off script during initial triage, or be wired into an automated pipeline that runs whenever a new credential is discovered; the underlying logic is the same either way.</p>
+
+        <h3>Container Runtime Extraction (Kubernetes)</h3>
+
+        <p>For secrets injected dynamically into running containers, the orchestration layer's API is a more reliable source than guessing based on image or deployment names. Querying the Kubernetes API server for a pod's specification reveals exactly how a credential is wired in:</p>
+
+        <div class="code-block"><pre><code>spec:
+  containers:
+  - name: payment-processor
+    env:
+    - name: DB_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: payment-db-credentials
+          key: password</code></pre></div>
+
+        <p>If that pod carries a label like <code>app.kubernetes.io/part-of: billing-service</code>, the credential's operational context — and therefore its risk profile if compromised — can be associated with the billing team. Whether that association lands in a spreadsheet, a ticketing system, or an NHI inventory platform, the extraction mechanism is the same.</p>
+
+        <h2 id="phase-3">Phase 3: The 30-to-90 Day Usage Delta Audit</h2>
+
+        <p>Least-privilege enforcement requires knowing what an identity actually does, not just what it's permitted to do — and many identities have legitimate but infrequent uses (end-of-month reconciliation jobs, quarterly backup processes) that a short observation window would miss entirely. A 90-day window is long enough to capture most of these cycles.</p>
+
+        <h3>Building the Usage Delta Matrix</h3>
+
+        <p>For each identity, comparing assigned permissions against actually-invoked actions over the observation window typically surfaces a meaningful gap:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Permission</th>
+                <th>Calls (90 days)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>s3:GetObject</code></td>
+                <td>4.2M</td>
+                <td><span class="tag tag-positive">In active use</span></td>
+              </tr>
+              <tr>
+                <td><code>s3:ListBucket</code></td>
+                <td>120,000</td>
+                <td><span class="tag tag-positive">In active use</span></td>
+              </tr>
+              <tr>
+                <td><code>s3:DeleteBucket</code></td>
+                <td>0</td>
+                <td><span class="tag tag-caution">Unused — candidate for removal</span></td>
+              </tr>
+              <tr>
+                <td><code>iam:CreateUser</code></td>
+                <td>0</td>
+                <td><span class="tag tag-caution">Unused — candidate for removal</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>This example, for an identity like <code>analytics-sync-svc</code>, is a common pattern: an identity that's clearly active and necessary for its core function, but that's also been granted administrative-tier permissions it has never exercised — often inherited from a broad managed policy applied for convenience at creation time.</p>
+
+        <h3>Shadow Policies and Dry-Run Validation</h3>
+
+        <p>The unused permissions shouldn't be stripped immediately — a 90-day window doesn't guarantee every legitimate use case has occurred. Instead, the right-sized permission set can be saved as a <strong>shadow policy</strong>: a proposed replacement that isn't yet enforced.</p>
+
+        <p>For a further validation period — commonly two weeks — every API call the identity makes is checked against the shadow policy without being blocked. If a call would have been denied under the shadow policy but is actually occurring in production, that's a signal the policy is too narrow — the policy is updated to permit it, and the validation window restarts. Once a full validation period passes with no such conflicts, the shadow policy can be promoted to the identity's actual permission set with much higher confidence that nothing will break.</p>
+
+        <h2 id="phase-4">Phase 4: Enforcement Without Downtime</h2>
+
+        <p>Once monitoring has identified specific risks, the transition to active enforcement is where the asymmetry from the introduction becomes concrete. Two patterns make this transition safer.</p>
+
+        <h3>The Conditional Deny Pattern</h3>
+
+        <p>For an orphaned identity — one whose creator has left and whose continued necessity is unclear, but which is still making active API calls — outright deletion is risky: if something still depends on it, deletion breaks it with no warning.</p>
+
+        <p>A more controlled approach is a scoped <strong>Deny</strong> policy targeting only the highest-risk actions available to that identity (for example, <code>iam:CreateUser</code>, <code>s3:DeleteBucket</code>, or other actions inconsistent with the identity's apparent function) while leaving its other permissions intact.</p>
+
+        <div class="callout">
+          <span class="callout-label">What a Deny policy actually does</span>
+          <p>A Deny policy blocks the specific actions it targets — it does not "log without blocking." What it provides is a controlled, low-blast-radius reduction in what the identity <em>can</em> do, combined with an audit trail of any <code>AccessDenied</code> events that follow. If those denied actions were actually load-bearing somewhere, that becomes visible quickly and narrowly, rather than as a full outage from revoking the identity entirely.</p>
+        </div>
+
+        <p>The equivalent pattern at an API gateway layer (Kong, MuleSoft) is a proxy-level rule that blocks specific routes or methods for a given API key while logging the attempts, providing the same kind of narrow, observable signal before a full key revocation.</p>
+
+        <h3>Staged JIT Secret Migration</h3>
+
+        <p>For legacy applications relying on static credentials in <code>.env</code> files or environment variables, migrating to short-lived, dynamically-issued credentials is a multi-stage process:</p>
+
+        <ul class="step-list">
+          <li>
+            <span class="step-num">1</span>
+            <div class="step-body">
+              <strong>Provision the ephemeral secret engine — infrastructure stage</strong>
+              <p>Configure a secrets management system (HashiCorp Vault, AWS Secrets Manager, or equivalent) to dynamically generate short-lived database credentials — a max TTL of 60 minutes is a common starting point.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div class="step-body">
+              <strong>Inject a sidecar agent — deployment stage</strong>
+              <p>Add a sidecar container to the application's Kubernetes deployment that authenticates to the secrets engine using the pod's native service account token, and mounts the dynamically-generated credentials into an in-memory volume.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div class="step-body">
+              <strong>Update application code — code refactor stage</strong>
+              <p>Modify the application's connection logic to read credentials from the mounted in-memory path rather than parsing environment variables, and implement a hot-reload so the application picks up rotated credentials when a connection drops rather than requiring a restart.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <div class="step-body">
+              <strong>Decommission the static credential — cleanup stage</strong>
+              <p>Once metrics confirm the application is consistently using the dynamic credentials, the original static credential can be deleted from wherever it was stored.</p>
+            </div>
+          </li>
+        </ul>
+
+        <p>This is the architecture regardless of whether a platform automates the sidecar injection and rotation orchestration, or a platform team wires it up directly with Vault and Kubernetes primitives — the difference is in how much of steps 1–3 comes pre-built versus assembled in-house.</p>
+
+        <h2>Implementation Risk Reference</h2>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Required access</th>
+                <th>Risk level</th>
+                <th>Safety signal / rollback trigger</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="#phase-1">Phase 1: Discovery</a></td>
+                <td>Read-only audit logs, git organization read access</td>
+                <td><span class="tag tag-positive">Low</span></td>
+                <td>Watch for monitoring/log-forwarding agent resource overhead</td>
+              </tr>
+              <tr>
+                <td><a href="#phase-2">Phase 2: Mapping</a></td>
+                <td>Identity provider directory read, CMDB or ticketing API access</td>
+                <td><span class="tag tag-positive">Low</span></td>
+                <td>None expected — metadata correlation only</td>
+              </tr>
+              <tr>
+                <td><a href="#phase-3">Phase 3: Auditing</a></td>
+                <td>IAM policy simulator / access-analyzer read access</td>
+                <td><span class="tag tag-positive">Low</span></td>
+                <td>Unexpected <code>AccessDenied</code> events during shadow-policy validation</td>
+              </tr>
+              <tr>
+                <td><a href="#phase-4">Phase 4: Enforcement</a></td>
+                <td>IAM write access, secrets manager admin</td>
+                <td><span class="tag tag-caution">Medium-High</span></td>
+                <td>Spikes in HTTP 500/401 responses at the application or gateway layer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Even read-only ingestion isn't literally zero-risk — there's monitoring overhead and the audit data itself is sensitive — but Phases 1 and 2 are low-risk relative to Phases 3 and 4, where actual policy changes and credential migrations occur. The risk profile climbs sharply at Phase 4, which is the rationale for the staged, observable approach throughout the earlier phases: by the time enforcement happens, most of the uncertainty about what will break has already been resolved.</p>
+
+        <hr>
+
+        <p>Not sure which phase is most relevant to your environment yet? The <a href="/tools/risk-self-check/">risk self-check</a> takes nine questions about how credentials are created, tracked, and managed today and points to the phase above worth starting with. The access-review work in Phase 3 also maps directly onto several controls covered in the <a href="/guides/nhi-audit-compliance-mapping/">audit and compliance mapping guide</a>, including SOC 2 CC6.1–6.3 and NIST 800-53 AC-2.</p>
+
+        <div class="newsletter-block">
+          <span class="page-label">Stay current</span>
+          <p>The Independent Defender covers the NHI security market the way vendors hope you won't read it. Monthly.</p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" id="nl-submit">Subscribe free</button>
+          </div>
+          <div id="nl-msg" style="display:none;font-size:11px;margin-top:8px;"></div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="page-label">Non-Human Identity Software</span>
+      <p>An independent publication. Built by <a href="https://machinesandwords.com">Machines &amp; Words</a>.</p>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script src="/newsletter.js"></script>
+
+</body>
+</html>

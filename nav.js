@@ -53,7 +53,8 @@
       <a href="/guides/nhi-vs-secrets-managers-vs-cnapp/" class="nav-item depth-1">&#9500; NHI vs secrets vs cnapp</a>
       <a href="/guides/nhi-rfp-framework/" class="nav-item depth-1">&#9500; RFP Framework</a>
       <a href="/guides/owasp-agentic-ai-identity-controls/" class="nav-item depth-1">&#9500; OWASP agentic controls</a>
-   <a href="/guides/" class="nav-item depth-0">&#9492; more</a>
+      <a href="/guides/nhi-rollout/" class="nav-item depth-1">&#9500; Rolling out discovery</a>
+      <a href="/guides/" class="nav-item depth-0">&#9492; more</a>
       </div>
 
     <div class="nav-divider"></div>
