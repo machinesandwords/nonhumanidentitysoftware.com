@@ -129,9 +129,62 @@
     .breakdown-table td.num, .breakdown-table th.num { text-align: right; font-family: 'Space Mono', monospace; }
     .breakdown-table tr.total td { font-weight: 700; border-top: 2px solid var(--charcoal); border-bottom: none; }
 
-    /* ── Export block + modal ───────────────────────────────── */
-    .export-actions { display: flex; }
-    #export-pdf-btn { width: auto; }
+    /* ── Export block ───────────────────────────────────────── */
+    .export-block {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .export-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .export-text p { font-size: var(--small); color: var(--mid); line-height: 1.7; margin: 0; }
+    .export-text strong { color: var(--charcoal); }
+    .export-link { display: inline-block; margin-top: 8px; }
+
+    .btn-export {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: var(--small);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 16px 28px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .btn-export:hover:not(:disabled) { background: var(--accent-dim); }
+    .btn-export:disabled { background: var(--border); color: var(--faint); cursor: default; }
+
+    @media (max-width: 640px) {
+      .export-row { flex-direction: column; align-items: stretch; gap: 16px; }
+      .btn-export { width: 100%; text-align: center; }
+    }
+
+    /* ── Modal ──────────────────────────────────────────────── */
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: var(--small);
+      font-weight: 700;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-dim); }
+    .btn-primary:disabled { background: var(--border); color: var(--faint); cursor: default; }
+    .btn-block { width: 100%; }
 
     .modal-overlay {
       position: fixed;
@@ -180,22 +233,6 @@
     .modal-box input[type="email"]:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
     .modal-disclaimer { font-size: 11px; color: var(--faint); margin-top: 12px; line-height: 1.6; }
     .modal-error { font-size: 11px; color: #b45309; margin-bottom: 8px; display: none; }
-
-    /* ── Buttons ────────────────────────────────────────────── */
-    .btn {
-      font-family: 'Space Mono', monospace;
-      font-size: var(--small);
-      font-weight: 700;
-      padding: 12px 20px;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: background 0.15s, color 0.15s;
-    }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: var(--accent-dim); }
-    .btn-block { width: 100%; }
   </style>
 </head>
 <body>
@@ -311,12 +348,14 @@
           </table>
         </div>
 
-        <div class="newsletter-block">
-          <span class="page-label">Export your results</span>
-          <p>Save this breakdown — including your inputs and assumptions — as a PDF to share with your team.</p>
-          <div class="export-actions">
-            <button type="button" class="btn btn-primary" id="export-pdf-btn">Export as PDF</button>
+        <div class="export-block">
+          <div class="export-row">
+            <div class="export-text">
+              <p><strong>Export your estimate.</strong> Download this breakdown — including your inputs and assumptions — as a PDF to share with your team. Requires a free subscription.</p>
+            </div>
+            <button type="button" class="btn-export" id="export-pdf-btn">Export PDF →</button>
           </div>
+          <a href="/subscribe/" class="export-link" style="font-size:11px; color:var(--accent);">See what's in the paid edition →</a>
         </div>
 
       </article>
@@ -336,7 +375,7 @@
       <button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>
       <h3>Get your PDF</h3>
       <p>Enter your email and your results will open as a printable PDF in a new tab.</p>
-      <div class="modal-error" id="modal-error">Enter a valid email address.</div>
+      <div class="modal-error" id="modal-error"></div>
       <input type="email" id="modal-email" placeholder="your@email.com" aria-label="Email address">
       <button type="button" class="btn btn-primary btn-block" id="modal-submit">Export as PDF</button>
       <p class="modal-disclaimer">We'll also add you to occasional NHI security research emails. Unsubscribe anytime.</p>
@@ -421,6 +460,7 @@
     const overlay = document.getElementById('modal-overlay');
     const modalEmail = document.getElementById('modal-email');
     const modalError = document.getElementById('modal-error');
+    const modalSubmit = document.getElementById('modal-submit');
 
     document.getElementById('export-pdf-btn').addEventListener('click', () => {
       overlay.hidden = false;
@@ -496,8 +536,6 @@
 </body>
 </html>`;
     }
-
-    const modalSubmit = document.getElementById('modal-submit');
 
     modalSubmit.addEventListener('click', async () => {
       const email = modalEmail.value.trim();
