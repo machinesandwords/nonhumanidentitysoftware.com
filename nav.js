@@ -27,8 +27,8 @@
       <div class="nav-section-label">Tools</div>
       <a href="/tools/" class="nav-item depth-0">All tools</a>
       <a href="/tools/vendor-comparison/" class="nav-item depth-1">&#9500; Vendor index</a>
-      <a href="/tools/market-direction/" class="nav-item depth-1">&#9492; TBD direction</a>
-      <a href="/tools/risk-self-check/" class="nav-item depth-1">&#9500; Risk Self Check</a>
+      <a href="/tools/market-direction/" class="nav-item depth-1">&#9500; TBD direction</a>
+      <a href="/tools/risk-self-check/" class="nav-item depth-1">&#9500; Risk self check</a>
       <a href="/tools/index.html/" class="nav-item depth-1">└ more</a>
     </div>
 
