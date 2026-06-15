@@ -48,9 +48,10 @@
     <div class="nav-section">
       <div class="nav-section-label">Guides</div>
       <a href="/guides/" class="nav-item depth-0">All guides</a>
-      <a href="/guides/nhi-discovery/" class="nav-item depth-1">&#9500; NHI discovery</a>
-      <a href="/guides/secrets-vs-workload-identity/" class="nav-item depth-1">&#9500; Secrets vs. workload identity</a>
-      <a href="/guides/rfp-framework/" class="nav-item depth-1">&#9500; RFP Framework</a>
+      <a href="/guides/nhi-audit-compliance-mapping/" class="nav-item depth-1">&#9500; NHI audit compliance mapping</a>
+      <a href="/guides/nhi-vs-secrets-vs-cnapp/" class="nav-item depth-1">&#9500; NHI vs secrets vs cnapp</a>
+      <a href="/guides/rfp-framework/" class="nav-item depth-1">&#9500; NHI RFP Framework</a>
+      <a href="/guides/owasp-agentic-ai-identity-controls/" class="nav-item depth-1">&#9500; OWASP agentic controls</a>
           <a href="/guides/" class="nav-item depth-0">&#9492; more</a>
       </div>
 
