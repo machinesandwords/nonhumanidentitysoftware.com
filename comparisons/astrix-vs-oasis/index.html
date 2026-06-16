@@ -3,22 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-  <title>Astrix vs. Oasis Security — NHI Governance Comparison | Non-Human Identity Software</title>
-  <meta name="description" content="Independent comparison of Astrix Security and Oasis Security for NHI governance. SaaS-origin leader vs. cross-environment challenger. Which platform covers your attack surface.">
+  <title>Astrix vs. Oasis | Non-Human Identity Software</title>
+  <meta name="description" content="Astrix Security vs. Oasis Security: two dedicated NHI governance platforms with different architectural starting points. Independent head-to-head for security teams evaluating NHI platforms.">
   <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/">
+
+  <meta property="og:title" content="Astrix vs. Oasis: NHI Platform Comparison | Non-Human Identity Software">
+  <meta property="og:description" content="Astrix Security vs. Oasis Security: SaaS-origin vs. cloud-origin NHI governance. Independent head-to-head.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/">
+  <meta property="og:type" content="article">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Astrix Security vs. Oasis Security",
-    "description": "Independent comparison of Astrix and Oasis for NHI governance. Which platform fits which environment.",
+    "headline": "Astrix vs. Oasis",
+    "description": "Astrix Security vs. Oasis Security: two dedicated NHI governance platforms with different architectural starting points.",
     "url": "https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/",
-    "datePublished": "2026-06-13",
-    "dateModified": "2026-06-13",
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
     "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://nonhumanidentitysoftware.com/comparisons/" },
+      { "@type": "ListItem", "position": 3, "name": "Astrix vs. Oasis", "item": "https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/" }
+    ]
   }
   </script>
 
@@ -29,14 +47,29 @@
   <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js" defer></script>
+
+  <style>
+    .compare-table td:first-child { width:200px; font-weight:700; font-size:11px; color:var(--mid); letter-spacing:0.02em; }
+    .compare-table .section-divider td { background:var(--bg); font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--faint); padding:10px 12px 6px; border-bottom:var(--hairline); }
+    .compare-table .win-a td:nth-child(2) { color:var(--accent); font-weight:700; }
+    .compare-table .win-b td:nth-child(3) { color:var(--accent); font-weight:700; }
+    .wins-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:var(--hairline); margin-bottom:32px; }
+    .wins-col { background:var(--surface); padding:20px 24px; }
+    .wins-col-label { font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 12px; display:block; }
+    .wins-col ul { list-style:none; padding:0; margin:0; }
+    .wins-col li { font-size:var(--small); padding:7px 0; border-bottom:var(--hairline); display:flex; gap:10px; align-items:flex-start; line-height:1.5; color:var(--mid); }
+    .wins-col li:last-child { border-bottom:none; }
+    .wins-col li::before { content:'+'; color:var(--accent); font-weight:700; flex-shrink:0; }
+    @media (max-width:640px) { .wins-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
 
   <header class="topbar">
-    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
     <div class="topbar-divider"></div>
-    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
-    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
   </header>
 
   <div class="layout">
@@ -55,104 +88,86 @@
           <span>Astrix vs. Oasis</span>
         </div>
 
-        <span class="page-label">NHI Governance Comparison</span>
-        <h1>Astrix vs. Oasis: Which NHI Governance Platform Covers Your Environment?</h1>
+        <span class="page-label">NHI Governance &mdash; Head-to-Head</span>
+        <h1>Astrix vs. Oasis</h1>
 
-        <p class="lead">Astrix and Oasis are the two most frequently co-evaluated NHI governance platforms. Both have real products and real enterprise customers. The choice between them is not about which is better in the abstract. It's about where your NHI risk actually lives.</p>
+        <p class="lead">Astrix and Oasis are the two most frequently co-evaluated dedicated NHI governance platforms — both discover, inventory, and remediate non-human identities across cloud and SaaS, and both have expanded their scope significantly over the past two years. The surface-level similarity is real. The architectural difference is where each platform started: Astrix built its core competency in SaaS-to-SaaS OAuth and third-party app integrations, then expanded to cloud and on-prem; Oasis started from cloud and hybrid-infrastructure coverage, then expanded into SaaS and AI-agent governance. Which one fits depends less on what each platform covers today and more on which direction your own NHI risk skews.</p>
 
         <div class="table-wrap">
           <table class="compare-table">
             <thead>
               <tr>
-                <th>Dimension</th>
-                <th>Astrix</th>
-                <th>Oasis</th>
+                <th style="width:200px;">Criteria</th>
+                <th>Astrix Security</th>
+                <th>Oasis Security</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>SaaS NHI coverage</td>
-                <td class="compare-win">Category-leading</td>
-                <td>Strong, narrowing gap</td>
-              </tr>
-              <tr>
-                <td>Cloud workload identity</td>
-                <td>Extended 2024-2025</td>
-                <td class="compare-win">Core strength</td>
-              </tr>
-              <tr>
-                <td>Kubernetes / container</td>
-                <td>Coverage added</td>
-                <td class="compare-win">Native</td>
-              </tr>
-              <tr>
-                <td>On-premises (AD, Linux)</td>
-                <td>Limited</td>
-                <td class="compare-win">Full coverage</td>
-              </tr>
-              <tr>
-                <td>Secrets platform integration</td>
-                <td>Strong</td>
-                <td class="compare-win">Broader integrations</td>
-              </tr>
-              <tr>
-                <td>AI agent governance</td>
-                <td class="compare-win">AI Agent Control Plane</td>
-                <td>Agentic Access Mgmt</td>
-              </tr>
-              <tr>
-                <td>Risk prioritization</td>
-                <td class="compare-win">Vendor reputation context</td>
-                <td>Policy intelligence layer</td>
-              </tr>
-              <tr>
-                <td>Funding</td>
-                <td>$85M, Series B</td>
-                <td class="compare-win">$75M, Series A</td>
-              </tr>
-              <tr>
-                <td>Founded</td>
-                <td>2021</td>
-                <td>2022</td>
-              </tr>
+              <tr class="section-divider"><td colspan="3">Architecture and scope</td></tr>
+              <tr><td>Origin</td><td>SaaS-to-SaaS OAuth discovery and third-party app governance</td><td>Cloud and hybrid-infrastructure NHI visibility across IaaS, PaaS, on-prem</td></tr>
+              <tr class="win-a"><td>SaaS integration coverage</td><td>Core strength — maps OAuth grants, token sprawl, and shadow SaaS connections across business applications</td><td>Growing — added SaaS coverage as a secondary surface after establishing cloud/on-prem foundations</td></tr>
+              <tr class="win-b"><td>Cloud infrastructure coverage</td><td>Expanded to cloud and on-prem; competitors have closed the gap on SaaS while this expansion has been underway</td><td>Core strength — service accounts, service principals, IAM roles across AWS, Azure, GCP and on-prem</td></tr>
+              <tr><td>AI agent governance</td><td>Available — agent discovery and OAuth scope visibility for AI service integrations</td><td>Dedicated product (Oasis AAM) — full agentic access management with intent inference, least-privilege enforcement, prompt-level audit trail</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Discovery and inventory</td></tr>
+              <tr><td>Discovery method</td><td>API-based — connects to SaaS platforms, cloud providers, and identity systems via native integrations</td><td>API-based — auto-discovers NHIs across IaaS, PaaS, SaaS, vaults, and CI/CD tools</td></tr>
+              <tr class="win-a"><td>Shadow SaaS detection</td><td>Identifies integrations added without IT approval; purpose-built capability from initial product design</td><td>Covered but less architecturally central than cloud identity discovery</td></tr>
+              <tr><td>Token and OAuth visibility</td><td>Detailed per-token risk analysis: scope, permissions, last-used date, revocation automation where the SaaS API supports it</td><td>Covered as part of broader NHI inventory; depth depends on platform and API availability</td></tr>
+              <tr class="win-b"><td>Outage prevention</td><td>Flags dependencies but outage prevention is not a primary design goal</td><td>Explicitly designed to prevent outages during remediation — tracks which NHIs are load-bearing before any revocation</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Lifecycle management</td></tr>
+              <tr><td>Rotation and remediation</td><td>Automated revocation of unused tokens where SaaS APIs allow; ITSM ticket integration for approval workflows</td><td>Automated lifecycle — provisioning, rotation, and decommissioning with policy enforcement</td></tr>
+              <tr class="win-b"><td>Provisioning controls</td><td>Governance-oriented — monitors what's been provisioned; less focused on provisioning policy enforcement at creation</td><td>NHI provisioning controls ensure identities are created with correct scope and ownership from day one</td></tr>
+              <tr><td>Human ownership attribution</td><td>Maps NHIs to responsible teams or users for remediation routing</td><td>Owner attribution and accountability tracking across the NHI lifecycle</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Integrations</td></tr>
+              <tr><td>ITSM / SOAR</td><td>Jira, ServiceNow, and major SOAR platforms for ticket-driven approval and remediation workflows</td><td>Jira, ServiceNow, HashiCorp Vault, cloud identity providers</td></tr>
+              <tr><td>Identity system integration</td><td>Integrates with Okta, Azure AD, and major SaaS identity providers</td><td>Integrates with AWS, Azure, GCP identity providers; strong IaaS/cloud IAM integration</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Procurement</td></tr>
+              <tr><td>Pricing</td><td>Enterprise SaaS — contact for pricing</td><td>Enterprise SaaS — contact for pricing</td></tr>
+              <tr><td>Target environment</td><td>Organizations whose primary NHI risk is in SaaS application integrations, OAuth grants, and API key sprawl across business tools</td><td>Organizations with significant cloud infrastructure footprint and compliance-driven NHI governance requirements</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2>Where Astrix wins</h2>
+        <p style="font-size:12px; color:var(--faint); margin-top:-20px; margin-bottom:40px;">Capability assessments based on publicly available vendor documentation and independent coverage. Validate specific feature depth against your environment before purchase.</p>
 
-        <p>Astrix coined the term non-human identity. That origin matters because it shaped the product: the detection depth, risk prioritization logic, and remediation workflows are most mature in the SaaS integration use case that drove the company's founding.</p>
-
-        <p>If your NHI risk is concentrated in SaaS-to-SaaS integrations, OAuth grants to third-party applications, and API key sprawl across Microsoft 365, Salesforce, GitHub, and similar platforms, Astrix has more signal, better vendor reputation context, and more mature remediation workflows than any competitor. That's a specific scenario. But it describes a lot of enterprise environments.</p>
-
-        <p>The AI Agent Control Plane, launched in 2025, was also early. Astrix recognized that AI agents are qualitatively different from service accounts, not just a new credential type but an identity that makes decisions, and built tooling specifically for governing autonomous systems. Whether that lead survives depends on how quickly Oasis and others mature their agentic capabilities.</p>
-
-        <h2>Where Oasis wins</h2>
-
-        <p>Oasis was designed with cross-environment breadth as a core architectural requirement, not an expansion after the fact. Discovery covers cloud workloads, SaaS applications, on-premises Active Directory service accounts, Linux daemon accounts, Kerberos service principals, Kubernetes workload identities, and secrets management platforms across HashiCorp Vault, AWS Secrets Manager, and CyberArk. That breadth is genuine.</p>
-
-        <p>Organizations whose NHI risk isn't concentrated in SaaS, where cloud IAM role sprawl, Kubernetes service account proliferation, and on-premises service account governance are the real problems, will find Oasis covers more of their attack surface without the same coverage gaps.</p>
-
-        <p>One credibility signal worth noting: Oasis discovered and disclosed a Microsoft MFA bypass vulnerability in 2024. Platform depth that generates real vulnerability research isn't the same thing as platform depth that generates marketing content.</p>
-
-        <h2>The AI agent question</h2>
-
-        <p>Both platforms are investing in AI agent identity governance. Neither is fully mature. This is a use case, governing autonomous agents that make independent access decisions, that doesn't map cleanly onto either platform's historical architecture. If you're deploying AI agents at scale today and need governance now, evaluate both specifically for the agentic use case. Don't assume that NHI governance depth in traditional machine identities translates directly to AI agent governance capability. It doesn't.</p>
-
-        <h2>The acquisition question you should ask</h2>
-
-        <p>Both platforms are venture-backed pure-plays in a category that large platform vendors are actively acquiring into. CyberArk's Venafi acquisition is the reference transaction. CrowdStrike's Falcon Fund is explicitly designed as an acquisition pipeline for identity security startups. Either platform could be acquired in the next 12 to 24 months.</p>
-
-        <p>Ask both vendors directly: what does continuity look like if you're acquired? What happens to the roadmap? What happens to pricing? That's not a hypothetical. It's a near-term planning question.</p>
-
-        <div class="verdict">
-          <span class="verdict-label">Verdict</span>
-          <p>Your NHI risk is concentrated in SaaS integrations and OAuth sprawl: Astrix is the stronger choice. Your NHI risk is distributed across cloud workloads, Kubernetes, on-premises service accounts, and SaaS: Oasis covers more of your environment and was built for that breadth. Genuinely mixed environment: run both against your actual asset mix in a proof of concept. Don't choose based on positioning. Choose based on what each platform finds in your specific environment.</p>
+        <div class="wins-grid">
+          <div class="wins-col">
+            <span class="wins-col-label">Astrix wins when</span>
+            <ul>
+              <li>Your primary NHI risk exposure is in SaaS-to-SaaS connections — third-party apps, OAuth grants, API keys across business tools like Slack, Salesforce, and GitHub</li>
+              <li>Shadow SaaS detection is a priority — integrations added outside IT visibility are a known risk in your environment</li>
+              <li>Token-level revocation automation matters more than lifecycle provisioning — you need to clean up what exists, not enforce how new identities are created</li>
+              <li>Your security team works primarily through ITSM approval workflows rather than infrastructure-level policy enforcement</li>
+              <li>The environment is predominantly SaaS-heavy with relatively fewer cloud infrastructure NHIs than application-layer ones</li>
+            </ul>
+          </div>
+          <div class="wins-col">
+            <span class="wins-col-label">Oasis wins when</span>
+            <ul>
+              <li>Your NHI risk is concentrated in cloud infrastructure — service accounts, IAM roles, service principals across AWS, Azure, and GCP</li>
+              <li>Outage prevention during remediation is a hard requirement — you need to know which NHIs are load-bearing before any revocation is attempted</li>
+              <li>AI agent governance is an active requirement, not a future concern — Oasis AAM provides intent inference and prompt-level audit trails that Astrix's agent coverage does not currently match</li>
+              <li>Provisioning policy enforcement matters as much as remediation — you want governance applied when NHIs are created, not just discovered after the fact</li>
+              <li>Compliance-driven lifecycle automation (provisioning, rotation, decommissioning) is a primary procurement requirement</li>
+            </ul>
+          </div>
         </div>
 
+        <div class="verdict">
+          <span class="verdict-label">The real decision</span>
+          <p>Astrix and Oasis have been converging for two years, and by 2026 the gap in raw coverage between them has narrowed significantly — both can inventory NHIs across SaaS, cloud, and on-prem. The question is architectural depth versus breadth at the layer that matters most for your environment.</p>
+          <p style="margin-top:12px;">If the majority of your NHI risk lives in business application integrations — OAuth grants, third-party app connections, API keys used by SaaS tools — Astrix's SaaS-native architecture gives it genuine depth at that layer that Oasis has been adding but didn't build for first. Astrix's token-level revocation automation also depends on what each SaaS API exposes, which means its effectiveness varies by application — but that constraint applies equally to any platform in this space.</p>
+          <p style="margin-top:12px;">If your environment is cloud-infrastructure-heavy, or if AI agent governance is an active requirement, Oasis is the stronger choice. Its outage prevention design reflects experience with organizations where NHIs are deeply embedded in production systems, and Agentic Access Management is a more complete implementation of agent identity governance than anything Astrix currently ships. For organizations in both situations — significant SaaS and significant cloud infrastructure — this becomes an environment-mapping exercise rather than a vendor-quality comparison. Both are capable; the fit depends on where your NHIs actually live.</p>
+        </div>
+
+        <p style="font-size:var(--small); margin-top:32px;">Related: <a href="/comparisons/entro-vs-clutch/">Entro vs. Clutch</a> &nbsp;&middot;&nbsp; <a href="/comparisons/gitguardian-vs-astrix/">GitGuardian vs. Astrix</a> &nbsp;&middot;&nbsp; <a href="/tools/vendor-comparison/">Full vendor comparison tool</a></p>
+
         <div class="newsletter-block">
-          <span class="page-label">The NHI Register</span>
-          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <span class="page-label">Stay current</span>
+          <p>The Shadow Inventory covers the NHI security market the way vendors hope you won't read it. Monthly.</p>
           <div class="newsletter-form">
             <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
             <button type="button" id="nl-submit">Subscribe free</button>

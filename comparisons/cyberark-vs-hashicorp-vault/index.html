@@ -3,22 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
-  <title>CyberArk Conjur vs. HashiCorp Vault — Secrets Management Comparison | Non-Human Identity Software</title>
-  <meta name="description" content="Independent comparison of CyberArk Conjur and HashiCorp Vault. PAM ecosystem depth vs. open-source flexibility. What the IBM acquisition actually means for Vault Enterprise buyers.">
+  <title>CyberArk vs. HashiCorp Vault | Non-Human Identity Software</title>
+  <meta name="description" content="CyberArk (Palo Alto Networks) vs. HashiCorp Vault (IBM): enterprise PAM and machine identity platform vs. developer-native secrets engine. Independent head-to-head covering a comparison that is both a replacement decision and a coexistence one.">
   <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/">
+
+  <meta property="og:title" content="CyberArk vs. HashiCorp Vault | Non-Human Identity Software">
+  <meta property="og:description" content="CyberArk vs. HashiCorp Vault: enterprise machine identity platform vs. developer-native secrets engine — and the unusual case where the same vendor is both an alternative and a layer on top.">
+  <meta property="og:url" content="https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/">
+  <meta property="og:type" content="article">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "CyberArk Conjur vs. HashiCorp Vault",
-    "description": "Independent comparison of CyberArk Conjur and HashiCorp Vault for enterprise secrets management.",
+    "headline": "CyberArk vs. HashiCorp Vault",
+    "description": "CyberArk (Palo Alto Networks) vs. HashiCorp Vault (IBM): enterprise machine identity platform vs. developer-native secrets engine.",
     "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/",
-    "datePublished": "2026-06-13",
-    "dateModified": "2026-06-13",
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
     "publisher": { "@type": "Organization", "name": "Non-Human Identity Software", "url": "https://nonhumanidentitysoftware.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nonhumanidentitysoftware.com" },
+      { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://nonhumanidentitysoftware.com/comparisons/" },
+      { "@type": "ListItem", "position": 3, "name": "CyberArk vs. HashiCorp Vault", "item": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/" }
+    ]
   }
   </script>
 
@@ -29,14 +47,29 @@
   <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js" defer></script>
+
+  <style>
+    .compare-table td:first-child { width:200px; font-weight:700; font-size:11px; color:var(--mid); letter-spacing:0.02em; }
+    .compare-table .section-divider td { background:var(--bg); font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--faint); padding:10px 12px 6px; border-bottom:var(--hairline); }
+    .compare-table .win-a td:nth-child(2) { color:var(--accent); font-weight:700; }
+    .compare-table .win-b td:nth-child(3) { color:var(--accent); font-weight:700; }
+    .wins-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:var(--hairline); margin-bottom:32px; }
+    .wins-col { background:var(--surface); padding:20px 24px; }
+    .wins-col-label { font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 12px; display:block; }
+    .wins-col ul { list-style:none; padding:0; margin:0; }
+    .wins-col li { font-size:var(--small); padding:7px 0; border-bottom:var(--hairline); display:flex; gap:10px; align-items:flex-start; line-height:1.5; color:var(--mid); }
+    .wins-col li:last-child { border-bottom:none; }
+    .wins-col li::before { content:'+'; color:var(--accent); font-weight:700; flex-shrink:0; }
+    @media (max-width:640px) { .wins-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
 
   <header class="topbar">
-    <a href="/" class="topbar-brand">Non-Human <span>Identity</span> Software</a>
+    <div class="topbar-brand">Non-Human <span>Identity</span> Software</div>
     <div class="topbar-divider"></div>
-    <span class="topbar-tagline">independent guidance for NHI security buyers</span>
-    <div class="topbar-right"><a href="/subscribe/">Subscribe &rarr;</a></div>
+    <div class="topbar-tagline">an independent guide to NHI security software</div>
+    <div class="topbar-right"><a href="/subscribe">Subscribe</a></div>
   </header>
 
   <div class="layout">
@@ -55,104 +88,83 @@
           <span>CyberArk vs. HashiCorp Vault</span>
         </div>
 
-        <span class="page-label">Secrets Management Comparison</span>
-        <h1>CyberArk Conjur vs. HashiCorp Vault: The Changed Calculus</h1>
+        <span class="page-label">Secrets Management &mdash; Head-to-Head</span>
+        <h1>CyberArk vs. HashiCorp Vault</h1>
 
-        <p class="lead">This comparison looked different two years ago. CyberArk Conjur and HashiCorp Vault were straightforward: one came from the PAM and compliance world, one from the open-source developer infrastructure world, and you chose based on your environment. The IBM acquisition of HashiCorp in 2024 introduced a variable that didn't previously exist.</p>
+        <p class="lead">CyberArk and HashiCorp Vault are an unusual pairing for a head-to-head comparison: as of 2026, CyberArk — now part of Palo Alto Networks following a $25B acquisition completed in February 2026 — ships both a competitor to Vault (Conjur secrets management) and a layer that sits on top of existing Vault deployments (Discovery and Context for HashiCorp Vault, providing visibility into dispersed Vault instances). Vault itself has been part of IBM since 2024. Both platforms have changed ownership in the past two years, and both carry the uncertainty that introduces about roadmap priorities. The comparison that matters has two distinct forms: for organizations without either platform, it is a genuine alternative decision; for organizations with Vault already deployed, it is a question of whether CyberArk extends or replaces what they have.</p>
 
         <div class="table-wrap">
           <table class="compare-table">
             <thead>
               <tr>
-                <th>Dimension</th>
-                <th>CyberArk Conjur</th>
-                <th>HashiCorp Vault</th>
+                <th style="width:200px;">Criteria</th>
+                <th>CyberArk / Conjur (Palo Alto Networks)</th>
+                <th>HashiCorp Vault (IBM)</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Open source</td>
-                <td class="compare-loss">No</td>
-                <td class="compare-win">Community Edition (BSL license)</td>
-              </tr>
-              <tr>
-                <td>Dynamic secrets</td>
-                <td>Supported</td>
-                <td class="compare-win">Broader, more mature coverage</td>
-              </tr>
-              <tr>
-                <td>Auth backends</td>
-                <td>CyberArk-ecosystem focused</td>
-                <td class="compare-win">LDAP, Kubernetes, AWS, Azure, GCP, OIDC, JWT, and more</td>
-              </tr>
-              <tr>
-                <td>PAM integration</td>
-                <td class="compare-win">Native (same vendor)</td>
-                <td>Integration required</td>
-              </tr>
-              <tr>
-                <td>Compliance and audit depth</td>
-                <td class="compare-win">Enterprise-grade, built in</td>
-                <td>Enterprise tier required</td>
-              </tr>
-              <tr>
-                <td>Integration ecosystem</td>
-                <td>Growing</td>
-                <td class="compare-win">Largest in category</td>
-              </tr>
-              <tr>
-                <td>SPIFFE / workload identity</td>
-                <td class="compare-win">Workload Identity Manager (native)</td>
-                <td>Vault Enterprise 2.0 native</td>
-              </tr>
-              <tr>
-                <td>Licensing clarity (2026)</td>
-                <td class="compare-win">Clear enterprise pricing</td>
-                <td>BSL license change creates uncertainty</td>
-              </tr>
-              <tr>
-                <td>Roadmap ownership</td>
-                <td class="compare-win">CyberArk-aligned</td>
-                <td>IBM-aligned (unclear)</td>
-              </tr>
+              <tr class="section-divider"><td colspan="3">Platform context</td></tr>
+              <tr><td>Ownership</td><td>Palo Alto Networks — $25B acquisition of CyberArk closed February 2026; Venafi machine identity acquired by CyberArk in 2024 ($1.54B) prior to the PANW deal</td><td>IBM — acquired HashiCorp in 2024; Vault roadmap subject to IBM enterprise and cloud priorities</td></tr>
+              <tr><td>Platform scope</td><td>PAM + secrets management (Conjur) + machine identity/PKI (Venafi) + cloud entitlements (CIEM) — full identity security platform inside Palo Alto Networks' ecosystem</td><td>Secrets management, dynamic secrets, PKI, encryption-as-a-service, identity brokering — developer-native secrets engine with broad plugin ecosystem</td></tr>
+              <tr class="win-a"><td>Machine identity and PKI</td><td>Strongest in market post-Venafi — certificate lifecycle management, SSH key management, PKI, and TLS automation are now native CyberArk capabilities; 47-day certificate lifecycle dashboard already shipping</td><td>Native PKI secrets engine — issues certificates and manages CAs; functional but narrower than CyberArk/Venafi's dedicated machine identity investment</td></tr>
+              <tr class="win-b"><td>Developer adoption</td><td>Enterprise IT deployment model — implementation complexity is high; 6–12+ month deployment timelines are common; typically requires dedicated identity security team</td><td>Developer-native — widely adopted in DevOps and cloud-native environments; large open-source community; Vault is often engineers' first choice for secrets management without top-down procurement</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Secrets management</td></tr>
+              <tr><td>Secrets vaulting</td><td>Conjur — purpose-built secrets manager for applications and machines; integrates with CyberArk's broader PAM and CIEM platform</td><td>KV secrets engine — flexible key-value storage; widely used as the default secrets backend for Kubernetes, CI/CD, and cloud applications</td></tr>
+              <tr class="win-a"><td>Enterprise policy enforcement</td><td>Centralizes policy across the full CyberArk platform — PAM, secrets, and machine identity under one policy model; CyberArk's Discovery and Context for Vault also enforces enterprise-wide policy compliance on existing Vault deployments</td><td>Policy enforced via Vault ACLs, namespaces, and auth methods — flexible but requires per-deployment configuration; enterprise-wide policy consistency requires additional governance tooling</td></tr>
+              <tr class="win-b"><td>Dynamic secrets</td><td>Available via Conjur — dynamic credential issuance for database, cloud, and application access</td><td>Core differentiator — dynamic secrets engines for AWS, GCP, Azure, databases, and more; shorter-lived credentials generated on demand without developer burden</td></tr>
+              <tr class="win-b"><td>Encryption as a service</td><td>Available but not a primary CyberArk differentiator</td><td>Transit secrets engine — application-layer encryption, decryption, and key management without key exposure; widely used pattern</td></tr>
+
+              <tr class="section-divider"><td colspan="3">NHI and machine identity</td></tr>
+              <tr class="win-a"><td>Certificate lifecycle management</td><td>CyberArk Certificate Manager (formerly Venafi) — enterprise-grade CLM with 47-day certificate dashboard, CA/B Forum TLS support, machine identity discovery at scale</td><td>PKI secrets engine — functional CA and certificate issuance; does not match CyberArk/Venafi's depth for large-scale enterprise certificate management</td></tr>
+              <tr class="win-a"><td>Vault sprawl visibility</td><td>Discovery and Context for HashiCorp Vault — CyberArk provides visibility into dispersed Vault instances, policy compliance monitoring, and risk dashboarding across Vault deployments</td><td>N/A — Vault does not natively provide cross-instance visibility</td></tr>
+              <tr><td>AI agent identity</td><td>JIT access and least-privilege enforcement for AI agents via CyberArk's CIEM and PAM capabilities</td><td>Can manage API keys for AI service access; not purpose-built for AI agent identity governance</td></tr>
+
+              <tr class="section-divider"><td colspan="3">Procurement</td></tr>
+              <tr><td>Pricing</td><td>$$$$ — enterprise licensing; commonly cited at $50K–$200K+ annually for mid-to-large deployments; layered licensing escalates with scope</td><td>Open-source (Vault OSS — free); HCP Vault (SaaS, usage-based); Vault Enterprise (add-on features)</td></tr>
+              <tr><td>Deployment</td><td>SaaS (Privilege Cloud) or hybrid; self-hosted options available but SaaS migration is the current direction</td><td>Self-hosted (OSS or Enterprise) or HCP Vault managed SaaS; open-source gives full deployment flexibility</td></tr>
+              <tr><td>Target buyer</td><td>Enterprise security teams in regulated industries with dedicated identity security programs and budget; organizations already running CyberArk for PAM</td><td>DevOps and engineering-led adoption; organizations that want to start free and expand; organizations with open-source licensing requirements</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2>The IBM acquisition: what it actually means</h2>
+        <p style="font-size:12px; color:var(--faint); margin-top:-20px; margin-bottom:40px;">Capability assessments based on publicly available vendor documentation and independent coverage. Both platforms have changed ownership since 2024; validate current roadmap commitments with each vendor before purchase.</p>
 
-        <p>HashiCorp changed its license from MPL to BSL in 2023. IBM acquired HashiCorp in 2024. Both events matter for Enterprise customers, but they matter differently.</p>
-
-        <p>The BSL restriction is narrow: it prohibits using Vault in a product or service that competes with HashiCorp. That doesn't affect most enterprise deployments. If you're using Vault to manage your own application credentials, you're not affected by the competitive restriction clause.</p>
-
-        <p>The IBM ownership question is harder. IBM's enterprise software portfolio and HashiCorp's platform-engineering-focused roadmap don't obviously align. HashiCorp's products were built for developers and platform engineers. IBM's enterprise software motion is built around large account relationships, complex procurement, and long integration timelines. Those are different cultures with different priorities, and it's not yet clear which one wins in the roadmap.</p>
-
-        <p>For organizations already on Vault, migration cost is high and the practical impact on most deployments is limited. For organizations evaluating Vault Enterprise on a new contract, ask IBM directly: what's the roadmap for the next 24 months, and who owns product decisions?</p>
-
-        <h2>Where Conjur wins</h2>
-
-        <p>Two scenarios favor Conjur clearly. First, organizations already running CyberArk PAM: Conjur's native integration means a unified policy model, audit trail, and governance layer across human and machine credentials. The operational value of a single vendor for both is real, especially in regulated industries where compliance documentation and audit trail continuity matter.</p>
-
-        <p>Second, organizations where procurement committee confidence is a real factor. CyberArk's enterprise security reputation translates to easier procurement in financial services, healthcare, and government environments where the buying committee includes people who haven't heard of HashiCorp but have heard of CyberArk.</p>
-
-        <h2>Where Vault wins</h2>
-
-        <p>Vault's integration ecosystem is still the best in the category. Native authentication backends for Kubernetes, AWS, Azure, GCP, LDAP, Active Directory, GitHub, and dozens of others. Dynamic secrets for databases and cloud providers, generating short-lived credentials on demand rather than storing long-lived ones, are more broadly implemented in Vault than in any competitor. For platform engineering teams building multi-environment secrets infrastructure that needs to work across heterogeneous systems, Vault's flexibility is not matched.</p>
-
-        <p>The community and open-source ecosystem are also genuine assets, even under BSL. The volume of community-built Vault integrations, the institutional knowledge accumulated by platform engineers who've been running it in production for years: those represent real switching costs.</p>
-
-        <h2>What neither covers</h2>
-
-        <p>Neither platform solves the credential discovery problem. Neither will find the credentials in your environment that were never put in a vault. That's the province of NHI governance platforms. Secrets management governs what's in the vault. It doesn't govern what isn't.</p>
-
-        <div class="verdict">
-          <span class="verdict-label">Verdict</span>
-          <p>Existing CyberArk PAM customers or organizations with strong compliance and audit requirements in regulated industries: Conjur is the more natural choice. Platform engineering teams that need integration flexibility, dynamic secrets, and a developer-native API across heterogeneous infrastructure: Vault remains the stronger choice, IBM diligence required. New Vault Enterprise evaluations should include explicit questions about the IBM roadmap, not as a dealbreaker, but as a changed risk profile that needs to be understood before signing. Both platforms should sit alongside NHI governance tooling, not instead of it.</p>
+        <div class="wins-grid">
+          <div class="wins-col">
+            <span class="wins-col-label">CyberArk wins when</span>
+            <ul>
+              <li>Machine identity and PKI at enterprise scale is a primary requirement — CyberArk/Venafi's certificate lifecycle management has no equivalent in Vault for organizations managing tens of thousands of certificates</li>
+              <li>You are already running CyberArk for PAM — adding Conjur secrets management to an existing CyberArk deployment is architecturally consistent and avoids introducing a second vendor</li>
+              <li>Vault sprawl is a known problem — CyberArk's Discovery and Context for Vault provides visibility across dispersed Vault instances without replacing them</li>
+              <li>A unified policy model across PAM, secrets, and cloud entitlements is a compliance requirement — CyberArk covers all three under one platform inside Palo Alto Networks' ecosystem</li>
+              <li>The security team, not engineering, is driving the procurement decision</li>
+            </ul>
+          </div>
+          <div class="wins-col">
+            <span class="wins-col-label">Vault wins when</span>
+            <ul>
+              <li>Vault is already deployed and operational — the migration cost of replacing it is not justified by the capability gap, particularly for organizations running Vault well</li>
+              <li>Open-source licensing, self-hosted deployment, or data sovereignty requirements rule out SaaS or commercial licensing</li>
+              <li>Engineering adoption without top-down procurement is the reality — Vault's developer-native model and free OSS tier give it a deployment path that CyberArk does not</li>
+              <li>Dynamic secrets and encryption-as-a-service are core requirements that engineering teams want to own operationally</li>
+              <li>Cost is a significant constraint and Vault OSS covers the primary use case without licensing overhead</li>
+            </ul>
+          </div>
         </div>
 
+        <div class="verdict">
+          <span class="verdict-label">The real decision</span>
+          <p>The most important context for this comparison is that both platforms have changed ownership in the past two years, and both comparisons — CyberArk vs. Vault as alternatives, and CyberArk as a layer on top of Vault — now involve IBM and Palo Alto Networks as the actual counterparties. For a long-horizon procurement decision, the vendor risk question belongs in the conversation regardless of which platform you're evaluating.</p>
+          <p style="margin-top:12px;">If you are in a large enterprise with an existing CyberArk PAM deployment and you are addressing machine identity and secrets management for the first time, Conjur is the path of least resistance — same vendor, same policy model, same support relationship. CyberArk's Venafi acquisition also makes the PKI and certificate lifecycle management story significantly stronger than anything it had before 2024. That combination — PAM, secrets, and machine identity/PKI — is a genuinely compelling enterprise platform, now inside Palo Alto Networks' broader security ecosystem.</p>
+          <p style="margin-top:12px;">If Vault is deployed and the engineering team runs it well, the bar for replacement is high. Vault's dynamic secrets model, its broad plugin ecosystem, and its open-source community represent accumulated operational knowledge that has real value. The more productive question for Vault-deployed organizations may not be whether CyberArk replaces Vault, but whether CyberArk's Vault discovery and context tooling provides the enterprise-wide visibility that Vault itself cannot — allowing both to coexist with different jobs.</p>
+        </div>
+
+        <p style="font-size:var(--small); margin-top:32px;">Related: <a href="/comparisons/aembit-vs-hashicorp-vault/">Aembit vs. HashiCorp Vault</a> &nbsp;&middot;&nbsp; <a href="/comparisons/cyberark-vs-beyondtrust/">CyberArk vs. BeyondTrust</a> &nbsp;&middot;&nbsp; <a href="/tools/vendor-comparison/">Full vendor comparison tool</a></p>
+
         <div class="newsletter-block">
-          <span class="page-label">The NHI Register</span>
-          <p>The NHI Register covers the non-human identity market the way your vendors hope you won't. Biweekly.</p>
+          <span class="page-label">Stay current</span>
+          <p>The Shadow Inventory covers the NHI security market the way vendors hope you won't read it. Monthly.</p>
           <div class="newsletter-form">
             <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Email address">
             <button type="button" id="nl-submit">Subscribe free</button>

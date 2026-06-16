@@ -7,18 +7,14 @@
   <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
 
   <title>Comparisons | Non-Human Identity Software</title>
-  <meta name="description" content="Independent head-to-head comparisons of NHI security platforms — technical differentiation, deployment fit, and category boundaries. No vendor affiliation.">
+  <meta name="description" content="Independent head-to-head comparisons of NHI security platforms. Technical differentiation, deployment fit, and a direct verdict on which platform belongs in which environment. No vendor affiliation.">
   <link rel="canonical" href="https://nonhumanidentitysoftware.com/comparisons/">
 
-  <meta property="og:title" content="Comparisons | Non-Human Identity Software">
-  <meta property="og:description" content="Independent head-to-head comparisons of NHI security platforms — technical differentiation, deployment fit, and category boundaries.">
+  <meta property="og:title" content="NHI Security Platform Comparisons | Non-Human Identity Software">
+  <meta property="og:description" content="Independent head-to-head comparisons of NHI security platforms. No vendor affiliation.">
   <meta property="og:image" content="https://nonhumanidentitysoftware.com/og-image.png">
   <meta property="og:url" content="https://nonhumanidentitysoftware.com/comparisons/">
   <meta property="og:type" content="website">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -30,15 +26,81 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "NHI Security Platform Comparisons",
+    "description": "Independent head-to-head comparisons of non-human identity security platforms.",
+    "url": "https://nonhumanidentitysoftware.com/comparisons/",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "url": "https://nonhumanidentitysoftware.com/comparisons/astrix-vs-oasis/", "name": "Astrix vs. Oasis" },
+      { "@type": "ListItem", "position": 2, "url": "https://nonhumanidentitysoftware.com/comparisons/entro-vs-clutch/", "name": "Entro vs. Clutch" },
+      { "@type": "ListItem", "position": 3, "url": "https://nonhumanidentitysoftware.com/comparisons/aembit-vs-hashicorp-vault/", "name": "Aembit vs. HashiCorp Vault" },
+      { "@type": "ListItem", "position": 4, "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-hashicorp-vault/", "name": "CyberArk vs. HashiCorp Vault" },
+      { "@type": "ListItem", "position": 5, "url": "https://nonhumanidentitysoftware.com/comparisons/cyberark-vs-beyondtrust/", "name": "CyberArk vs. BeyondTrust" },
+      { "@type": "ListItem", "position": 6, "url": "https://nonhumanidentitysoftware.com/comparisons/gitguardian-vs-astrix/", "name": "GitGuardian vs. Astrix" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>:root{--accent:#7B3FA6;--accent-dim:#5C2E7D;--accent-pale:#F0E8F7}</style>
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js" defer></script>
 
   <style>
-    .comparison-group { margin-top: 40px; }
-    .comparison-group h2 { margin-bottom: 4px; }
-    .comparison-group-note { font-size: var(--small); color: var(--mid); margin-bottom: 20px; }
+    .comparison-list { list-style: none; padding: 0; margin-bottom: 32px; }
+    .comparison-list li { border-bottom: var(--hairline); }
+    .comparison-list li:last-child { border-bottom: none; }
+    .comparison-list a {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+    .comparison-list a:hover .comparison-list-name { color: var(--accent); }
+    .comparison-list-body { flex: 1; }
+    .comparison-list-name { font-size: var(--small); font-weight: 700; margin-bottom: 2px; }
+    .comparison-list-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+    .comparison-list-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .comparison-list-arrow { color: var(--border); font-size: 11px; padding-top: 2px; flex-shrink: 0; }
+    .comparison-list a:hover .comparison-list-arrow { color: var(--accent); }
+
+    .section-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: 16px 0 8px;
+      border-bottom: 1px solid var(--charcoal);
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-head::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 12px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -64,68 +126,91 @@
           <span>Comparisons</span>
         </div>
 
-        <span class="page-label">Comparisons</span>
+        <span class="page-label">Head-to-Head Comparisons</span>
         <h1>NHI Security Platform Comparisons</h1>
 
-        <p class="lead">Independent head-to-head comparisons of NHI security platforms. Each comparison covers technical differentiation, deployment fit, and a direct read on which platform fits which environment. No vendor affiliation.</p>
+        <p class="lead">Independent head-to-head comparisons of NHI security platforms. Each comparison covers technical differentiation, deployment fit, and a direct verdict on which platform belongs in which environment. No vendor affiliation.</p>
 
-        <p>Use the <a href="/tools/vendor-comparison/">vendor comparison tool</a> to filter the full market before shortlisting. Use these comparisons once you have a shortlist and need to understand the specific trade-offs between two platforms.</p>
-
-        <!-- Group 1: NHI governance platforms -->
-        <div class="comparison-group">
-          <h2 id="nhi-governance-platforms">NHI governance platforms</h2>
-          <p class="comparison-group-note">The most common shortlist pairings within the dedicated NHI category — both sides do roughly the same job, with different starting points.</p>
-
-          <h3 id="astrix-vs-oasis">Astrix vs. Oasis</h3>
-          <div class="tags"><span class="tag">NHI Governance</span></div>
-          <p>Astrix built its reputation on SaaS-to-SaaS OAuth discovery — third-party app integrations, token sprawl, shadow SaaS connections — and has expanded into cloud and on-prem coverage. Oasis started with broader cloud, on-prem, and IaaS/PaaS scope and has been closing the SaaS gap, with a stronger emphasis on AI-agent governance and outage prevention. The overlap is real; the difference is which direction each platform expanded from.</p>
-          <p><a href="/comparisons/astrix-vs-oasis/">Read comparison &rarr;</a></p>
-
-          <hr />
-
-          <h3 id="entro-vs-clutch">Entro vs. Clutch</h3>
-          <div class="tags"><span class="tag">NHI Governance</span></div>
-          <p>Entro pairs NHI governance with secrets detection across the software development lifecycle, tying every key, token, and service account back to a human owner and using behavioral-anomaly detection for remediation. Clutch takes a broader enterprise-visibility approach across cloud, SaaS, and on-prem built around its Identity Lineage tracking, with less developer-workflow-native detection than secrets-scanning specialists.</p>
-          <p><a href="/comparisons/entro-vs-clutch/">Read comparison &rarr;</a></p>
+        <div class="section-intro">
+          <p>Use the <a href="/tools/vendor-comparison/">vendor comparison tool</a> to filter the full market before shortlisting. Use these comparisons once you have a shortlist and need to understand the specific trade-offs between two platforms. The <a href="/landscape/vendors/">vendor index</a> covers every significant platform organized by category.</p>
         </div>
 
-        <!-- Group 2: Secrets management and workload identity -->
-        <div class="comparison-group">
-          <h2 id="secrets-management-and-workload-identity">Secrets management and workload identity</h2>
-          <p class="comparison-group-note">Whether the right move is to manage secrets better, or to reduce how much needs managing in the first place.</p>
+        <!-- NHI governance platforms -->
+        <div class="section-head" style="margin-top:32px;">NHI governance platforms</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/astrix-vs-oasis/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">NHI governance — head-to-head</span>
+                <div class="comparison-list-name">Astrix vs. Oasis</div>
+                <div class="comparison-list-desc">SaaS-origin OAuth and third-party app governance vs. cloud-origin hybrid-infrastructure NHI platform. Both have expanded scope significantly — the difference is which direction each platform expanded from, and which end of the lifecycle has genuine architectural depth.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons/entro-vs-clutch/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">NHI governance — head-to-head</span>
+                <div class="comparison-list-name">Entro vs. Clutch</div>
+                <div class="comparison-list-desc">SDLC-integrated NHI and secrets governance with behavioral detection vs. enterprise-wide identity lineage and Zero Trust posture. The comparison between managing the lifecycle of static credentials and eliminating the need for them.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
 
-          <h3 id="aembit-vs-hashicorp-vault">Aembit vs. HashiCorp Vault</h3>
-          <div class="tags"><span class="tag tag-accent">Workload Identity</span></div>
-          <p>Aembit's pitch is "manage access, not secrets" — secretless, policy-based workload identities issued at runtime, with nothing to vault in the first place. HashiCorp Vault, part of IBM since 2024, is the established secrets-vaulting and dynamic-secrets engine that most organizations with any NHI maturity already have deployed somewhere. This isn't really vendor-vs-vendor — it's whether your starting point is "manage the vault better" or "reduce what needs vaulting."</p>
-          <p><a href="/comparisons/aembit-vs-hashicorp-vault/">Read comparison &rarr;</a></p>
+        <!-- Secrets management and workload identity -->
+        <div class="section-head">Secrets management and workload identity</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/aembit-vs-hashicorp-vault/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Workload identity — architectural fork</span>
+                <div class="comparison-list-name">Aembit vs. HashiCorp Vault</div>
+                <div class="comparison-list-desc">The comparison that should not be read as a vendor-vs-vendor evaluation. Aembit replaces the credential model that Vault manages — secretless, policy-based workload identity vs. the established secrets engine most organizations already have deployed. The question is whether to manage secrets better or reduce what needs managing.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons/cyberark-vs-hashicorp-vault/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Secrets management — enterprise vs. developer-native</span>
+                <div class="comparison-list-name">CyberArk vs. HashiCorp Vault</div>
+                <div class="comparison-list-desc">An unusual pairing: CyberArk (now Palo Alto Networks, post-Venafi) ships both an alternative to Vault and a layer that sits on top of existing Vault deployments. Covers both the replacement decision and the coexistence one, with both platforms under new ownership since 2024.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
 
-          <hr />
+        <!-- Privileged access and category boundaries -->
+        <div class="section-head">Privileged access and category boundaries</div>
+        <ul class="comparison-list">
+          <li>
+            <a href="/comparisons/cyberark-vs-beyondtrust/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">PAM — head-to-head</span>
+                <div class="comparison-list-name">CyberArk vs. BeyondTrust</div>
+                <div class="comparison-list-desc">Two Gartner PAM Leaders with different footprints after significant M&amp;A. CyberArk's post-Venafi machine identity scope vs. BeyondTrust's endpoint privilege and remote access depth. The comparison for organizations where the PAM decision and the NHI decision are the same procurement.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="/comparisons/gitguardian-vs-astrix/">
+              <div class="comparison-list-body">
+                <span class="comparison-list-tag">Secrets vs. SaaS governance — head-to-head</span>
+                <div class="comparison-list-name">GitGuardian vs. Astrix</div>
+                <div class="comparison-list-desc">Developer-native secrets detection built outward vs. SaaS OAuth governance built inward. Both describe themselves as end-to-end NHI platforms — the comparison covers where each has genuine architectural depth and where the category label overstates the overlap.</div>
+              </div>
+              <span class="comparison-list-arrow">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
 
-          <h3 id="cyberark-vs-hashicorp-vault">CyberArk vs. HashiCorp Vault</h3>
-          <div class="tags"><span class="tag">Secrets Management</span></div>
-          <p>Following Palo Alto Networks' $25B acquisition of CyberArk, completed in February 2026, CyberArk's PAM, Conjur secrets management, and Venafi machine-identity/PKI capabilities now sit inside one platform — a platform that also ships discovery and observability specifically for HashiCorp Vault deployments (Vault itself part of IBM since 2024). The result is an unusual pairing: an alternative to Vault, and a layer that can sit on top of an existing Vault deployment, from the same vendor.</p>
-          <p><a href="/comparisons/cyberark-vs-hashicorp-vault/">Read comparison &rarr;</a></p>
-        </div>
-
-        <!-- Group 3: PAM and category boundaries -->
-        <div class="comparison-group">
-          <h2 id="pam-and-category-boundaries">Privileged access and category boundaries</h2>
-          <p class="comparison-group-note">Comparisons where the harder question isn't "which is better" but "are these even the same kind of product."</p>
-
-          <h3 id="cyberark-vs-beyondtrust">CyberArk vs. BeyondTrust</h3>
-          <div class="tags"><span class="tag">PAM</span></div>
-          <p>Both have sat in the Leaders quadrant for privileged access management for years, and the core comparison — credential vaulting, session management, endpoint privilege — predates either company's recent moves. What's changed is scope: CyberArk, now part of Palo Alto Networks, carries the broader machine-identity and secrets-management footprint post-Venafi; BeyondTrust's strength remains endpoint privilege and remote access, with a narrower but deep story of its own.</p>
-          <p><a href="/comparisons/cyberark-vs-beyondtrust/">Read comparison &rarr;</a></p>
-
-          <hr />
-
-          <h3 id="gitguardian-vs-astrix">GitGuardian vs. Astrix</h3>
-          <div class="tags"><span class="tag">Secrets vs. SaaS Governance</span></div>
-          <p>GitGuardian started as developer-workflow-native secrets scanning — hardcoded credentials in code, public leak monitoring, honeytokens — and has expanded into broader NHI governance. Astrix started at the opposite end, with SaaS-to-SaaS OAuth and third-party app governance, and carries secret-scanning capabilities that aren't its core strength. Both now describe themselves as end-to-end NHI platforms; the difference is which end of the lifecycle each was actually built for first.</p>
-          <p><a href="/comparisons/gitguardian-vs-astrix/">Read comparison &rarr;</a></p>
-        </div>
-
-        <div class="newsletter-block" style="margin-top:48px;">
+        <div class="newsletter-block">
           <span class="page-label">Stay current</span>
           <p>The Shadow Inventory covers the NHI security market the way vendors hope you won't read it. Monthly.</p>
           <div class="newsletter-form">
